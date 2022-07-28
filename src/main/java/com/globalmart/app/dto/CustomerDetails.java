@@ -22,7 +22,7 @@ public class CustomerDetails {
 	private String address;
 	
 	@Temporal(TemporalType.DATE)
-	private Date CreatedDate = new Date(System.currentTimeMillis());
+	private Date createdDate= new Date(System.currentTimeMillis());
 
 	private CustomerDetails() {
 		super();
@@ -38,7 +38,6 @@ public class CustomerDetails {
 		this.email = email;
 		this.phoneNumber = phoneNumber;
 		this.address = address;
-		CreatedDate = createdDate;
 	}
 
 	public Integer getId() {
@@ -66,7 +65,7 @@ public class CustomerDetails {
 	}
 
 	public Date getCreatedDate() {
-		return CreatedDate;
+		return createdDate;
 	}
 
 	public void setId(Integer id) {
@@ -94,7 +93,8 @@ public class CustomerDetails {
 	}
 
 	public void setCreatedDate(Date createdDate) {
-		CreatedDate = createdDate;
+		this.createdDate = createdDate;
 	}
+
 	
 }
