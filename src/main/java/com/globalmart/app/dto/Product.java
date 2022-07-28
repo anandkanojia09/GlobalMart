@@ -1,74 +1,90 @@
 package com.globalmart.app.dto;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
 @Entity
 public class Product {
-
+	
 	@Id
-	private Integer productId;
-	private String productName;
-	private String productDesc;
-	private Double productPrice;
-
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer id;
+	private String name;
+	private String description;
+	private Double price;
+	private Integer quantity;
+	
+//	@ManyToOne(fetch = FetchType.LAZY)
 	@ManyToOne
-	private Category categoryId;
+	private Category category;
+	
+	
 
-	private Product() {
+	public Product() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
-	private Product(Integer productId, String productName, String productDesc, Double productPrice,
-			Category categoryId) {
+	public Product(Integer id, String name, String description, Double price, Integer quantity, Category category) {
 		super();
-		this.productId = productId;
-		this.productName = productName;
-		this.productDesc = productDesc;
-		this.productPrice = productPrice;
-		this.categoryId = categoryId;
+		this.id = id;
+		this.name = name;
+		this.description = description;
+		this.price = price;
+		this.quantity = quantity;
+		this.category = category;
 	}
 
-	public Integer getProductId() {
-		return productId;
+	public Integer getId() {
+		return id;
 	}
 
-	public String getProductName() {
-		return productName;
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
-	public String getProductDesc() {
-		return productDesc;
+	public String getName() {
+		return name;
 	}
 
-	public Double getProductPrice() {
-		return productPrice;
+	public void setName(String name) {
+		this.name = name;
 	}
 
-	public Category getCategoryId() {
-		return categoryId;
+	public String getDescription() {
+		return description;
 	}
 
-	public void setProductId(Integer productId) {
-		this.productId = productId;
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
-	public void setProductName(String productName) {
-		this.productName = productName;
+	public Double getPrice() {
+		return price;
 	}
 
-	public void setProductDesc(String productDesc) {
-		this.productDesc = productDesc;
+	public void setPrice(Double price) {
+		this.price = price;
 	}
 
-	public void setProductPrice(Double productPrice) {
-		this.productPrice = productPrice;
+	public Integer getQuantity() {
+		return quantity;
 	}
 
-	public void setCategoryId(Category categoryId) {
-		this.categoryId = categoryId;
+	public void setQuantity(Integer quantity) {
+		this.quantity = quantity;
 	}
 
+	public Category getCategory() {
+		return category;
+	}
+
+	public void setCategory(Category category) {
+		this.category = category;
+	}
+	
+	
 }
