@@ -15,8 +15,7 @@ public class Category {
 	public Category() {
 		super();
 		// TODO Auto-generated constructor stub
-	}
-
+	} 
 
 	public Category(Integer categoryId, String name, String description) {
 		super();

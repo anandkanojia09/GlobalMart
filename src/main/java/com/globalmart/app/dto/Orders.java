@@ -1,67 +1,64 @@
 package com.globalmart.app.dto;
 
-import java.util.Date;
-
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 @Entity
 public class Orders {
 	@Id
-	private Integer orderId;
-
-	private String deliveryAddress;
-	private Integer paymentId;
-	@Temporal(TemporalType.DATE)
-	private Date CreatedDate = new Date(System.currentTimeMillis());
+	private long orderId;
+	private double amount;
+	private String billingDate;
+	private String customer;
+	private String paymentMethod;
 
 	public Orders() {
 		super();
-
-	}
-
-	public Orders(Integer orderId, Product product, String deliveryAddress, Integer paymentId, Date createdDate) {
-		super();
 		this.orderId = orderId;
-
-		this.deliveryAddress = deliveryAddress;
-		this.paymentId = paymentId;
-		CreatedDate = createdDate;
+		this.amount = amount;
+		this.billingDate = billingDate;
+		this.customer = customer;
+		this.paymentMethod = paymentMethod;
 	}
 
-	public Integer getOrderId() {
+	public long getOrderId() {
 		return orderId;
 	}
 
-	public void setOrderId(Integer orderId) {
+	public void setOrderId(long orderId) {
 		this.orderId = orderId;
 	}
 
-	public String getDeliveryAddress() {
-		return deliveryAddress;
+	public double getAmount() {
+		return amount;
 	}
 
-	public void setDeliveryAddress(String deliveryAddress) {
-		this.deliveryAddress = deliveryAddress;
+	public void setAmount(double amount) {
+		this.amount = amount;
 	}
 
-	public Integer getPaymentId() {
-		return paymentId;
+	public String getBillingDate() {
+		return billingDate;
 	}
 
-	public void setPaymentId(Integer paymentId) {
-		this.paymentId = paymentId;
+	public void setBillingDate(String billingDate) {
+		this.billingDate = billingDate;
 	}
 
-	public Date getCreatedDate() {
-		return CreatedDate;
+	public String getCustomer() {
+		return customer;
 	}
 
-	public void setCreatedDate(Date createdDate) {
-		CreatedDate = createdDate;
+	public void setCustomer(String customer) {
+		this.customer = customer;
+	}
+
+	public String getPaymentMethod() {
+		return paymentMethod;
+	}
+
+	public void setPaymentMethod(String paymentMethod) {
+		this.paymentMethod = paymentMethod;
 	}
 
 }
