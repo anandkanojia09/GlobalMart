@@ -5,11 +5,12 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
 @Entity
 public class Product {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
@@ -17,25 +18,30 @@ public class Product {
 	private String description;
 	private Double price;
 	private Integer quantity;
-	
-//	@ManyToOne(fetch = FetchType.LAZY)
-	@ManyToOne
-	private Category category;
-	
-	
+
+//	@ManyToMany
+//	private Orders orders;
 
 	public Product() {
 		super();
 	}
 
-	public Product(Integer id, String name, String description, Double price, Integer quantity, Category category) {
+//	public Orders getOrders() {
+//		return orders;
+//	}
+//
+//	public void setOrders(Orders orders) {
+//		this.orders = orders;
+//	}
+
+	public Product(Integer id, String name, String description, Double price, Integer quantity) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.description = description;
 		this.price = price;
 		this.quantity = quantity;
-		this.category = category;
+//		this.orders = orders;
 	}
 
 	public Integer getId() {
@@ -78,13 +84,4 @@ public class Product {
 		this.quantity = quantity;
 	}
 
-	public Category getCategory() {
-		return category;
-	}
-
-	public void setCategory(Category category) {
-		this.category = category;
-	}
-	
-	
 }

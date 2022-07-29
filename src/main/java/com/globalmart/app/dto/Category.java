@@ -15,15 +15,15 @@ public class Category {
 	public Category() {
 		super();
 		// TODO Auto-generated constructor stub
-	} 
+	}
 
-	public Category(Integer categoryId, String name, String description) {
+	public Category(Integer categoryId, String name, String description, Product product) {
 		super();
 		this.categoryId = categoryId;
 		this.name = name;
 		this.description = description;
+//		this.product = product;
 	}
-
 
 	public Integer getCategoryId() {
 		return categoryId;
@@ -36,6 +36,10 @@ public class Category {
 	public String getDescription() {
 		return description;
 	}
+//
+//	public Product getProduct() {
+//		return product;
+//	}
 
 	public void setCategoryId(Integer categoryId) {
 		this.categoryId = categoryId;
@@ -45,10 +49,12 @@ public class Category {
 		this.name = name;
 	}
 
-
 	public void setDescription(String description) {
 		this.description = description;
 	}
-
+//
+//	public void setProduct(Product product) {
+//		this.product = product;
+//	}
 
 }

@@ -1,35 +1,34 @@
 package com.globalmart.app.dto;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
+//import javax.persistence.GeneratedValue;
+//import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
 public class Admin {
 
 	@Id
-	private Integer id;
+	private Integer adminId;
 	private String name;
 	private String passsword;
 
 	private Admin() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	private Admin(Integer id, String name, String passsword) {
 		super();
-		this.id = id;
+		this.adminId = id;
 		this.name = name;
 		this.passsword = passsword;
 	}
 
-	public Integer getId() {
-		return id;
+	public Integer getAdminId() {
+		return adminId;
 	}
 
-	public String getName() {
+	public String getAdminName() {
 		return name;
 	}
 
@@ -37,11 +36,11 @@ public class Admin {
 		return passsword;
 	}
 
-	public void setId(Integer id) {
-		this.id = id;
+	public void setAdminId(Integer id) {
+		this.adminId = id;
 	}
 
-	public void setName(String name) {
+	public void setAdminName(String name) {
 		this.name = name;
 	}
 
