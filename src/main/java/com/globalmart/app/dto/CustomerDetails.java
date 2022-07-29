@@ -78,10 +78,6 @@ public class CustomerDetails {
 		return id;
 	}
 
-	public String getName() {
-		return customerName;
-	}
-
 	public String getPasssword() {
 		return passsword;
 	}

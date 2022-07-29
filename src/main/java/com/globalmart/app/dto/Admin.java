@@ -1,8 +1,6 @@
 package com.globalmart.app.dto;
 
 import javax.persistence.Entity;
-//import javax.persistence.GeneratedValue;
-//import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
@@ -10,18 +8,27 @@ public class Admin {
 
 	@Id
 	private Integer adminId;
-	private String name;
+	private String adminName;
 	private String passsword;
 
-	private Admin() {
+	public Admin() {
 		super();
 	}
 
-	private Admin(Integer id, String name, String passsword) {
+	public String getName() {
+		return adminName;
+	}
+
+	public void setName(String name) {
+		this.adminName = name;
+	}
+
+	public Admin(Integer adminId, String name, String passsword) {
 		super();
-		this.adminId = id;
-		this.name = name;
+		this.adminId = adminId;
+		this.adminName = name;
 		this.passsword = passsword;
+//		this.customers = customers;
 	}
 
 	public Integer getAdminId() {
@@ -29,7 +36,7 @@ public class Admin {
 	}
 
 	public String getAdminName() {
-		return name;
+		return adminName;
 	}
 
 	public String getPasssword() {
@@ -41,7 +48,7 @@ public class Admin {
 	}
 
 	public void setAdminName(String name) {
-		this.name = name;
+		this.adminName = name;
 	}
 
 	public void setPasssword(String passsword) {

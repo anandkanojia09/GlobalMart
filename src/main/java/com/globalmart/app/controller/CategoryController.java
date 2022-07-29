@@ -1,5 +1,6 @@
 package com.globalmart.app.controller;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,11 @@ public class CategoryController {
 	@GetMapping("category/{id}")
 	public Optional<Category> getCategory(@PathVariable Integer categoryId) {
 		return categoryRepo.findById(categoryId);
+	}
+
+	@GetMapping("category/all")
+	public List<Category> getAllCategory() {
+		return categoryRepo.findAll();
 	}
 
 	@PostMapping("category/update")
