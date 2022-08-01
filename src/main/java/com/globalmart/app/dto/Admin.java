@@ -15,20 +15,11 @@ public class Admin {
 		super();
 	}
 
-	public String getName() {
-		return adminName;
-	}
-
-	public void setName(String name) {
-		this.adminName = name;
-	}
-
-	public Admin(Integer adminId, String name, String passsword) {
+	public Admin(Integer adminId, String adminName, String passsword) {
 		super();
 		this.adminId = adminId;
-		this.adminName = name;
+		this.adminName = adminName;
 		this.passsword = passsword;
-//		this.customers = customers;
 	}
 
 	public Integer getAdminId() {
@@ -43,12 +34,12 @@ public class Admin {
 		return passsword;
 	}
 
-	public void setAdminId(Integer id) {
-		this.adminId = id;
+	public void setAdminId(Integer adminId) {
+		this.adminId = adminId;
 	}
 
-	public void setAdminName(String name) {
-		this.adminName = name;
+	public void setAdminName(String adminName) {
+		this.adminName = adminName;
 	}
 
 	public void setPasssword(String passsword) {

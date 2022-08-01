@@ -11,9 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.globalmart.app.dao.CartRepo;
-import com.globalmart.app.dao.ProductRepo;
 import com.globalmart.app.dto.Cart;
-import com.globalmart.app.dto.Product;
 
 @RestController
 public class CartController {
