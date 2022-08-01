@@ -1,7 +1,6 @@
 package com.globalmart.app.dto;
 
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -9,7 +8,7 @@ import javax.persistence.ManyToOne;
 
 @Entity
 public class Product {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
@@ -17,15 +16,20 @@ public class Product {
 	private String description;
 	private Double price;
 	private Integer quantity;
-	
-//	@ManyToOne(fetch = FetchType.LAZY)
+
 	@ManyToOne
 	private Category category;
-	
-	
 
 	public Product() {
 		super();
+	}
+
+	public Category getCategory() {
+		return category;
+	}
+
+	public void setCategory(Category category) {
+		this.category = category;
 	}
 
 	public Product(Integer id, String name, String description, Double price, Integer quantity, Category category) {
@@ -78,13 +82,4 @@ public class Product {
 		this.quantity = quantity;
 	}
 
-	public Category getCategory() {
-		return category;
-	}
-
-	public void setCategory(Category category) {
-		this.category = category;
-	}
-	
-	
 }
