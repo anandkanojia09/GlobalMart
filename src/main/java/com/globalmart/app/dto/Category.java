@@ -2,7 +2,6 @@ package com.globalmart.app.dto;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 
 @Entity
 public class Category {
@@ -17,14 +16,13 @@ public class Category {
 		// TODO Auto-generated constructor stub
 	}
 
-
 	public Category(Integer categoryId, String name, String description) {
 		super();
 		this.categoryId = categoryId;
 		this.name = name;
 		this.description = description;
+//		this.products = product;
 	}
-
 
 	public Integer getCategoryId() {
 		return categoryId;
@@ -46,10 +44,8 @@ public class Category {
 		this.name = name;
 	}
 
-
 	public void setDescription(String description) {
 		this.description = description;
 	}
-
 
 }
