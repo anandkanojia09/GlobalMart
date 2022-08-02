@@ -1,41 +1,34 @@
-//package com.globalmart.app.services;
-//
-//import java.util.List;
-//import java.util.Optional;
-//
-//import org.hibernate.tool.schema.internal.ExceptionHandlerCollectingImpl;
-//import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.web.bind.annotation.ExceptionHandler;
-//import org.springframework.web.bind.annotation.RestControllerAdvice;
-//
-//import com.globalmart.app.controller.CartController;
-//import com.globalmart.app.dao.CustomerRepo;
-//import com.globalmart.app.dao.ProductRepo;
-//import com.globalmart.app.dto.Cart;
-//import com.globalmart.app.dto.CustomerDetails;
-//import com.globalmart.app.dto.Product;
-//
-//@RestControllerAdvice
-//public class ServiceImplementation implements ServicesInterface {
-//
-//	@Autowired
-//	private ProductRepo productRepo;
-//	@Autowired
-//	private CustomerRepo customerRepo;
-//
-//	@Override
-//	public boolean addProductToCart(Integer productId, Integer customerId) {
-//		boolean productAdded = false;
-//		Optional<Product> pId = productRepo.findById(productId);
-//		Optional<CustomerDetails> c = customerRepo.findById(customerId);
-//		
-//		CartController.addCart(new Cart(1,1, 78873, pID, c));
-//
-//		return productAdded;
-//	}
-//
-//	@ExceptionHandler
-//	public String error() {
-//		return "Error";
-//	}
-//}
+package com.globalmart.app.services;
+
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.globalmart.app.dao.CustomerRepo;
+import com.globalmart.app.dto.CustomerDetails;
+import com.globalmart.app.exception.GlobalMartException;
+
+@Service
+public class ServiceImplementation implements ServicesInterface {
+
+	@Autowired
+	private CustomerRepo customerRepo;
+
+	@Override
+	public List<CustomerDetails> allCustomers() throws GlobalMartException {
+		List<CustomerDetails> custD = customerRepo.findAll();
+		return custD;
+	}
+
+	@Override
+	public Optional<CustomerDetails> getCustomerById(Integer id) throws GlobalMartException {
+		Optional<CustomerDetails> customerD = customerRepo.findById(id);
+		if(customerD.isEmpty()) {
+			throw new GlobalMartException("User with user id "+id+" does not exist");
+		}
+		return customerD;
+	}
+
+}
