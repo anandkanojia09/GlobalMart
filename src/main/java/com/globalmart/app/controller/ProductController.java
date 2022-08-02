@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.globalmart.app.dao.ProductRepo;
@@ -29,7 +30,12 @@ public class ProductController {
 	public Optional<Product> getProduct(@PathVariable("id") Integer id) {
 		return productRepo.findById(id);
 	}
-	
+
+	@GetMapping("product/{name}")
+	public List<Product> getByName(@RequestParam(value="name") String name) {
+		return productRepo.findByName(name);
+	}
+
 	@GetMapping("product/all")
 	public List<Product> getAllProducts() {
 		return productRepo.findAll();
