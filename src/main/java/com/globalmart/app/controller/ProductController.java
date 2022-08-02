@@ -14,46 +14,61 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.globalmart.app.dao.ProductRepo;
 import com.globalmart.app.dto.Product;
+import com.globalmart.app.exception.GlobalMartException;
+import com.globalmart.app.services.ProductServiceImplementation;
+import com.globalmart.app.services.ProductServiceImplementation;
 
 @RestController
 public class ProductController {
 
 	@Autowired
 	private ProductRepo productRepo;
+	@Autowired
+	private ProductServiceImplementation serviceImpl;
 
 	@PostMapping("product")
-	public Product addProduct(@RequestBody Product product) {
-		return productRepo.save(product);
+	public Product addProduct(@RequestBody Product product) throws GlobalMartException{
+		return serviceImpl.addProduct(product);
 	}
 
+//	@GetMapping("product/{id}")
+//	public Optional<Product> getProduct(@PathVariable("id") Integer id) {
+//		return productRepo.findById(id);
+//	}
 	@GetMapping("product/{id}")
-	public Optional<Product> getProduct(@PathVariable("id") Integer id) {
-		return productRepo.findById(id);
+	public Optional<Product> getProduct(@PathVariable("id") Integer id) throws GlobalMartException {
+		return serviceImpl.getProductById(id);
 	}
 
-	@GetMapping("product/{name}")
-	public List<Product> getByName(@RequestParam(value="name") String name) {
-		return productRepo.findByName(name);
-	}
+//	@GetMapping("product/{name}")
+//	public List<Product> getByName(@RequestParam(value="name") String name) {
+//		return productRepo.findByName(name);
+//	}
+
+//	@GetMapping("product/{name}")
+//	public List<Product> getByName(@RequestParam(value="name") String name) {
+//		return serviceImpl.findByName(name);
+//	}
 
 	@GetMapping("product/all")
-	public List<Product> getAllProducts() {
-		return productRepo.findAll();
+	public List<Product> getAllProducts() throws GlobalMartException{
+		return serviceImpl.getAllProducts();
 	}
 
 	@PostMapping("product/update")
-	public Product updateProduct(@RequestBody Product product) {
-		return productRepo.save(product);
+	public Product updateProduct(@RequestBody Product product) throws GlobalMartException{
+		return serviceImpl.updateProduct(product);
 	}
 
 	@DeleteMapping("product/delete/{id}")
-	public void deleteProductById(@PathVariable Integer productId) {
-		productRepo.deleteById(productId);
+	public void deleteProductById(@RequestParam(value="productId") Integer productId) throws GlobalMartException {
+		serviceImpl.deleteProductById(productId);
 	}
 
+
 	@DeleteMapping("product/delete")
-	public void deleteProduct(@PathVariable Product product) {
-		productRepo.delete(product);
+	public void deleteProduct(@PathVariable Product product) throws GlobalMartException {
+		serviceImpl.deleteProduct(product);
 	}
 
 }
