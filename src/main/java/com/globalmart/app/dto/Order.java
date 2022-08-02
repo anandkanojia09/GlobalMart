@@ -1,6 +1,7 @@
 package com.globalmart.app.dto;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -9,6 +10,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 @Table(name = "orders")
@@ -18,12 +21,33 @@ public class Order {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int orderId;
 	private double amount;
-	private String billingDate;
+	@Temporal(TemporalType.DATE)
+	private Date orderDate = new Date(System.currentTimeMillis());
+
+	public Date getOrderDate() {
+		return orderDate;
+	}
+
+	public void setOrderDate(Date orderDate) {
+		this.orderDate = orderDate;
+	}
+
 	private String customer;
 	private String paymentMethod;
 
 	@ManyToMany
 	private List<Product> product = new ArrayList<>();
+
+	public Order(int orderId, double amount, Date orderDate, String customer, String paymentMethod,
+			List<Product> product) {
+		super();
+		this.orderId = orderId;
+		this.amount = amount;
+		this.orderDate = orderDate;
+		this.customer = customer;
+		this.paymentMethod = paymentMethod;
+		this.product = product;
+	}
 
 	public List<Product> getProduct() {
 		return product;
@@ -35,17 +59,6 @@ public class Order {
 
 	public Order() {
 		super();
-	}
-
-	public Order(int orderId, double amount, String billingDate, String customer, String paymentMethod,
-			List<Product> product) {
-		super();
-		this.orderId = orderId;
-		this.amount = amount;
-		this.billingDate = billingDate;
-		this.customer = customer;
-		this.paymentMethod = paymentMethod;
-		this.product = product;
 	}
 
 	public int getOrderId() {
@@ -62,14 +75,6 @@ public class Order {
 
 	public void setAmount(double amount) {
 		this.amount = amount;
-	}
-
-	public String getBillingDate() {
-		return billingDate;
-	}
-
-	public void setBillingDate(String billingDate) {
-		this.billingDate = billingDate;
 	}
 
 	public String getCustomer() {

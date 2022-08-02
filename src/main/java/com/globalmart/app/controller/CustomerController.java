@@ -12,12 +12,16 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.globalmart.app.dao.CustomerRepo;
 import com.globalmart.app.dto.CustomerDetails;
+import com.globalmart.app.exception.GlobalMartException;
+import com.globalmart.app.services.ServiceImplementation;
 
 @RestController
 public class CustomerController {
 
 	@Autowired
 	private CustomerRepo customerRepo;
+	@Autowired
+	private ServiceImplementation serviceImpl;
 
 	@PostMapping("customer")
 	public CustomerDetails addCustomer(@RequestBody CustomerDetails customer) {
@@ -25,8 +29,9 @@ public class CustomerController {
 	}
 
 	@GetMapping("customer/{id}")
-	public Optional<CustomerDetails> getCustomer(@PathVariable("id") Integer id) {
-		return customerRepo.findById(id);
+	public Optional<CustomerDetails> getCustomer(@PathVariable("id") Integer id) throws GlobalMartException {
+//		return customerRepo.findById(id);
+		return serviceImpl.getCustomerById(id);
 	}
 
 	@PostMapping("customer/update")
