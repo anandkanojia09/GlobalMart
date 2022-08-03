@@ -11,52 +11,39 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.globalmart.app.dao.AdminRepo;
-import com.globalmart.app.dao.CartRepo;
-import com.globalmart.app.dao.CustomerRepo;
 import com.globalmart.app.dto.Admin;
-import com.globalmart.app.dto.Cart;
-import com.globalmart.app.dto.CustomerDetails;
+import com.globalmart.app.exception.GlobalMartException;
+import com.globalmart.app.services.AdminServices;
 
 @RestController
 public class AdminController {
 
 	@Autowired
-	private CustomerRepo customerRepo;
-	@Autowired
-	private AdminRepo adminRepo;
-
-	@Autowired
-	private CartRepo cartRepo;
+	private AdminServices adminServices;
 
 	@PostMapping("admin")
 	public Admin addAdmin(@RequestBody Admin admin) {
-		return adminRepo.save(admin);
+		return adminServices.addAdmin(admin);
 	}
 
 	@GetMapping("admin/{id}")
-	public Optional<Admin> getAdmin(@PathVariable("id") Integer id) {
-		return adminRepo.findById(id);
+	public Optional<Admin> getAdmin(@PathVariable("id") Integer id) throws GlobalMartException {
+		return adminServices.getAdminById(id);
 	}
 
 	@PostMapping("admin/update")
-	public Admin updateAdmin(@RequestBody Admin admin) {
-		return adminRepo.save(admin);
+	public Admin updateAdmin(@RequestBody Admin admin) throws GlobalMartException {
+		return adminServices.updateAdminById(admin);
 	}
 
 	@DeleteMapping("deleteAdmin/{id}")
-	public void deleteAdmin(@PathVariable("id") Integer id) {
-		adminRepo.deleteById(id);
+	public void deleteAdmin(@PathVariable("id") Integer id) throws GlobalMartException {
+		adminServices.deleteAdminById(id);
+
 	}
 
-	@GetMapping("allCustomer")
-	public List<CustomerDetails> getAllCustomer() {
-		return customerRepo.findAll();
+	@GetMapping("admin/all")
+	public List<Admin> getAllAdmin() throws GlobalMartException {
+		return adminServices.getAllAdmins();
 	}
-
-	@GetMapping("allCart")
-	public List<Cart> getAllCarts() {
-		return cartRepo.findAll();
-	}
-
 }
