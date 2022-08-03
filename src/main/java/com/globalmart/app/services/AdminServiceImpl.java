@@ -1,5 +1,6 @@
 package com.globalmart.app.services;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,9 +18,11 @@ public class AdminServiceImpl implements AdminServices {
 	private AdminRepo adminRepo;
 
 	@Override
-	public Admin addAdmin(Admin admin) {
-		adminRepo.save(admin);
-		return admin;
+	public Admin addAdmin(Admin admin) throws GlobalMartException {
+		if (admin == null)
+			throw new GlobalMartException("Admincant be null");
+		return adminRepo.save(admin);
+
 	}
 
 	@Override
@@ -47,7 +50,7 @@ public class AdminServiceImpl implements AdminServices {
 		if (adminRepo.existsById(id)) {
 			adminRepo.deleteById(id);
 			if (adminRepo.existsById(id)) {
-				throw new GlobalMartException("User not deleted");
+				throw new GlobalMartException("Unable to delete User. Try Again!!");
 			}
 		} else {
 			throw new GlobalMartException("No customer with id " + id + " exists to be deleted ");
@@ -61,6 +64,17 @@ public class AdminServiceImpl implements AdminServices {
 			throw new GlobalMartException("No customers yet!!");
 		}
 		return allAdmins;
+	}
+
+	@Override
+	public List<Admin> getAdminByNameAndPassword(String name, String password) throws GlobalMartException {
+		List<Admin> admins = new ArrayList<>();
+		try {
+			admins = adminRepo.findByAdminNameAndPassword(name, password);
+		} catch (Exception e) {
+			throw new GlobalMartException(e.getLocalizedMessage());
+		}
+		return admins;
 	}
 
 }

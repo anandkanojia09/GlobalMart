@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.globalmart.app.dto.CustomerDetails;
+import com.globalmart.app.dto.Customer;
 import com.globalmart.app.exception.GlobalMartException;
 import com.globalmart.app.services.CustomerServices;
 
@@ -22,18 +22,18 @@ public class CustomerController {
 	private CustomerServices customerService;
 
 	@PostMapping("customer")
-	public CustomerDetails addCustomer(@RequestBody CustomerDetails customer) throws GlobalMartException {
+	public Customer addCustomer(@RequestBody Customer customer) throws GlobalMartException {
 		return customerService.addCustomer(customer);
 	}
 
 	@GetMapping("customer/{id}")
-	public Optional<CustomerDetails> getCustomer(@PathVariable("id") Integer id) throws GlobalMartException {
+	public Optional<Customer> getCustomer(@PathVariable("id") Integer id) throws GlobalMartException {
 //		return customerRepo.findById(id);
 		return customerService.getCustomerById(id);
 	}
 
 	@PostMapping("customer/update")
-	public CustomerDetails updateCustomer(@RequestBody CustomerDetails customer) throws GlobalMartException {
+	public Customer updateCustomer(@RequestBody Customer customer) throws GlobalMartException {
 		return customerService.updateCustomerById(customer);
 	}
 
@@ -43,7 +43,7 @@ public class CustomerController {
 	}
 
 	@GetMapping("customer/all")
-	public List<CustomerDetails> getAllCustomers() throws GlobalMartException {
+	public List<Customer> getAllCustomers() throws GlobalMartException {
 		return customerService.getAllCustomers();
 	}
 

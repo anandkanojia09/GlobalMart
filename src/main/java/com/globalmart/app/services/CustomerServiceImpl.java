@@ -1,5 +1,6 @@
 package com.globalmart.app.services;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -7,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.globalmart.app.dao.CustomerRepo;
-import com.globalmart.app.dto.CustomerDetails;
+import com.globalmart.app.dto.Customer;
 import com.globalmart.app.exception.GlobalMartException;
 
 @Service
@@ -17,8 +18,8 @@ public class CustomerServiceImpl implements CustomerServices {
 	private CustomerRepo customerRepo;
 
 	@Override
-	public Optional<CustomerDetails> getCustomerById(Integer id) throws GlobalMartException {
-		Optional<CustomerDetails> customer = customerRepo.findById(id);
+	public Optional<Customer> getCustomerById(Integer id) throws GlobalMartException {
+		Optional<Customer> customer = customerRepo.findById(id);
 		if (customer.isEmpty()) {
 			throw new GlobalMartException("User with user id " + id + " does not exist");
 		}
@@ -26,7 +27,7 @@ public class CustomerServiceImpl implements CustomerServices {
 	}
 
 	@Override
-	public CustomerDetails addCustomer(CustomerDetails customer) throws GlobalMartException {
+	public Customer addCustomer(Customer customer) throws GlobalMartException {
 		try {
 			customerRepo.save(customer);
 		} catch (Exception e) {
@@ -36,7 +37,7 @@ public class CustomerServiceImpl implements CustomerServices {
 	}
 
 	@Override
-	public CustomerDetails updateCustomerById(CustomerDetails customer) throws GlobalMartException {
+	public Customer updateCustomerById(Customer customer) throws GlobalMartException {
 		int x = customer.getId();
 		if (customerRepo.existsById(x)) {
 			customerRepo.save(customer);
@@ -59,11 +60,23 @@ public class CustomerServiceImpl implements CustomerServices {
 	}
 
 	@Override
-	public List<CustomerDetails> getAllCustomers() throws GlobalMartException {
-		List<CustomerDetails> allCustomers = customerRepo.findAll();
+	public List<Customer> getAllCustomers() throws GlobalMartException {
+		List<Customer> allCustomers = customerRepo.findAll();
 		if (allCustomers.isEmpty()) {
 			throw new GlobalMartException("No customers yet!!");
 		}
 		return allCustomers;
 	}
+
+	@Override
+	public List<Customer> getCustomerByNameAndPassword(String name, String password) throws GlobalMartException {
+		List<Customer> customer = new ArrayList<>();
+		try {
+			customer = customerRepo.findByCustomerNameAndPassword(name, password);
+		} catch (Exception e) {
+			throw new GlobalMartException(e.getLocalizedMessage());
+		}
+		return customer;
+	}
+
 }
