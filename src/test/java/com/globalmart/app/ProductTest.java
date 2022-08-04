@@ -34,20 +34,52 @@ public class ProductTest {
 		assertNotNull(productService.getProductById(50));
 	}
 
+	@Test
+	void getAllProducts() throws GlobalMartException {
+//	Product product = new Product(50, "MyProduct", "MyDescription", 2500.00, 25, category);
+//		Product productnew = productService.addProduct(product);
+		assumeTrue(productService != null);
+		assertNotNull(productService.getAllProducts());
+	}
+	
 	
 	@Test
 	void deleteProductByIdTest() throws GlobalMartException {
 		Product product = productService.getProductById(6).get();
-//		System.out.println(product);
 		assumeTrue(productService != null);
 		productService.deleteProductById(6);
 //		assertNull(productService.getProductById(3).get());
-
 //		assertNotNull(productService.getProductById(3).get());
 		assertThrows(GlobalMartException.class, ()-> productService.getProductById(6));
 		productService.addProduct(product);
-		
-		
+	}
+	@Test
+	void deleteProductByIdTest2() throws GlobalMartException {
+		Product product = productService.getProductById(6).get();
+		assumeTrue(productService != null);
+//		productService.deleteProductById(6);
+//		assertNull(productService.getProductById(3).get());
+//		assertNotNull(productService.getProductById(3).get());
+		assertThrows(GlobalMartException.class, ()-> productService.deleteProductById(7));
+		productService.addProduct(product);
+	}
+	
+	@Test
+	void updateProductTest() throws GlobalMartException {
+		Product myproduct = new Product(50, "MyProduct", "MyDescription", 2500.00, 25, category);
+		Product product = new Product(50, "oldProduct", "MyDescription", 2500.00, 25, category);
+		productService.addProduct(product);
+		assumeTrue(productService != null);
+		assertNotNull(productService.updateProduct(myproduct));
+	}
+	
+	@Test
+	void deleteProduct() throws GlobalMartException{
+		Product myproduct = new Product(50, "MyProduct", "MyDescription", 2500.00, 25, category);
+		productService.addProduct(myproduct);
+		assumeTrue(productService != null);
+		productService.deleteProduct(myproduct);
+		assertThrows(GlobalMartException.class, ()-> productService.getProductById(50));
 	}
 	
 
