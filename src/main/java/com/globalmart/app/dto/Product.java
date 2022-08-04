@@ -10,7 +10,7 @@ import javax.persistence.ManyToOne;
 public class Product {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+//	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private String name;
 	private String description;
@@ -31,7 +31,7 @@ public class Product {
 	public void setCategory(Category category) {
 		this.category = category;
 	}
-
+//Product product = new Product(1, "MyProduct", "MyDescription", 2500.00, 25, (1, "categoryName", "categoryDescription"));
 	public Product(Integer id, String name, String description, Double price, Integer quantity, Category category) {
 		super();
 		this.id = id;
@@ -80,6 +80,12 @@ public class Product {
 
 	public void setQuantity(Integer quantity) {
 		this.quantity = quantity;
+	}
+
+	@Override
+	public String toString() {
+		return "Product [id=" + id + ", name=" + name + ", description=" + description + ", price=" + price
+				+ ", quantity=" + quantity + ", category=" + category + "]";
 	}
 
 }

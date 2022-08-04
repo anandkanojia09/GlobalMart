@@ -24,6 +24,9 @@ public class ProductServiceImplementation implements ProductServicesInterface {
 
 	public Optional<Product> getProductById(Integer id) throws GlobalMartException {
 		Optional<Product> productD = productRepo.findById(id);
+		if (productD.isEmpty()) {
+			throw new GlobalMartException("Id Not found");
+		}
 		return productD;
 	}
 
