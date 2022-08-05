@@ -20,4 +20,6 @@ public interface AdminServices {
 
 	public List<Admin> getAdminByNameAndPassword(String name, String password) throws GlobalMartException;
 
+	public boolean deleteAllAdmins() throws GlobalMartException;
+
 }

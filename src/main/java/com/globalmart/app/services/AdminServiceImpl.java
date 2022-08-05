@@ -20,7 +20,7 @@ public class AdminServiceImpl implements AdminServices {
 	@Override
 	public Admin addAdmin(Admin admin) throws GlobalMartException {
 		if (admin == null)
-			throw new GlobalMartException("Admincant be null");
+			throw new GlobalMartException("Admin cant be null");
 		return adminRepo.save(admin);
 
 	}
@@ -40,7 +40,7 @@ public class AdminServiceImpl implements AdminServices {
 		if (adminRepo.existsById(x)) {
 			adminRepo.save(admin);
 		} else {
-			throw new GlobalMartException("No customer with data exists to be updated!! ");
+			throw new GlobalMartException("No customer with the		 data exists to be updated!! ");
 		}
 		return admin;
 	}
@@ -75,6 +75,18 @@ public class AdminServiceImpl implements AdminServices {
 			throw new GlobalMartException(e.getLocalizedMessage());
 		}
 		return admins;
+	}
+
+	@Override
+	public boolean deleteAllAdmins() throws GlobalMartException {
+		boolean flag = false;
+		adminRepo.deleteAll();
+		if (getAllAdmins().isEmpty()) {
+			flag = true;
+		} else {
+			throw new GlobalMartException("Deletion failed. Try again");
+		}
+		return flag;
 	}
 
 }

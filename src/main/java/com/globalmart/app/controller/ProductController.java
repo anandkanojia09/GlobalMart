@@ -31,7 +31,7 @@ public class ProductController {
 		return productRepo.findById(id);
 	}
 
-	@GetMapping("product/{name}")
+	@GetMapping("product/name/{name}")
 	public List<Product> getByName(@RequestParam(value="name") String name) {
 		return productRepo.findByName(name);
 	}

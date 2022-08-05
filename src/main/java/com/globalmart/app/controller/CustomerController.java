@@ -28,7 +28,6 @@ public class CustomerController {
 
 	@GetMapping("customer/{id}")
 	public Optional<Customer> getCustomer(@PathVariable("id") Integer id) throws GlobalMartException {
-//		return customerRepo.findById(id);
 		return customerService.getCustomerById(id);
 	}
 

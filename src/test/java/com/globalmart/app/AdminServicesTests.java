@@ -34,26 +34,26 @@ class AdminServicesTests {
 	void getAdminById() throws GlobalMartException {
 
 		assumeTrue(adminService != null);
-		admin = adminService.getAdminById(53).get();
-		assertEquals(53, admin.getAdminId());
+		Admin adminFound = adminService.getAdminById(53).get();
+		assertEquals(admin, adminFound);
 		assertThrows(GlobalMartException.class, () -> adminService.getAdminById(0));
 
 	}
 
-	@Test
-	void updateAdmin() throws GlobalMartException {
-		assumeTrue(adminService != null);
-		admin = new Admin(0, "AAAA", "JJJJ");
-		assertThrows(GlobalMartException.class, () -> adminService.updateAdminById(admin));
-		Admin admin2 = adminService.updateAdminById(new Admin(53, "SHHS", "jhdhd"));
+//	@Test
+//	void updateAdmin() throws GlobalMartException {
+//		assumeTrue(adminService != null);
+//		admin = new Admin(0, "AAAA", "JJJJ");
+//		assertThrows(GlobalMartException.class, () -> adminService.updateAdminById(admin));
+//		Admin admin2 = adminService.updateAdminById(new Admin(53, "SHHS", "jhdhd"));
 //		assertEquals(admin.getAdminId(), admin2.getAdminId());
-	}
-
-	@Test
-	void deleteAdmnById() throws GlobalMartException {
-		assumeTrue(adminService != null);
-		adminService.deleteAdminById(53);
-		assertThrows(GlobalMartException.class, () -> adminService.getAdminById(53));
-	}
+//	}
+//
+//	@Test
+//	void deleteAdmnById() throws GlobalMartException {
+//		assumeTrue(adminService != null);
+//		adminService.deleteAdminById(53);
+//		assertThrows(GlobalMartException.class, () -> adminService.getAdminById(53));
+//	}
 
 }

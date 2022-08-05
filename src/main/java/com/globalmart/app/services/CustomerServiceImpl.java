@@ -28,11 +28,9 @@ public class CustomerServiceImpl implements CustomerServices {
 
 	@Override
 	public Customer addCustomer(Customer customer) throws GlobalMartException {
-		try {
-			customerRepo.save(customer);
-		} catch (Exception e) {
-			throw new GlobalMartException(e.getMessage());
-		}
+		if (customer == null)
+			throw new GlobalMartException("Feilds cannot be left empty. Please fill in the necesaary details.");
+		customerRepo.save(customer);
 		return customer;
 	}
 
@@ -42,7 +40,7 @@ public class CustomerServiceImpl implements CustomerServices {
 		if (customerRepo.existsById(x)) {
 			customerRepo.save(customer);
 		} else {
-			throw new GlobalMartException("No customer with data exists to be updated!! ");
+			throw new GlobalMartException("No customer with the provided data exists to be updated!! ");
 		}
 		return customer;
 	}
@@ -71,11 +69,9 @@ public class CustomerServiceImpl implements CustomerServices {
 	@Override
 	public List<Customer> getCustomerByNameAndPassword(String name, String password) throws GlobalMartException {
 		List<Customer> customer = new ArrayList<>();
-		try {
-			customer = customerRepo.findByCustomerNameAndPassword(name, password);
-		} catch (Exception e) {
-			throw new GlobalMartException(e.getLocalizedMessage());
-		}
+		customer = customerRepo.findByCustomerNameAndPassword(name, password);
+		if (customer.isEmpty())
+			throw new GlobalMartException("No customer with the provided data. Try again with correct details.");
 		return customer;
 	}
 
