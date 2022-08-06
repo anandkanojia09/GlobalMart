@@ -20,7 +20,7 @@ public class CustomerServiceImpl implements CustomerServices {
 	@Override
 	public Optional<Customer> getCustomerById(Integer id) throws GlobalMartException {
 		Optional<Customer> customer = customerRepo.findById(id);
-		if (customer.isPresent()) {
+		if (customer.isEmpty()) {
 			throw new GlobalMartException("User with user id " + id + " does not exist");
 		}
 		return customer;

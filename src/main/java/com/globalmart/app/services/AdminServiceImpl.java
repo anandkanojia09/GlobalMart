@@ -28,7 +28,7 @@ public class AdminServiceImpl implements AdminServices {
 	@Override
 	public Optional<Admin> getAdminById(Integer id) throws GlobalMartException {
 		Optional<Admin> admin = adminRepo.findById(id);
-		if (admin.isPresent()) {
+		if (admin.isEmpty()) {
 			throw new GlobalMartException("Admin with admin id " + id + " does not exist");
 		}
 		return admin;

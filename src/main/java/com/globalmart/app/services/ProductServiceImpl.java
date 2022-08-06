@@ -19,7 +19,7 @@ public class ProductService implements ProductServicesInterface {
 
 	public Optional<Product> getProductById(Integer id) throws ProductException {
 		Optional<Product> productD = productRepo.findById(id);
-		if (productD.isPresent()) {
+		if (!productD.isPresent()) {
 			throw new ProductException("Id Not found");
 		}
 		return productD;
