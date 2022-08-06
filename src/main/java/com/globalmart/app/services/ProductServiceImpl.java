@@ -11,7 +11,7 @@ import com.globalmart.app.dto.Product;
 import com.globalmart.app.exception.ProductException;
 
 @Service
-public class ProductService implements ProductServicesInterface {
+public class ProductServiceImpl implements ProductServicesInterface {
 
 	@Autowired
 	private ProductRepo productRepo;
