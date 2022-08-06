@@ -1,5 +1,6 @@
 package com.globalmart.app.controller;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,37 +16,41 @@ import com.globalmart.app.dto.CustomerDetails;
 import com.globalmart.app.exception.ProductException;
 import com.globalmart.app.services.ProductService;
 
+
 @RestController
 public class CustomerController {
 
-	@Autowired
-	private CustomerRepo customerRepo;
+
 	@Autowired
 	private ProductService serviceImpl;
+	@Autowired
+	private CustomerServices customerService;
+
 
 	@PostMapping("customer")
-	public CustomerDetails addCustomer(@RequestBody CustomerDetails customer) {
-		return customerRepo.save(customer);
+	public Customer addCustomer(@RequestBody Customer customer) throws GlobalMartException {
+		return customerService.addCustomer(customer);
 	}
 
 	@GetMapping("customer/{id}")
-	public Optional<CustomerDetails> getCustomer(@PathVariable("id") Integer id) throws ProductException {
-		return customerRepo.findById(id);
+
+	public Optional<Customer> getCustomer(@PathVariable("id") Integer id) throws GlobalMartException {
+		return customerService.getCustomerById(id);
 	}
 
 	@PostMapping("customer/update")
-	public CustomerDetails updateCustomer(@RequestBody CustomerDetails customer) {
-		return customerRepo.save(customer);
+	public Customer updateCustomer(@RequestBody Customer customer) throws GlobalMartException {
+		return customerService.updateCustomerById(customer);
 	}
 
 	@DeleteMapping("customer/delete/{id}")
-	public void deleteCustomer(@PathVariable("id") Integer id) {
-		customerRepo.deleteById(id);
+	public void deleteCustomerById(@PathVariable("id") Integer id) throws GlobalMartException {
+		customerService.deleteCustomerById(id);
 	}
 
-	@DeleteMapping("customer/delete")
-	public void deleteCustomer(@PathVariable CustomerDetails customer) {
-		customerRepo.delete(customer);
+	@GetMapping("customer/all")
+	public List<Customer> getAllCustomers() throws GlobalMartException {
+		return customerService.getAllCustomers();
 	}
 
 }

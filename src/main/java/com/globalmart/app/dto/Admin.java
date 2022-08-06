@@ -9,7 +9,7 @@ public class Admin {
 	@Id
 	private Integer adminId;
 	private String adminName;
-	private String passsword;
+	private String password;
 
 	public Admin() {
 		super();
@@ -19,7 +19,7 @@ public class Admin {
 		super();
 		this.adminId = adminId;
 		this.adminName = adminName;
-		this.passsword = passsword;
+		this.password = passsword;
 	}
 
 	public Integer getAdminId() {
@@ -31,7 +31,7 @@ public class Admin {
 	}
 
 	public String getPasssword() {
-		return passsword;
+		return password;
 	}
 
 	public void setAdminId(Integer adminId) {
@@ -43,7 +43,7 @@ public class Admin {
 	}
 
 	public void setPasssword(String passsword) {
-		this.passsword = passsword;
+		this.password = passsword;
 	}
 
 }

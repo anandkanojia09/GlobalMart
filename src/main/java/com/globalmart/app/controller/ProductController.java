@@ -46,6 +46,10 @@ public class ProductController {
 		return productService.getProductById(id).get();
 	}
 
+	//@GetMapping("product/name/{name}")
+	//public List<Product> getByName(@RequestParam(value="name") String name) {
+	//	return productRepo.findByName(name);
+	//}
 
 	@GetMapping("products")
 	public List<Product> getAllProducts() throws ProductException{
@@ -67,10 +71,5 @@ public class ProductController {
 	public void deleteProduct(@RequestBody Product product) throws ProductException {
 		productService.deleteProduct(product);
 	}
-
-//	@GetMapping("product/by-name/{name}")
-//	public Product getProduct(@PathVariable("name") String name) throws GlobalMartException {
-//		return productService.getProductByName(name).get();
-//	}
 
 }

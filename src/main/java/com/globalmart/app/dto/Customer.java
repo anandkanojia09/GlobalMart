@@ -14,13 +14,13 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
-public class CustomerDetails {
+public class Customer {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
 	private String customerName;
-	private String passsword;
+	private String password;
 	private String email;
 	private String phoneNumber;
 	private String roomNumber;
@@ -31,10 +31,7 @@ public class CustomerDetails {
 	@Temporal(TemporalType.DATE)
 	private Date createdDate = new Date(System.currentTimeMillis());
 
-//	@OneToOne
-//	private Cart cart;
-
-	@OneToMany(cascade = {CascadeType.ALL})
+	@OneToMany(cascade = { CascadeType.ALL })
 	private List<Order> orders = new ArrayList<>();
 
 	public String getCustomerName() {
@@ -53,17 +50,17 @@ public class CustomerDetails {
 		this.orders = orders;
 	}
 
-	private CustomerDetails() {
+	private Customer() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	private CustomerDetails(Integer id, String name, String passsword, String email, String phoneNumber,
-			String roomNumber, String city, String state, int pincode, Date createdDate) {
+	private Customer(Integer id, String name, String passsword, String email, String phoneNumber, String roomNumber,
+			String city, String state, int pincode, Date createdDate) {
 		super();
 		this.id = id;
 		this.customerName = name;
-		this.passsword = passsword;
+		this.password = passsword;
 		this.email = email;
 		this.phoneNumber = phoneNumber;
 		this.roomNumber = roomNumber;
@@ -79,7 +76,7 @@ public class CustomerDetails {
 	}
 
 	public String getPasssword() {
-		return passsword;
+		return password;
 	}
 
 	public String getEmail() {
@@ -100,10 +97,10 @@ public class CustomerDetails {
 
 	public void setId(Integer id) {
 		this.id = id;
-	}  
+	}
 
 	public void setPasssword(String passsword) {
-		this.passsword = passsword;
+		this.password = passsword;
 	}
 
 	public void setEmail(String email) {
