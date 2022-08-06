@@ -3,7 +3,6 @@ package com.globalmart.app.services;
 import java.util.List;
 import java.util.Optional;
 
-import com.globalmart.app.dao.ProductRepo;
 import com.globalmart.app.dto.Product;
 import com.globalmart.app.exception.ProductException;
 

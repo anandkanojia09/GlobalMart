@@ -52,7 +52,6 @@ public class Customer {
 
 	private Customer() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	private Customer(Integer id, String name, String passsword, String email, String phoneNumber, String roomNumber,

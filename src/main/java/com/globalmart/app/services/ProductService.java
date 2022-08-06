@@ -6,7 +6,6 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.globalmart.app.dao.CustomerRepo;
 import com.globalmart.app.dao.ProductRepo;
 import com.globalmart.app.dto.Product;
 import com.globalmart.app.exception.ProductException;
@@ -15,15 +14,12 @@ import com.globalmart.app.exception.ProductException;
 public class ProductService implements ProductServicesInterface {
 
 	@Autowired
-	private CustomerRepo customerRepo;
-
-	@Autowired
 	private ProductRepo productRepo;
 
 
 	public Optional<Product> getProductById(Integer id) throws ProductException {
 		Optional<Product> productD = productRepo.findById(id);
-		if (productD.isEmpty()) {
+		if (productD.isPresent()) {
 			throw new ProductException("Id Not found");
 		}
 		return productD;
@@ -90,7 +86,6 @@ public class ProductService implements ProductServicesInterface {
 
 //	public List<Product> findByName(String name) {
 //		List<Product> prodD = productRepo.
-//		// TODO Auto-generated method stub
 //		return null;
 //	}
 
