@@ -5,16 +5,35 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
 public class Product {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+//	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
+
+	@NotEmpty(message = "Name is Mandatory.")
+	@Pattern(regexp = "[A-Za-z0-9 ]*", message = "Only Alphanumeric characters are allowed.")
+	@Size(min=3, max=20, message="Name must be between 3 and 20 characters long.")
 	private String name;
+	@Pattern(regexp = "[A-Za-z0-9 ]*", message = "Only Alphanumeric characters are allowed.")
+	@Size(min=3, max=200, message="Description must be between 3 and 200 characters long.")
+	@NotNull(message = "Description can't be Null.")
 	private String description;
+//	@NotEmpty(message = "Price is required.")
+	@Min(value = 1, message = "Price needs to be greater than 0")
 	private Double price;
+	@Min(value = 1, message = "Product quantity must be atleast 1.")
+	
 	private Integer quantity;
 
 	@ManyToOne
@@ -32,6 +51,7 @@ public class Product {
 		this.category = category;
 	}
 
+//Product product = new Product(1, "MyProduct", "MyDescription", 2500.00, 25, (1, "categoryName", "categoryDescription"));
 	public Product(Integer id, String name, String description, Double price, Integer quantity, Category category) {
 		super();
 		this.id = id;
@@ -80,6 +100,12 @@ public class Product {
 
 	public void setQuantity(Integer quantity) {
 		this.quantity = quantity;
+	}
+
+	@Override
+	public String toString() {
+		return "Product [id=" + id + ", name=" + name + ", description=" + description + ", price=" + price
+				+ ", quantity=" + quantity + ", category=" + category + "]";
 	}
 
 }
