@@ -11,18 +11,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.globalmart.app.dao.CustomerRepo;
-import com.globalmart.app.dto.CustomerDetails;
-import com.globalmart.app.exception.ProductException;
-import com.globalmart.app.services.ProductService;
+import com.globalmart.app.dto.Customer;
+import com.globalmart.app.exception.GlobalMartException;
+import com.globalmart.app.services.CustomerServices;
 
 
 @RestController
 public class CustomerController {
 
 
-	@Autowired
-	private ProductService serviceImpl;
 	@Autowired
 	private CustomerServices customerService;
 

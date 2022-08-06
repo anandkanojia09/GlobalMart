@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 
 import com.globalmart.app.dao.CustomerRepo;
 import com.globalmart.app.dao.ProductRepo;
-import com.globalmart.app.dto.CustomerDetails;
 import com.globalmart.app.dto.Product;
 import com.globalmart.app.exception.ProductException;
 
