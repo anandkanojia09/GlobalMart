@@ -1,74 +1,82 @@
 package com.globalmart.app.dto;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import java.util.ArrayList;
+import java.util.List;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToOne;
 
 @Entity
 public class Cart {
+
 	@Id
-	private Integer productId;
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Integer cartId;
 	private Integer productQuantity;
 	private Double cartPrice;
-	private Integer userId;
-	
-	//@OneToMany
-	//private Orders orderId;
-	
-	public Cart() {
-		super();
-		
+
+	@OneToOne
+	private Customer customer;
+
+	public Customer getCustomer() {
+		return customer;
 	}
 
-	public Cart(Integer productId, Integer productQuantity, Double cartPrice, Integer userId, Orders orderId) {
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
+	}
+
+	@ManyToMany
+	private List<Product> products = new ArrayList<>();
+
+	public Cart(Integer cartId, Integer productQuantity, Double cartPrice, List<Product> products,
+			Customer customer) {
 		super();
-		this.productId = productId;
+		this.cartId = cartId;
 		this.productQuantity = productQuantity;
 		this.cartPrice = cartPrice;
-		this.userId = userId;
-		
+		this.products = products;
+		this.customer = customer;
 	}
 
-	public Integer getProductId() {
-		return productId;
+	public Cart() {
+		super();
 	}
 
-	public void setProductId(Integer productId) {
-		this.productId = productId;
+	public Integer getCartId() {
+		return cartId;
 	}
 
 	public Integer getProductQuantity() {
 		return productQuantity;
 	}
 
-	public void setProductQuantity(Integer productQuantity) {
-		this.productQuantity = productQuantity;
-	}
-
 	public Double getCartPrice() {
 		return cartPrice;
+	}
+
+	public List<Product> getProducts() {
+		return products;
+	}
+
+	public void setCartId(Integer cartId) {
+		this.cartId = cartId;
+	}
+
+	public void setProductQuantity(Integer productQuantity) {
+		this.productQuantity = productQuantity;
 	}
 
 	public void setCartPrice(Double cartPrice) {
 		this.cartPrice = cartPrice;
 	}
 
-	public Integer getUserId() {
-		return userId;
+	public void setProducts(List<Product> products) {
+		this.products = products;
 	}
-
-	public void setUserId(Integer userId) {
-		this.userId = userId;
-	}
-
-	
-	
-
-	
-	
-	
-	
-	
 
 }
-

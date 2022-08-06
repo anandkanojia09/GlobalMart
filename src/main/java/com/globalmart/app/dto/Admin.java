@@ -1,52 +1,49 @@
 package com.globalmart.app.dto;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
 public class Admin {
 
 	@Id
-	private Integer id;
-	private String name;
-	private String passsword;
+	private Integer adminId;
+	private String adminName;
+	private String password;
 
-	private Admin() {
+	public Admin() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
-	private Admin(Integer id, String name, String passsword) {
+	public Admin(Integer adminId, String adminName, String passsword) {
 		super();
-		this.id = id;
-		this.name = name;
-		this.passsword = passsword;
+		this.adminId = adminId;
+		this.adminName = adminName;
+		this.password = passsword;
 	}
 
-	public Integer getId() {
-		return id;
+	public Integer getAdminId() {
+		return adminId;
 	}
 
-	public String getName() {
-		return name;
+	public String getAdminName() {
+		return adminName;
 	}
 
 	public String getPasssword() {
-		return passsword;
+		return password;
 	}
 
-	public void setId(Integer id) {
-		this.id = id;
+	public void setAdminId(Integer adminId) {
+		this.adminId = adminId;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setAdminName(String adminName) {
+		this.adminName = adminName;
 	}
 
 	public void setPasssword(String passsword) {
-		this.passsword = passsword;
+		this.password = passsword;
 	}
 
 }
