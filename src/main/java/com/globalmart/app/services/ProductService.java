@@ -10,10 +10,10 @@ import com.globalmart.app.dao.CustomerRepo;
 import com.globalmart.app.dao.ProductRepo;
 import com.globalmart.app.dto.CustomerDetails;
 import com.globalmart.app.dto.Product;
-import com.globalmart.app.exception.GlobalMartException;
+import com.globalmart.app.exception.ProductException;
 
 @Service
-public class ProductServiceImplementation implements ProductServicesInterface {
+public class ProductService implements ProductServicesInterface {
 
 	@Autowired
 	private CustomerRepo customerRepo;
@@ -22,69 +22,69 @@ public class ProductServiceImplementation implements ProductServicesInterface {
 	private ProductRepo productRepo;
 
 
-	public Optional<Product> getProductById(Integer id) throws GlobalMartException {
+	public Optional<Product> getProductById(Integer id) throws ProductException {
 		Optional<Product> productD = productRepo.findById(id);
 		if (productD.isEmpty()) {
-			throw new GlobalMartException("Id Not found");
+			throw new ProductException("Id Not found");
 		}
 		return productD;
 	}
 
 	@Override
-	public void deleteProductById(Integer productId) throws GlobalMartException {
+	public void deleteProductById(Integer productId) throws ProductException {
 		if (productRepo.existsById(productId)) {
 			productRepo.deleteById(productId);
 			if (productRepo.existsById(productId)) {
-				throw new GlobalMartException("Product not deleted");
+				throw new ProductException("Product not deleted");
 			}
 
 		} else {
-			throw new GlobalMartException("No Product with id " + productId + "found.");
+			throw new ProductException("No Product with id " + productId + "found.");
 
 		}
 
 	}
 
 	@Override
-	public Product addProduct(Product product) throws GlobalMartException {
+	public Product addProduct(Product product) throws ProductException {
 		try {
 		return productRepo.save(product);
 		}
 		catch (Exception e) {
-			throw new GlobalMartException(e.getMessage());
+			throw new ProductException(e.getMessage());
 		}
 	}
 
 	@Override
-	public List<Product> getAllProducts() throws GlobalMartException {
+	public List<Product> getAllProducts() throws ProductException {
 		try {
 		return productRepo.findAll();
 		}
 		catch (Exception e) {
-			throw new GlobalMartException(e.getMessage());
+			throw new ProductException(e.getMessage());
 		}
 		
 	}
 
 	@Override
-	public Product updateProduct(Product product) throws GlobalMartException {
+	public Product updateProduct(Product product) throws ProductException {
 		try {
 		productRepo.save(product);
 		return product;
 		}
 		catch (Exception e) {
-			throw new GlobalMartException(e.getMessage());
+			throw new ProductException(e.getMessage());
 		}
 		
 	}
 
 	@Override
-	public void deleteProduct(Product product) throws GlobalMartException {
+	public void deleteProduct(Product product) throws ProductException {
 		try {
 		productRepo.delete(product);
 		}
 		catch (Exception e) {
-			throw new GlobalMartException(e.getMessage());
+			throw new ProductException(e.getMessage());
 		}
 		
 	}
