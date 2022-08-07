@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.globalmart.app.dao.ProductRepo;
 import com.globalmart.app.dto.Product;
@@ -34,7 +35,7 @@ public class ProductServiceImpl implements ProductServicesInterface {
 			}
 
 		} else {
-			throw new ProductException("No Product with id " + productId + "found.");
+			throw new ProductException("No Product with id " + productId + " found.");
 
 		}
 
@@ -84,9 +85,17 @@ public class ProductServiceImpl implements ProductServicesInterface {
 		
 	}
 
-//	public List<Product> findByName(String name) {
-//		List<Product> prodD = productRepo.
-//		return null;
-//	}
+	@Override
+	public List<Product> getProductByName(String name) throws ProductException {
+		List<Product> prodD = productRepo.findAllByName(name);
+		return prodD;
+	}
+
+	@Override
+	@Transactional
+	public void deleteByName(String name) throws ProductException {
+		productRepo.deleteByName(name);
+	}
+	
 
 }

@@ -1,6 +1,7 @@
 package com.globalmart.app.controller;
 
 import java.util.List;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,11 +25,10 @@ public class ProductController {
 	private ProductServicesInterface productService;
 
 	@PostMapping("product")
-	public Product addProduct(@Valid @RequestBody Product product) throws ProductException{
+	public Product addProduct(@Valid @RequestBody Product product) throws ProductException {
 		try {
-		return productService.addProduct(product);
-		}
-		catch (ProductException e) {
+			return productService.addProduct(product);
+		} catch (ProductException e) {
 			throw new ProductException(e.getMessage());
 		}
 	}
@@ -38,26 +38,31 @@ public class ProductController {
 		return productService.getProductById(id).get();
 	}
 
-	//@GetMapping("product/name/{name}")
-	//public List<Product> getByName(@RequestParam(value="name") String name) {
-	//	return productRepo.findByName(name);
-	//}
+	@GetMapping("product")
+	public List<Product> getByName(@RequestParam(value="name") String name) throws ProductException {
+	return productService.getProductByName(name);
+	}
 
 	@GetMapping("products")
-	public List<Product> getAllProducts() throws ProductException{
+	public List<Product> getAllProducts() throws ProductException {
 		return productService.getAllProducts();
 	}
 
 	@PutMapping("product")
-	public Product updateProduct(@Valid @RequestBody Product product) throws ProductException{
+	public Product updateProduct(@Valid @RequestBody Product product) throws ProductException {
 		return productService.updateProduct(product);
 	}
 
-	@DeleteMapping("product/{id}")
-	public void deleteProductById(@RequestParam(value="productId") Integer productId) throws ProductException {
+	@DeleteMapping("product/{productId}")
+	public String deleteProductById(@PathVariable(value = "productId") Integer productId) throws ProductException {
 		productService.deleteProductById(productId);
+		return ("deleted");
 	}
 
+	@DeleteMapping("product/by-name")
+	public void deleteByNames(@RequestParam(value = "name") String name) throws ProductException {
+		productService.deleteByName(name);
+	}
 
 	@DeleteMapping("product")
 	public void deleteProduct(@RequestBody Product product) throws ProductException {

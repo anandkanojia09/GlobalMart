@@ -91,4 +91,14 @@ class ProductTest {
 		assertThrows(ProductException.class, () -> productService.getProductById(6));
 	}
 
+	@Test
+	void getProductByNameTest() throws ProductException {
+		Product myproduct = new Product(6, "MyProduct", "MyDescription", 2500.00, 25, category);
+		productService.addProduct(myproduct);
+		assumeTrue(productService != null);
+		productService.getProductByName("MyProduct");
+		
+
+	}
+
 }

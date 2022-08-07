@@ -10,8 +10,6 @@ import io.swagger.v3.oas.annotations.parameters.RequestBody;
 
 public interface ProductServicesInterface {
 
-//	public List<Product> findByName() throws GlobalMartException;
-
 	public Optional<Product> getProductById(Integer id) throws ProductException;
 
 	public void deleteProductById(Integer productId) throws ProductException;
@@ -24,6 +22,8 @@ public interface ProductServicesInterface {
 
 	public void deleteProduct(Product product) throws ProductException;
 
-//	public Optional<Product> getProductByName(String name) throws GlobalMartException;
+	public List<Product> getProductByName(String name) throws ProductException;
+
+	public void deleteByName(String name) throws ProductException;
 
 }
