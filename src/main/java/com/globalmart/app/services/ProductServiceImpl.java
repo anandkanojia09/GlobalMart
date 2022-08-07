@@ -17,7 +17,6 @@ public class ProductServiceImpl implements ProductServicesInterface {
 	@Autowired
 	private ProductRepo productRepo;
 
-
 	public Optional<Product> getProductById(Integer id) throws ProductException {
 		Optional<Product> productD = productRepo.findById(id);
 		if (!productD.isPresent()) {
@@ -27,6 +26,7 @@ public class ProductServiceImpl implements ProductServicesInterface {
 	}
 
 	@Override
+	@Transactional
 	public void deleteProductById(Integer productId) throws ProductException {
 		if (productRepo.existsById(productId)) {
 			productRepo.deleteById(productId);
@@ -44,58 +44,69 @@ public class ProductServiceImpl implements ProductServicesInterface {
 	@Override
 	public Product addProduct(Product product) throws ProductException {
 		try {
-		return productRepo.save(product);
-		}
-		catch (Exception e) {
+			return productRepo.save(product);
+		} catch (Exception e) {
 			throw new ProductException(e.getMessage());
 		}
 	}
 
 	@Override
 	public List<Product> getAllProducts() throws ProductException {
+		List<Product> allProducts = productRepo.findAll();
 		try {
-		return productRepo.findAll();
-		}
-		catch (Exception e) {
+			if (!allProducts.isEmpty()) {
+				return allProducts;
+			} else {
+				throw new ProductException("Product Table Empty.");
+			}
+		} catch (Exception e) {
 			throw new ProductException(e.getMessage());
 		}
-		
 	}
 
 	@Override
 	public Product updateProduct(Product product) throws ProductException {
 		try {
-		productRepo.save(product);
-		return product;
-		}
-		catch (Exception e) {
+			productRepo.save(product);
+			return product;
+		} catch (Exception e) {
 			throw new ProductException(e.getMessage());
 		}
-		
+
 	}
 
 	@Override
 	public void deleteProduct(Product product) throws ProductException {
 		try {
-		productRepo.delete(product);
-		}
-		catch (Exception e) {
+			productRepo.delete(product);
+		} catch (Exception e) {
 			throw new ProductException(e.getMessage());
 		}
-		
+
 	}
 
 	@Override
 	public List<Product> getProductByName(String name) throws ProductException {
 		List<Product> prodD = productRepo.findAllByName(name);
-		return prodD;
+		if (!prodD.isEmpty()) {
+			return prodD;
+		} else {
+			throw new ProductException("No Product matching the given name : " + name);
+		}
 	}
 
 	@Override
 	@Transactional
-	public void deleteByName(String name) throws ProductException {
-		productRepo.deleteByName(name);
+	public String deleteByName(String name) throws ProductException {
+		if (!productRepo.findAllByName(name).isEmpty()) {
+			productRepo.deleteByName(name);
+			if (!productRepo.findAllByName(name).isEmpty()) {
+				throw new ProductException("Delete operation unsuccessful");
+			} else
+				return ("Delete operation successful");
+		} else {
+			throw new ProductException("No product with name " + name + " found");
+		}
 	}
-	
 
 }

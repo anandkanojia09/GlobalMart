@@ -21,7 +21,7 @@ public class Product {
 	@Pattern(regexp = "[A-Za-z0-9 ]*", message = "Only Alphanumeric characters are allowed.")
 	@Size(min=3, max=20, message="Name must be between 3 and 20 characters long.")
 	private String name;
-	@Pattern(regexp = "[A-Za-z0-9 ]*", message = "Only Alphanumeric characters are allowed.")
+	@Pattern(regexp = "[A-Za-z0-9. ]*", message = "Only Alphanumeric characters are allowed.")
 	@Size(min=3, max=200, message="Description must be between 3 and 200 characters long.")
 	@NotNull(message = "Description can't be Null.")
 	private String description;

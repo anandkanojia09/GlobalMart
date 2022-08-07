@@ -18,6 +18,7 @@ import com.globalmart.app.dto.Product;
 import com.globalmart.app.exception.ProductException;
 import com.globalmart.app.services.ProductServicesInterface;
 
+
 @RestController
 public class ProductController {
 
@@ -39,8 +40,8 @@ public class ProductController {
 	}
 
 	@GetMapping("product")
-	public List<Product> getByName(@RequestParam(value="name") String name) throws ProductException {
-	return productService.getProductByName(name);
+	public List<Product> getByName(@RequestParam(value = "name") String name) throws ProductException {
+		return productService.getProductByName(name);
 	}
 
 	@GetMapping("products")
@@ -54,14 +55,13 @@ public class ProductController {
 	}
 
 	@DeleteMapping("product/{productId}")
-	public String deleteProductById(@PathVariable(value = "productId") Integer productId) throws ProductException {
+	public void deleteProductById(@PathVariable(value = "productId") Integer productId) throws ProductException {
 		productService.deleteProductById(productId);
-		return ("deleted");
 	}
 
-	@DeleteMapping("products")
-	public void deleteByNames(@PathVariable(value = "name") String name) throws ProductException {
-		productService.deleteByName(name);
+	@DeleteMapping("products/{name}")
+	public String deleteByNames(@PathVariable(value = "name") String name) throws ProductException {
+		return productService.deleteByName(name);
 	}
 
 	@DeleteMapping("product")

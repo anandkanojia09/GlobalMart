@@ -24,6 +24,6 @@ public interface ProductServicesInterface {
 
 	public List<Product> getProductByName(String name) throws ProductException;
 
-	public void deleteByName(String name) throws ProductException;
+	public String deleteByName(String name) throws ProductException;
 
 }
