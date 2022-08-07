@@ -59,8 +59,8 @@ public class ProductController {
 		return ("deleted");
 	}
 
-	@DeleteMapping("product/by-name")
-	public void deleteByNames(@RequestParam(value = "name") String name) throws ProductException {
+	@DeleteMapping("products")
+	public void deleteByNames(@PathVariable(value = "name") String name) throws ProductException {
 		productService.deleteByName(name);
 	}
 
