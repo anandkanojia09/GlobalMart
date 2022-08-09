@@ -5,7 +5,6 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.globalmart.app.dao.ProductRepo;
 import com.globalmart.app.dto.Product;
@@ -26,41 +25,39 @@ public class ProductServiceImpl implements ProductServicesInterface {
 	}
 
 	@Override
-	@Transactional
-	public void deleteProductById(Integer productId) throws ProductException {
+	public Optional<Product> deleteProductById(Integer productId) throws ProductException {
 		if (productRepo.existsById(productId)) {
+			Optional<Product> tempProduct = this.getProductById(productId);
 			productRepo.deleteById(productId);
-			if (productRepo.existsById(productId)) {
-				throw new ProductException("Product not deleted");
-			}
-
+			return (tempProduct);
 		} else {
 			throw new ProductException("No Product with id " + productId + " found.");
 
 		}
-
 	}
 
 	@Override
 	public Product addProduct(Product product) throws ProductException {
-		try {
+		Integer productId = product.getId();
+		Boolean flag = false;
+		if (!productRepo.existsById(productId)) {
+			flag = true;
 			return productRepo.save(product);
-		} catch (Exception e) {
-			throw new ProductException(e.getMessage());
+		}
+		if (flag == false) {
+			throw new ProductException("Product with ID " + productId + " Already Present");
+		} else {
+			return product;
 		}
 	}
 
 	@Override
 	public List<Product> getAllProducts() throws ProductException {
 		List<Product> allProducts = productRepo.findAll();
-		try {
-			if (!allProducts.isEmpty()) {
-				return allProducts;
-			} else {
-				throw new ProductException("Product Table Empty.");
-			}
-		} catch (Exception e) {
-			throw new ProductException(e.getMessage());
+		if (!allProducts.isEmpty()) {
+			return allProducts;
+		} else {
+			throw new ProductException("Product Table Empty.");
 		}
 	}
 
@@ -96,7 +93,6 @@ public class ProductServiceImpl implements ProductServicesInterface {
 	}
 
 	@Override
-	@Transactional
 	public String deleteByName(String name) throws ProductException {
 		if (!productRepo.findAllByName(name).isEmpty()) {
 			productRepo.deleteByName(name);

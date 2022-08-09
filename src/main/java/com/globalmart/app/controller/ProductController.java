@@ -1,6 +1,7 @@
 package com.globalmart.app.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.validation.Valid;
 
@@ -18,7 +19,6 @@ import com.globalmart.app.dto.Product;
 import com.globalmart.app.exception.ProductException;
 import com.globalmart.app.services.ProductServicesInterface;
 
-
 @RestController
 public class ProductController {
 
@@ -27,11 +27,7 @@ public class ProductController {
 
 	@PostMapping("product")
 	public Product addProduct(@Valid @RequestBody Product product) throws ProductException {
-		try {
-			return productService.addProduct(product);
-		} catch (ProductException e) {
-			throw new ProductException(e.getMessage());
-		}
+		return productService.addProduct(product);
 	}
 
 	@GetMapping("product/{id}")
@@ -40,7 +36,7 @@ public class ProductController {
 	}
 
 	@GetMapping("product")
-	public List<Product> getByName(@RequestParam(value = "name") String name) throws ProductException {
+	public List<Product> getByName(@Valid @RequestParam(value = "name") String name) throws ProductException {
 		return productService.getProductByName(name);
 	}
 
@@ -55,8 +51,8 @@ public class ProductController {
 	}
 
 	@DeleteMapping("product/{productId}")
-	public void deleteProductById(@PathVariable(value = "productId") Integer productId) throws ProductException {
-		productService.deleteProductById(productId);
+	public Optional<Product> deleteProductById(@PathVariable(value = "productId") Integer productId) throws ProductException {
+		return (productService.deleteProductById(productId));
 	}
 
 	@DeleteMapping("products/{name}")

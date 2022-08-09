@@ -14,7 +14,7 @@ import javax.validation.constraints.Size;
 public class Product {
 
 	@Id
-//	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	// @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
 	@NotEmpty(message = "Name is Mandatory.")
@@ -100,8 +100,8 @@ public class Product {
 
 	@Override
 	public String toString() {
-		return "Product [id=" + id + ", name=" + name + ", description=" + description + ", price=" + price
-				+ ", quantity=" + quantity + ", category=" + category + "]";
+		return "Product [category=" + category + ", description=" + description + ", id=" + id + ", name=" + name
+				+ ", price=" + price + ", quantity=" + quantity + "]";
 	}
 
 }

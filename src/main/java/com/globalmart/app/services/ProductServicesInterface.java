@@ -12,7 +12,7 @@ public interface ProductServicesInterface {
 
 	public Optional<Product> getProductById(Integer id) throws ProductException;
 
-	public void deleteProductById(Integer productId) throws ProductException;
+	public Optional<Product> deleteProductById(Integer productId) throws ProductException;
 
 	public Product addProduct(@RequestBody Product product) throws ProductException;
 
