@@ -12,6 +12,12 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+
+import org.hibernate.validator.constraints.Range;
 
 @Entity
 public class Customer {
@@ -19,7 +25,13 @@ public class Customer {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
+//	@NotEmpty(message = "Cannot be empty. Please give correct name")
+//	@Range(max = 25, min = 2, message = "Should be more than 2 and less than 25 characters")
+//	@Pattern(regexp = "[A-Za-z]*", message = "Name cannot have number or special characters Data!!")
 	private String customerName;
+//	@NotEmpty(message = "Cannot be empty")
+//	@Pattern(regexp = "[A-Za-z0-9]", message = "Password should contain number and special characters!!")
+//	@Range(min = 8, message = "Password should be more than 8 characters")
 	private String password;
 	private String email;
 	private String phoneNumber;
@@ -34,33 +46,19 @@ public class Customer {
 	@OneToMany(cascade = { CascadeType.ALL })
 	private List<Order> orders = new ArrayList<>();
 
-	public String getCustomerName() {
-		return customerName;
-	}
-
-	public List<Order> getOrders() {
-		return orders;
-	}
-
-	public void setCustomerName(String customerName) {
-		this.customerName = customerName;
-	}
-
-	public void setOrders(List<Order> orders) {
-		this.orders = orders;
-	}
-
-	private Customer() {
+	public Customer() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	private Customer(Integer id, String name, String passsword, String email, String phoneNumber, String roomNumber,
-			String city, String state, int pincode, Date createdDate) {
+	public Customer(Integer id,
+			@NotEmpty(message = "Cannot be empty. Please give correct name") @Range(max = 25, min = 2, message = "Should be more than 2 and less than 25 characters") @Pattern(regexp = "[A-Za-z]*", message = "Name cannot have number or special characters Data!!") String customerName,
+			@NotNull @NotBlank String password, String email, String phoneNumber, String roomNumber, String city,
+			String state, int pincode, Date createdDate, List<Order> orders) {
 		super();
 		this.id = id;
-		this.customerName = name;
-		this.password = passsword;
+		this.customerName = customerName;
+		this.password = password;
 		this.email = email;
 		this.phoneNumber = phoneNumber;
 		this.roomNumber = roomNumber;
@@ -68,14 +66,18 @@ public class Customer {
 		this.state = state;
 		this.pincode = pincode;
 		this.createdDate = createdDate;
-//		this.cart = cart;
+		this.orders = orders;
 	}
 
 	public Integer getId() {
 		return id;
 	}
 
-	public String getPasssword() {
+	public String getCustomerName() {
+		return customerName;
+	}
+
+	public String getPassword() {
 		return password;
 	}
 
@@ -87,20 +89,40 @@ public class Customer {
 		return phoneNumber;
 	}
 
+	public String getRoomNumber() {
+		return roomNumber;
+	}
+
+	public String getCity() {
+		return city;
+	}
+
+	public String getState() {
+		return state;
+	}
+
+	public int getPincode() {
+		return pincode;
+	}
+
 	public Date getCreatedDate() {
 		return createdDate;
 	}
-//
-//	public Cart getCart() {
-//		return cart;
-//	}
+
+	public List<Order> getOrders() {
+		return orders;
+	}
 
 	public void setId(Integer id) {
 		this.id = id;
 	}
 
-	public void setPasssword(String passsword) {
-		this.password = passsword;
+	public void setCustomerName(String customerName) {
+		this.customerName = customerName;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	public void setEmail(String email) {
@@ -111,44 +133,28 @@ public class Customer {
 		this.phoneNumber = phoneNumber;
 	}
 
-	public void setCreatedDate(Date createdDate) {
-		this.createdDate = createdDate;
-	}
-
-//	public void setCart(Cart cart) {
-//		this.cart = cart;
-//	}
-
-	public String getRoomNumber() {
-		return roomNumber;
-	}
-
 	public void setRoomNumber(String roomNumber) {
 		this.roomNumber = roomNumber;
-	}
-
-	public String getCity() {
-		return city;
 	}
 
 	public void setCity(String city) {
 		this.city = city;
 	}
 
-	public String getState() {
-		return state;
-	}
-
 	public void setState(String state) {
 		this.state = state;
 	}
 
-	public int getPincode() {
-		return pincode;
-	}
-
 	public void setPincode(int pincode) {
 		this.pincode = pincode;
+	}
+
+	public void setCreatedDate(Date createdDate) {
+		this.createdDate = createdDate;
+	}
+
+	public void setOrders(List<Order> orders) {
+		this.orders = orders;
 	}
 
 }

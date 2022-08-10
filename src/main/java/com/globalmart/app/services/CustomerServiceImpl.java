@@ -30,15 +30,24 @@ public class CustomerServiceImpl implements CustomerServices {
 	public Customer addCustomer(Customer customer) throws GlobalMartException {
 		if (customer == null)
 			throw new GlobalMartException("Feilds cannot be left empty. Please fill in the necesaary details.");
-		customerRepo.save(customer);
+		customer = customerRepo.save(customer);
+		if (customer == null) {
+			throw new GlobalMartException("Customer could not be added!! Try again.");
+		}
 		return customer;
 	}
 
 	@Override
-	public Customer updateCustomerById(Customer customer) throws GlobalMartException {
+	public Customer updateCustomer(Customer customer) throws GlobalMartException {
+		if (customer == null) {
+			throw new GlobalMartException("Provide details to update");
+		}
 		int x = customer.getId();
 		if (customerRepo.existsById(x)) {
-			customerRepo.save(customer);
+			customer = customerRepo.save(customer);
+			if (customer == null) {
+				throw new GlobalMartException("Updation Failed!! Try again");
+			}
 		} else {
 			throw new GlobalMartException("No customer with the provided data exists to be updated!! ");
 		}
@@ -46,15 +55,19 @@ public class CustomerServiceImpl implements CustomerServices {
 	}
 
 	@Override
-	public void deleteCustomerById(Integer id) throws GlobalMartException {
+	public boolean deleteCustomerById(Integer id) throws GlobalMartException {
+		boolean flag = true;
 		if (customerRepo.existsById(id)) {
 			customerRepo.deleteById(id);
 			if (customerRepo.existsById(id)) {
+				flag = false;
 				throw new GlobalMartException("User not deleted");
 			}
 		} else {
+			flag = false;
 			throw new GlobalMartException("No customer with id " + id + " exists to be deleted ");
 		}
+		return flag;
 	}
 
 	@Override
@@ -69,6 +82,9 @@ public class CustomerServiceImpl implements CustomerServices {
 	@Override
 	public List<Customer> getCustomerByNameAndPassword(String name, String password) throws GlobalMartException {
 		List<Customer> customer = new ArrayList<>();
+		if (name == null || password == null) {
+			throw new GlobalMartException("Name and password are required!! ");
+		}
 		customer = customerRepo.findByCustomerNameAndPassword(name, password);
 		if (customer.isEmpty())
 			throw new GlobalMartException("No customer with the provided data. Try again with correct details.");
