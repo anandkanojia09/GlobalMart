@@ -12,15 +12,13 @@ public interface ProductServicesInterface {
 
 	public Optional<Product> getProductById(Integer id) throws ProductException;
 
-	public Optional<Product> deleteProductById(Integer productId) throws ProductException;
+	public String deleteProductById(Integer productId) throws ProductException;
 
-	public Product addProduct(@RequestBody Product product) throws ProductException;
+	public String addProduct(@RequestBody Product product) throws ProductException;
 
-	public Product updateProduct(@RequestBody Product product) throws ProductException;
+	public String updateProduct(@RequestBody Product product) throws ProductException;
 
 	public List<Product> getAllProducts() throws ProductException;
-
-	public void deleteProduct(Product product) throws ProductException;
 
 	public List<Product> getProductByName(String name) throws ProductException;
 

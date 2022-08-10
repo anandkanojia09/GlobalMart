@@ -26,7 +26,7 @@ public class ProductController {
 	private ProductServicesInterface productService;
 
 	@PostMapping("product")
-	public Product addProduct(@Valid @RequestBody Product product) throws ProductException {
+	public String addProduct(@Valid @RequestBody Product product) throws ProductException {
 		return productService.addProduct(product);
 	}
 
@@ -46,12 +46,12 @@ public class ProductController {
 	}
 
 	@PutMapping("product")
-	public Product updateProduct(@Valid @RequestBody Product product) throws ProductException {
+	public String updateProduct(@Valid @RequestBody Product product) throws ProductException {
 		return productService.updateProduct(product);
 	}
 
 	@DeleteMapping("product/{productId}")
-	public Optional<Product> deleteProductById(@PathVariable(value = "productId") Integer productId) throws ProductException {
+	public String deleteProductById(@PathVariable(value = "productId") Integer productId) throws ProductException {
 		return (productService.deleteProductById(productId));
 	}
 
@@ -59,10 +59,4 @@ public class ProductController {
 	public String deleteByNames(@PathVariable(value = "name") String name) throws ProductException {
 		return productService.deleteByName(name);
 	}
-
-	@DeleteMapping("product")
-	public void deleteProduct(@RequestBody Product product) throws ProductException {
-		productService.deleteProduct(product);
-	}
-
 }

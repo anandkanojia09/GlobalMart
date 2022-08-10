@@ -5,12 +5,14 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.globalmart.app.dao.ProductRepo;
 import com.globalmart.app.dto.Product;
 import com.globalmart.app.exception.ProductException;
 
 @Service
+@Transactional
 public class ProductServiceImpl implements ProductServicesInterface {
 
 	@Autowired
@@ -25,11 +27,10 @@ public class ProductServiceImpl implements ProductServicesInterface {
 	}
 
 	@Override
-	public Optional<Product> deleteProductById(Integer productId) throws ProductException {
+	public String deleteProductById(Integer productId) throws ProductException {
 		if (productRepo.existsById(productId)) {
-			Optional<Product> tempProduct = this.getProductById(productId);
 			productRepo.deleteById(productId);
-			return (tempProduct);
+			return ("Product With ID " + productId + " Deleted Successfully.");
 		} else {
 			throw new ProductException("No Product with id " + productId + " found.");
 
@@ -37,17 +38,23 @@ public class ProductServiceImpl implements ProductServicesInterface {
 	}
 
 	@Override
-	public Product addProduct(Product product) throws ProductException {
+	public String addProduct(Product product) throws ProductException {
 		Integer productId = product.getId();
-		Boolean flag = false;
 		if (!productRepo.existsById(productId)) {
-			flag = true;
-			return productRepo.save(product);
-		}
-		if (flag == false) {
-			throw new ProductException("Product with ID " + productId + " Already Present");
+			return product.toString();
 		} else {
-			return product;
+			throw new ProductException("Product with ID " + productId + " already present in Database.");
+		}
+	}
+
+	@Override
+	public String updateProduct(Product product) throws ProductException {
+		Integer productId = product.getId();
+		if (productRepo.existsById(productId)) {
+			productRepo.save(product);
+			return product.toString();
+		} else {
+			throw new ProductException("Product not found in Database, can't Update.");
 		}
 	}
 
@@ -59,27 +66,6 @@ public class ProductServiceImpl implements ProductServicesInterface {
 		} else {
 			throw new ProductException("Product Table Empty.");
 		}
-	}
-
-	@Override
-	public Product updateProduct(Product product) throws ProductException {
-		try {
-			productRepo.save(product);
-			return product;
-		} catch (Exception e) {
-			throw new ProductException(e.getMessage());
-		}
-
-	}
-
-	@Override
-	public void deleteProduct(Product product) throws ProductException {
-		try {
-			productRepo.delete(product);
-		} catch (Exception e) {
-			throw new ProductException(e.getMessage());
-		}
-
 	}
 
 	@Override
@@ -96,10 +82,7 @@ public class ProductServiceImpl implements ProductServicesInterface {
 	public String deleteByName(String name) throws ProductException {
 		if (!productRepo.findAllByName(name).isEmpty()) {
 			productRepo.deleteByName(name);
-			if (!productRepo.findAllByName(name).isEmpty()) {
-				throw new ProductException("Delete operation unsuccessful");
-			} else
-				return ("Delete operation successful");
+			return ("Delete operation successful");
 		} else {
 			throw new ProductException("No product with name " + name + " found");
 		}
