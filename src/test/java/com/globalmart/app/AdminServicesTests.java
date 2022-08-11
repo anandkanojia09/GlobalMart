@@ -3,8 +3,11 @@ package com.globalmart.app;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -21,6 +24,16 @@ class AdminServicesTests {
 
 	Admin admin = new Admin(53, "SHHS", "jhdhd");
 
+	@AfterEach
+	void drop() throws GlobalMartException {
+		try {
+			adminService.deleteAdminById(53);
+		} catch (Exception e) {
+
+		}
+	}
+
+	@BeforeEach
 	@Test
 	void addAdmin() throws GlobalMartException {
 
@@ -35,25 +48,37 @@ class AdminServicesTests {
 
 		assumeTrue(adminService != null);
 		Admin adminFound = adminService.getAdminById(53).get();
-		assertEquals(admin, adminFound);
-		assertThrows(GlobalMartException.class, () -> adminService.getAdminById(0));
+		assertEquals(admin.getAdminName(), adminFound.getAdminName());
+		assertThrows(GlobalMartException.class, () -> adminService.getAdminById(8999));
 
 	}
 
-//	@Test
-//	void updateAdmin() throws GlobalMartException {
-//		assumeTrue(adminService != null);
-//		admin = new Admin(0, "AAAA", "JJJJ");
-//		assertThrows(GlobalMartException.class, () -> adminService.updateAdminById(admin));
-//		Admin admin2 = adminService.updateAdminById(new Admin(53, "SHHS", "jhdhd"));
-//		assertEquals(admin.getAdminId(), admin2.getAdminId());
-//	}
-//
-//	@Test
-//	void deleteAdmnById() throws GlobalMartException {
-//		assumeTrue(adminService != null);
-//		adminService.deleteAdminById(53);
-//		assertThrows(GlobalMartException.class, () -> adminService.getAdminById(53));
-//	}
+	@Test
+	void updateAdmin() throws GlobalMartException {
+		assumeTrue(adminService != null);
+		Admin adminUpdate = new Admin(890, "SHHS", "jhdhd");
+		assertThrows(GlobalMartException.class, () -> adminService.updateAdminById(adminUpdate));
+		Admin admin2 = adminService.updateAdminById(new Admin(53, "SHHS", "llllll"));
+		assertEquals("llllll", admin2.getPasssword());
+	}
+
+	@Test
+	void deleteAdminById() throws GlobalMartException {
+		assumeTrue(adminService != null);
+		assertTrue(adminService.deleteAdminById(53));
+		assertThrows(GlobalMartException.class, () -> adminService.getAdminById(53));
+		assertThrows(GlobalMartException.class, () -> adminService.deleteAdminById(900));
+	}
+
+	@Test
+	void getAllAdmin() throws GlobalMartException {
+		adminService.deleteAdminById(53);
+		assertThrows(GlobalMartException.class, () -> adminService.getAllAdmins());
+	}
+
+	@Test
+	void getByNameAndPassword() {
+		assertThrows(GlobalMartException.class, () -> adminService.getAdminByNameAndPassword("akkk", "hkjk"));
+	}
 
 }

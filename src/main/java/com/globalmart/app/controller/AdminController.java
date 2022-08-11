@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,7 +26,7 @@ public class AdminController {
 	private AdminServices adminServices;
 
 	@PostMapping("admin")
-	public Admin addAdmin(@RequestBody Admin admin) throws GlobalMartException {
+	public Admin addAdmin(@Valid @RequestBody Admin admin) throws GlobalMartException {
 		Admin adminAdded = null;
 		adminAdded = adminServices.addAdmin(admin);
 		return adminAdded;
@@ -34,43 +36,28 @@ public class AdminController {
 	public Optional<Admin> getAdminById(@PathVariable("id") Integer id) throws GlobalMartException {
 		Optional<Admin> admin = null;
 		admin = adminServices.getAdminById(id);
-
 		return admin;
 	}
-
-//	@GetMapping("admin/{name}/{passowrd}")
-//	public List<Admin> getAdminByName(@RequestParam(value = "adminName") String name,
-//			@RequestParam(value = "passowrd") String password) throws GlobalMartException {
-//		List<Admin> admin = null;
-//		admin = adminServices.getAdminByNameAndPassword(name, password);
-//
-//		return admin;
-//	}
 
 	@PutMapping("admin")
 	public Admin updateAdmin(@RequestBody Admin admin) throws GlobalMartException {
 		Admin updatedAdmin = null;
 		updatedAdmin = adminServices.updateAdminById(admin);
-
 		return updatedAdmin;
 	}
 
 	@DeleteMapping("admin/{id}")
-	public void deleteAdmin(@PathVariable("id") Integer id) throws GlobalMartException {
-		adminServices.deleteAdminById(id);
-
+	public String deleteAdmin(@PathVariable("id") Integer id) throws GlobalMartException {
+		String msg = "";
+		if (adminServices.deleteAdminById(id))
+			msg = "Delete Successfull";
+		return msg;
 	}
 
-	@DeleteMapping("admins")
-	public void deleteAllAdmins() throws GlobalMartException {
-		adminServices.deleteAllAdmins();
-	}
-
-	@GetMapping("admins")
+	@GetMapping("admins/all")
 	public List<Admin> getAllAdmins() throws GlobalMartException {
 		List<Admin> admins = new ArrayList<>();
 		admins = adminServices.getAllAdmins();
-
 		return admins;
 	}
 }

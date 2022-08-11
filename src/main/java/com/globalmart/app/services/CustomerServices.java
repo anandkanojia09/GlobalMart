@@ -12,9 +12,9 @@ public interface CustomerServices {
 
 	public Customer addCustomer(Customer customer) throws GlobalMartException;
 
-	public void deleteCustomerById(Integer id) throws GlobalMartException;
+	public boolean deleteCustomerById(Integer id) throws GlobalMartException;
 
-	public Customer updateCustomerById(Customer customer) throws GlobalMartException;
+	public Customer updateCustomer(Customer customer) throws GlobalMartException;
 
 	public List<Customer> getAllCustomers() throws GlobalMartException;
 
