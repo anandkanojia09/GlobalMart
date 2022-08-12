@@ -22,6 +22,14 @@ public class Cart {
 		super();
 	}
 
+	public Cart(Integer cartId, Integer productQuantity, Double cartPrice, List<Product> products) {
+		super();
+		this.cartId = cartId;
+		this.productQuantity = productQuantity;
+		this.cartPrice = cartPrice;
+		this.products = products;
+	}
+
 	public Integer getCartId() {
 		return cartId;
 	}
@@ -53,5 +61,6 @@ public class Cart {
 	public void setProducts(List<Product> products) {
 		this.products = products;
 	}
+
 
 }

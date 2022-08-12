@@ -1,6 +1,5 @@
 package com.globalmart.app.dto;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -11,14 +10,14 @@ import javax.persistence.ManyToOne;
 public class Product {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	//@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private String name;
 	private String description;
 	private Double price;
 	private Integer quantity;
 
-	@ManyToOne(cascade=javax.persistence.CascadeType.REMOVE)
+	@ManyToOne
 	private Category category;
 
 	public Product() {
@@ -27,7 +26,7 @@ public class Product {
 
 	public Category getCategory() {
 		return category;
-	} 
+	}
 
 	public void setCategory(Category category) {
 		this.category = category;
@@ -76,7 +75,7 @@ public class Product {
 	}
 
 	public Integer getQuantity() {
-		return quantity; 
+		return quantity;
 	}
 
 	public void setQuantity(Integer quantity) {

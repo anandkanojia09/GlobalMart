@@ -1,7 +1,6 @@
 package com.globalmart.app.controller;
 
 import java.util.Optional;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -13,44 +12,22 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.globalmart.app.dao.CustomerRepo;
 import com.globalmart.app.dto.CustomerDetails;
-import com.globalmart.app.exception.CategoryException;
-import com.globalmart.app.service.CustomerDetailsServices;
+import com.globalmart.app.exception.OrderMartException;
 
 @RestController
 public class CustomerController {
 
 	@Autowired
 	private CustomerRepo customerRepo;
-	
-	@Autowired
-	private CustomerDetailsServices customerDetailsServices;
 
 	@PostMapping("customer")
-	public CustomerDetails addCustomer(@RequestBody CustomerDetails customer) throws CategoryException {
-		
-		if(customer==null) {
-			throw new CategoryException("CustomerDetails could not added please provide essiential details");
-		}
-		    Optional<CustomerDetails> customerDetails = customerRepo.findById(customer.getId());
-		    if(customerDetails.isPresent()) {
-		    	throw new CategoryException("Already Exist");
-		    	
-		    }
-		    else {
+	public CustomerDetails addCustomer(@RequestBody CustomerDetails customer) {
 		return customerRepo.save(customer);
-		    }
 	}
 
 	@GetMapping("customer/{id}")
-	public Optional<CustomerDetails> getCustomer(@PathVariable("id") Integer id) throws CategoryException{
-		
-		//return customerRepo.findById(id);
-		
-		Optional<CustomerDetails> customer=null;
-	       
-			customer = customerDetailsServices.getCustomer(id);
-	
-	       return customer;
+	public Optional<CustomerDetails> getCustomer(@PathVariable("id") Integer id) {
+		return customerRepo.findById(id);
 	}
 
 	@PostMapping("customer/update")
@@ -59,21 +36,21 @@ public class CustomerController {
 	}
 
 	@DeleteMapping("customer/delete/{id}")
-	public void deleteCustomer(@PathVariable("id") Integer id) throws CategoryException {
-		//customerRepo.deleteById(id);
-		customerDetailsServices.deleteCustomer(id);
+	public void deleteCustomerById(@PathVariable("id") Integer id) throws OrderMartException {
+		serviceImpl.deleteCustomerById(id);
+	public void deleteCustomer(@PathVariable("id") Integer id) {
+		customerRepo.deleteById(id);
+	@DeleteMapping("customer/{id}")
+	public String deleteCustomerById(@PathVariable("id") Integer id) throws GlobalMartException {
+		String msg = null;
+		if (customerService.deleteCustomerById(id))
+			msg = "Delete Successfull";
+		return msg;
 	}
 
-//	@DeleteMapping("customer/delete")
-//	public void deleteCustomer(@PathVariable CustomerDetails customer) {
-//		customerRepo.delete(customer);
-//	}
-	
-	@GetMapping("customers/all")
-	public List<CustomerDetails> getAllCustomersDetails(){
-		return customerDetailsServices.getAllCustomerDetals();
-		
+	@DeleteMapping("customer/delete")
+	public void deleteCustomer(@PathVariable CustomerDetails customer) {
+		customerRepo.delete(customer);
 	}
-	
 
 }

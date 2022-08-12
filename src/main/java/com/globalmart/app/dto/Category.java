@@ -61,8 +61,4 @@ public class Category {
 	public String toString() {
 		return "Category [categoryId=" + categoryId + ", name=" + name + ", description=" + description + "]";
 	}
-
-	
-	
-
 }

@@ -29,7 +29,12 @@ public class ProductController {
 	public Optional<Product> getProduct(@PathVariable("id") Integer id) {
 		return productRepo.findById(id);
 	}
-	
+
+	@GetMapping("product/{name}")
+	public List<Product> getByName(@RequestParam(value="name") String name) {
+		return productRepo.findByName(name);
+	}
+
 	@GetMapping("product/all")
 	public List<Product> getAllProducts() {
 		return productRepo.findAll();
