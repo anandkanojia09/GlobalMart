@@ -1,58 +1,59 @@
 package com.globalmart.app.controller;
 
 import java.util.List;
-import java.util.Optional;
-
+import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.globalmart.app.dao.ProductRepo;
 import com.globalmart.app.dto.Product;
+import com.globalmart.app.exception.ProductException;
+import com.globalmart.app.services.ProductServicesInterface;
 
 @RestController
 public class ProductController {
 
 	@Autowired
-	private ProductRepo productRepo;
+	private ProductServicesInterface productService;
 
 	@PostMapping("product")
-	public Product addProduct(@RequestBody Product product) {
-		return productRepo.save(product);
+	public String addProduct(@Valid @RequestBody Product product) throws ProductException {
+		return productService.addProduct(product);
 	}
 
 	@GetMapping("product/{id}")
-	public Optional<Product> getProduct(@PathVariable("id") Integer id) {
-		return productRepo.findById(id);
+	public Product getProduct(@PathVariable("id") Integer id) throws ProductException {
+		return productService.getProductById(id).get();
 	}
 
-	@GetMapping("product/{name}")
-	public List<Product> getByName(@RequestParam(value="name") String name) {
-		return productRepo.findByName(name);
+	@GetMapping("product")
+	public List<Product> getByName(@Valid @RequestParam(value = "name") String name) throws ProductException {
+		return productService.getProductByName(name);
 	}
 
-	@GetMapping("product/all")
-	public List<Product> getAllProducts() {
-		return productRepo.findAll();
+	@GetMapping("products")
+	public List<Product> getAllProducts() throws ProductException {
+		return productService.getAllProducts();
 	}
 
-	@PostMapping("product/update")
-	public Product updateProduct(@RequestBody Product product) {
-		return productRepo.save(product);
+	@PutMapping("product")
+	public String updateProduct(@Valid @RequestBody Product product) throws ProductException {
+		return productService.updateProduct(product);
 	}
 
-	@DeleteMapping("product/delete/{id}")
-	public void deleteProductById(@PathVariable Integer productId) {
-		productRepo.deleteById(productId);
+	@DeleteMapping("product/{productId}")
+	public String deleteProductById(@PathVariable(value = "productId") Integer productId) throws ProductException {
+		return (productService.deleteProductById(productId));
 	}
 
-	@DeleteMapping("product/delete")
-	public void deleteProduct(@PathVariable Product product) {
-		productRepo.delete(product);
+	@DeleteMapping("products/{name}")
+	public String deleteByNames(@PathVariable(value = "name") String name) throws ProductException {
+		return productService.deleteByName(name);
 	}
-
 }
