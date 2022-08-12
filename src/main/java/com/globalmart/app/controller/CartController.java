@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.globalmart.app.dto.Cart;
 import com.globalmart.app.exception.CartException;
-import com.globalmart.app.service.CartService;
+import com.globalmart.app.services.CartService;
 
 @RestController
 public class CartController {
