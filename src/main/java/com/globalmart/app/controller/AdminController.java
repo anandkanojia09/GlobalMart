@@ -1,63 +1,71 @@
 package com.globalmart.app.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
-import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.globalmart.app.dao.AdminRepo;
+import com.globalmart.app.dao.CartRepo;
+import com.globalmart.app.dao.CustomerRepo;
 import com.globalmart.app.dto.Admin;
-import com.globalmart.app.exception.GlobalMartException;
-import com.globalmart.app.services.AdminServices;
+import com.globalmart.app.dto.Cart;
+import com.globalmart.app.dto.CustomerDetails;
+import com.globalmart.app.service.AdminServices;
 
 @RestController
 public class AdminController {
 
 	@Autowired
-	private AdminServices adminServices;
+	private CustomerRepo customerRepo;
+	@Autowired
+	private AdminRepo adminRepo;
+
+	@Autowired
+	private CartRepo cartRepo;
+	
+	@Autowired
+	private AdminServices globalMartservices;
 
 	@PostMapping("admin")
-	public Admin addAdmin(@Valid @RequestBody Admin admin) throws GlobalMartException {
-		Admin adminAdded = null;
-		adminAdded = adminServices.addAdmin(admin);
-		return adminAdded;
+	public Admin addAdmin(@RequestBody Admin admin) {
+		return adminRepo.save(admin);
 	}
 
 	@GetMapping("admin/{id}")
-	public Optional<Admin> getAdminById(@PathVariable("id") Integer id) throws GlobalMartException {
-		Optional<Admin> admin = null;
-		admin = adminServices.getAdminById(id);
-		return admin;
+	public Optional<Admin> getAdmin(@PathVariable("id") Integer id) {
+		return adminRepo.findById(id);
 	}
 
-	@PutMapping("admin")
-	public Admin updateAdmin(@RequestBody Admin admin) throws GlobalMartException {
-		Admin updatedAdmin = null;
-		updatedAdmin = adminServices.updateAdminById(admin);
-		return updatedAdmin;
+	@PostMapping("admin/update")
+	public Admin updateAdmin(@RequestBody Admin admin) {
+		return adminRepo.save(admin);
 	}
 
-	@DeleteMapping("admin/{id}")
-	public String deleteAdmin(@PathVariable("id") Integer id) throws GlobalMartException {
-		String msg = "";
-		if (adminServices.deleteAdminById(id))
-			msg = "Delete Successfull";
-		return msg;
+	@DeleteMapping("deleteAdmin/{id}")
+	public void deleteAdmin(@PathVariable("id") Integer id) {
+		adminRepo.deleteById(id);
 	}
 
-	@GetMapping("admins/all")
-	public List<Admin> getAllAdmins() throws GlobalMartException {
-		List<Admin> admins = new ArrayList<>();
-		admins = adminServices.getAllAdmins();
-		return admins;
+	@GetMapping("allCustomer")
+	public List<CustomerDetails> getAllCustomer() {
+		return customerRepo.findAll();
 	}
+
+	@GetMapping("allCart")
+	public List<Cart> getAllCarts() {
+		return cartRepo.findAll();
+	}
+
+	@GetMapping("alladmin")
+	public List<Admin> getAllAdmins(){
+		return globalMartservices.getAllAdmin();
+	}
+	
 }

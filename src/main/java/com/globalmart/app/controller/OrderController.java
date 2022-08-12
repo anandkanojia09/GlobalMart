@@ -1,6 +1,5 @@
 package com.globalmart.app.controller;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +12,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.globalmart.app.dao.OrdersRepo;
 import com.globalmart.app.dto.Order;
+
+
 
 @RestController
 public class OrderController {
@@ -28,11 +29,6 @@ public class OrderController {
 	@GetMapping("orders/{id}")
 	public Optional<Order> getProduct(@PathVariable("id") Integer id) {
 		return ordersRepo.findById(id);
-	}
-
-	@GetMapping("orders/all")
-	public List<Order> getAllProduct() {
-		return ordersRepo.findAll();
 	}
 
 	@PostMapping("orders/update")

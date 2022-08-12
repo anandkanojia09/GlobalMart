@@ -1,67 +1,79 @@
 package com.globalmart.app.controller;
 
-import java.util.List;
 import java.util.Optional;
-
-import javax.validation.Valid;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.globalmart.app.dto.Customer;
-import com.globalmart.app.exception.GlobalMartException;
-import com.globalmart.app.services.CustomerServices;
-
+import com.globalmart.app.dao.CustomerRepo;
+import com.globalmart.app.dto.CustomerDetails;
+import com.globalmart.app.exception.CategoryException;
+import com.globalmart.app.service.CustomerDetailsServices;
 
 @RestController
 public class CustomerController {
 
-
 	@Autowired
-	private CustomerServices customerService;
-
+	private CustomerRepo customerRepo;
+	
+	@Autowired
+	private CustomerDetailsServices customerDetailsServices;
 
 	@PostMapping("customer")
-	public Customer addCustomer(@Valid @RequestBody Customer customer) throws GlobalMartException {
-		Customer customerAdded = null;
-		customerAdded = customerService.addCustomer(customer);
-		return customerAdded;
+	public CustomerDetails addCustomer(@RequestBody CustomerDetails customer) throws CategoryException {
+		
+		if(customer==null) {
+			throw new CategoryException("CustomerDetails could not added please provide essiential details");
+		}
+		    Optional<CustomerDetails> customerDetails = customerRepo.findById(customer.getId());
+		    if(customerDetails.isPresent()) {
+		    	throw new CategoryException("Already Exist");
+		    	
+		    }
+		    else {
+		return customerRepo.save(customer);
+		    }
 	}
 
 	@GetMapping("customer/{id}")
-
-	public Optional<Customer> getCustomer(@PathVariable("id") Integer id) throws GlobalMartException {
-		Optional<Customer> customerFound = null;
-		customerFound = customerService.getCustomerById(id);
-		return customerFound;
+	public Optional<CustomerDetails> getCustomer(@PathVariable("id") Integer id) throws CategoryException{
+		
+		//return customerRepo.findById(id);
+		
+		Optional<CustomerDetails> customer=null;
+	       
+			customer = customerDetailsServices.getCustomer(id);
+	
+	       return customer;
 	}
 
-	@PutMapping("customer")
-	public Customer updateCustomer(@RequestBody Customer customer) throws GlobalMartException {
-		Customer customerUpdated = null;
-		customerUpdated = customerService.updateCustomer(customer);
-		return customerUpdated;
+	@PostMapping("customer/update")
+	public CustomerDetails updateCustomer(@RequestBody CustomerDetails customer) {
+		return customerRepo.save(customer);
 	}
 
 	@DeleteMapping("customer/delete/{id}")
-	public String deleteCustomerById(@PathVariable("id") Integer id) throws GlobalMartException {
-		String msg = null;
-		if (customerService.deleteCustomerById(id))
-			msg = "Delete Successfull";
-		return msg;
+	public void deleteCustomer(@PathVariable("id") Integer id) throws CategoryException {
+		//customerRepo.deleteById(id);
+		customerDetailsServices.deleteCustomer(id);
 	}
 
-	@GetMapping("customer/all")
-	public List<Customer> getAllCustomers() throws GlobalMartException {
-		List<Customer> customers = null;
-		customers = customerService.getAllCustomers();
-		return customers;
+//	@DeleteMapping("customer/delete")
+//	public void deleteCustomer(@PathVariable CustomerDetails customer) {
+//		customerRepo.delete(customer);
+//	}
+	
+	@GetMapping("customers/all")
+	public List<CustomerDetails> getAllCustomersDetails(){
+		return customerDetailsServices.getAllCustomerDetals();
+		
 	}
+	
 
 }

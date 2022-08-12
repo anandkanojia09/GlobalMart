@@ -1,19 +1,13 @@
 package com.globalmart.app.dto;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import javax.persistence.Table;
 //import javax.persistence.ManyToMany;
 
 //import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-@Table(name="orders")
-public class Order {
+public class Orders {
 
 	@Id
 	private long orderId;
@@ -22,18 +16,11 @@ public class Order {
 	private String customer;
 	private String paymentMethod;
 
-	@ManyToMany
-	private List<Product> product = new ArrayList<>();
+//	@ManyToMany
+//	@JsonIgnore
+//	private Product product;
 
-	public List<Product> getProduct() {
-		return product;
-	}
-
-	public void setProduct(List<Product> product) {
-		this.product = product;
-	}
-
-	public Order() {
+	public Orders() {
 		super();
 	}
 //
@@ -45,7 +32,7 @@ public class Order {
 //		this.product = product;
 //	}
 
-	public Order(long orderId, double amount, String billingDate, String customer, String paymentMethod) {
+	public Orders(long orderId, double amount, String billingDate, String customer, String paymentMethod) {
 		super();
 		this.orderId = orderId;
 		this.amount = amount;

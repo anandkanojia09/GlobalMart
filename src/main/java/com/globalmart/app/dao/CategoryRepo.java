@@ -7,5 +7,5 @@ import com.globalmart.app.dto.Category;
 
 @Repository
 public interface CategoryRepo extends JpaRepository <Category, Integer> {
-
+	Boolean existsByName(String name);
 }
