@@ -7,5 +7,4 @@ import com.globalmart.app.dto.CustomerDetails;
 
 @Repository
 public interface CustomerRepo extends JpaRepository<CustomerDetails, Integer> {
-
 }

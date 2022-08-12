@@ -1,7 +1,6 @@
 package com.globalmart.app.dto;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -17,7 +16,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 @Entity
-@Table(name = "orders")
+@Table(name="orders")
 public class Order {
 
 	@Id
@@ -48,22 +47,15 @@ public class Order {
 				+ customer + ", paymentMethod=" + paymentMethod + ", product=" + product + "]";
 	}
 
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private long orderId;
+	private double amount;
+	private String billingDate;
 	private String customer;
 	private String paymentMethod;
 
 	@ManyToMany
 	private List<Product> product = new ArrayList<>();
-
-	public Order(int orderId, double amount, Date orderDate, String customer, String paymentMethod,
-			List<Product> product) {
-		super();
-		this.orderId = orderId;
-		this.amount = amount;
-		this.orderDate = orderDate;
-		this.customer = customer;
-		this.paymentMethod = paymentMethod;
-		this.product = product;
-	}
 
 	public List<Product> getProduct() {
 		return product;
@@ -77,11 +69,22 @@ public class Order {
 		super();
 	}
 
-	public int getOrderId() {
+
+	public Order(long orderId, double amount, String billingDate, String customer, String paymentMethod) {
+		super();
+		this.orderId = orderId;
+		this.amount = amount;
+		this.billingDate = billingDate;
+		this.customer = customer;
+		this.paymentMethod = paymentMethod;
+
+	}
+
+	public long getOrderId() {
 		return orderId;
 	}
 
-	public void setOrderId(int orderId) {
+	public void setOrderId(long orderId) {
 		this.orderId = orderId;
 	}
 
@@ -91,6 +94,14 @@ public class Order {
 
 	public void setAmount(double amount) {
 		this.amount = amount;
+	}
+
+	public String getBillingDate() {
+		return billingDate;
+	}
+
+	public void setBillingDate(String billingDate) {
+		this.billingDate = billingDate;
 	}
 
 	public String getCustomer() {

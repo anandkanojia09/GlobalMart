@@ -20,6 +20,8 @@ import com.globalmart.app.dto.Order;
 import com.globalmart.app.exception.OrderMartException;
 import com.globalmart.app.services.OrderService;
 
+
+
 @RestController
 public class OrderController {
 
@@ -35,12 +37,11 @@ public class OrderController {
 	public Optional<Order> getOrder(@PathVariable("id") Integer id) throws OrderMartException,SQLException {
 		return orderService.getOrderById(id);
 	}
-
+  
 	@GetMapping("orders/all")
 	public List<Order> getAllOrder() throws OrderMartException,SQLException{
 		return orderService.findAll();
 	}
-
 	@PostMapping("orders/update")
 	public Order updateOrder(@RequestBody Order orders)throws OrderMartException,SQLException {
 		return orderService.updateOrder(orders);
