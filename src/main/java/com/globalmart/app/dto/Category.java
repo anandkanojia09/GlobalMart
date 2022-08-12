@@ -7,6 +7,7 @@ import javax.persistence.Id;
 public class Category {
 
 	@Id
+//	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer categoryId;
 	private String name;
 	private String description;

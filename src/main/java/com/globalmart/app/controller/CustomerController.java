@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.globalmart.app.dao.CustomerRepo;
 import com.globalmart.app.dto.CustomerDetails;
+import com.globalmart.app.exception.OrderMartException;
 
 @RestController
 public class CustomerController {
@@ -35,6 +36,8 @@ public class CustomerController {
 	}
 
 	@DeleteMapping("customer/delete/{id}")
+	public void deleteCustomerById(@PathVariable("id") Integer id) throws OrderMartException {
+		serviceImpl.deleteCustomerById(id);
 	public void deleteCustomer(@PathVariable("id") Integer id) {
 		customerRepo.deleteById(id);
 	@DeleteMapping("customer/{id}")
@@ -51,3 +54,4 @@ public class CustomerController {
 	}
 
 }
+*/

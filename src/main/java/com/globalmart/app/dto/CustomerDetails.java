@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -31,6 +33,7 @@ public class CustomerDetails {
 	@Temporal(TemporalType.DATE)
 	private Date createdDate = new Date(System.currentTimeMillis());
 
+	@OneToMany(cascade = {CascadeType.ALL})
 	@OneToOne
 	private Cart cart;
 
@@ -71,6 +74,7 @@ public class CustomerDetails {
 		this.state = state;
 		this.pincode = pincode;
 		this.createdDate = createdDate;
+
 		this.cart = cart;
 	}
 
@@ -93,7 +97,6 @@ public class CustomerDetails {
 	public Date getCreatedDate() {
 		return createdDate;
 	}
-
 	public Cart getCart() {
 		return cart;
 	}
