@@ -10,6 +10,7 @@ import com.globalmart.app.dto.Customer;
 @Repository
 public interface CustomerRepo extends JpaRepository<Customer, Integer> {
 
-	public List<Customer> findByCustomerNameAndPassword(String customerName, String password);
+	public List<Customer> findByUserNameAndPassword(String userName, String password);
+	
 
 }

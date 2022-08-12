@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import com.globalmart.app.dao.AdminRepo;
 import com.globalmart.app.dto.Admin;
 import com.globalmart.app.exception.GlobalMartException;
 import com.globalmart.app.services.AdminServices;
@@ -21,6 +22,9 @@ class AdminServicesTests {
 
 	@Autowired
 	private AdminServices adminService;
+	
+	@Autowired
+	AdminRepo adminRepo;
 
 	Admin admin = new Admin(53, "SHHS", "jhdhd");
 
@@ -72,7 +76,8 @@ class AdminServicesTests {
 
 	@Test
 	void getAllAdmin() throws GlobalMartException {
-		adminService.deleteAdminById(53);
+		assertNotNull(adminService.getAllAdmins());
+		adminRepo.deleteAll();
 		assertThrows(GlobalMartException.class, () -> adminService.getAllAdmins());
 	}
 

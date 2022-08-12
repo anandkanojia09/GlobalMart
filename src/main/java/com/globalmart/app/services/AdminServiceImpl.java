@@ -40,7 +40,7 @@ public class AdminServiceImpl implements AdminServices {
 		if (adminRepo.existsById(id)) {
 			adminRepo.save(admin);
 		} else {
-			throw new GlobalMartException("No customer with the data exists to be updated!! ");
+			throw new GlobalMartException("No customer with the data exists to be updated!! Create new Admin ");
 		}
 		return admin;
 	}

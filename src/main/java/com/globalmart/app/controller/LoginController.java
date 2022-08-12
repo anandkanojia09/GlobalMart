@@ -29,11 +29,11 @@ public class LoginController {
 		return adminServices.getAdminByNameAndPassword(name, password);
 	}
 
-	@GetMapping("login/customer/{customername}/{password}")
-	public List<Customer> getCustomerByName(@PathVariable(value = "customerName") String name,
+	@GetMapping("login/customer/{userName}/{password}")
+	public List<Customer> getCustomerByUserName(@PathVariable(value = "userName") String userName,
 			@PathVariable(value = "password") String password) throws GlobalMartException {
 				
-		return customerServices.getCustomerByNameAndPassword(name, password);
+		return customerServices.getCustomerByUserNameAndPassword(userName, password);
 
 	}
 }
