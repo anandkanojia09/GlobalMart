@@ -12,14 +12,12 @@ public interface AdminServices {
 
 	public Admin addAdmin(Admin admin) throws GlobalMartException;
 
-	public void deleteAdminById(Integer id) throws GlobalMartException;
+	public boolean deleteAdminById(Integer id) throws GlobalMartException;
 
 	public Admin updateAdminById(Admin admin) throws GlobalMartException;
 
 	public List<Admin> getAllAdmins() throws GlobalMartException;
 
 	public List<Admin> getAdminByNameAndPassword(String name, String password) throws GlobalMartException;
-
-	public boolean deleteAllAdmins() throws GlobalMartException;
 
 }
