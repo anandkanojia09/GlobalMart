@@ -11,18 +11,21 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import com.globalmart.app.dao.CustomerRepo;
 import com.globalmart.app.dto.Customer;
 import com.globalmart.app.exception.GlobalMartException;
 import com.globalmart.app.services.CustomerServices;
 
 @SpringBootTest
-class CustomerServiceTest {
+class CustomerServicesTest {
 
 	@Autowired
 	CustomerServices customerService;
+	@Autowired
+	CustomerRepo customerRepo;
 
-	Customer customer = new Customer(18, "test", "pass1", "test@mail.com", "89879987", "23", "cityTEST", "testState",
-			897876, null, null);
+	Customer customer = new Customer(18, "test", "pass1", "passtest", "test@mail.com", "89879987", "23", "cityTEST",
+			"testState", 897876, null, null);
 
 	@BeforeEach
 	@Test
@@ -53,16 +56,18 @@ class CustomerServiceTest {
 	void allCustomers() throws GlobalMartException {
 		assumeTrue(customerService != null);
 		assertNotNull(customerService.getAllCustomers());
-		customerService.deleteCustomerById(18);
+//		customerService.deleteCustomerById(18);
+		customerRepo.deleteAll();
 		assertThrows(GlobalMartException.class, () -> customerService.getAllCustomers());
 	}
 
 	@Test
 	void getCustomerByNameAndPassword() throws GlobalMartException {
 		assumeTrue(customerService != null);
-		assertThrows(GlobalMartException.class, () -> customerService.getCustomerByNameAndPassword(null, null));
-		assertThrows(GlobalMartException.class, () -> customerService.getCustomerByNameAndPassword("ppppp", "pppp"));
-		assertNotNull(customerService.getCustomerByNameAndPassword("test", "pass1"));
+		assertThrows(GlobalMartException.class, () -> customerService.getCustomerByUserNameAndPassword(null, null));
+		assertThrows(GlobalMartException.class,
+				() -> customerService.getCustomerByUserNameAndPassword("ppppp", "pppp"));
+		assertNotNull(customerService.getCustomerByUserNameAndPassword("passtest", "pass1"));
 
 	}
 
@@ -72,9 +77,9 @@ class CustomerServiceTest {
 		Customer customer1 = new Customer();
 		assertThrows(Exception.class, () -> customerService.updateCustomer(null));
 		assertThrows(GlobalMartException.class, () -> customerService.updateCustomer(new Customer(2233, "test", "pass1",
-				"test@mail.com", "89879987", "23", "cityTEST", "testState", 897876, null, null)));
-		customer1 = new Customer(18, "TEST", "password", "test@mail.com", "89879987", "23", "cityTEST", "testState",
-				897876, null, null);
+				"passtest", "test@mail.com", "89879987", "23", "cityTEST", "testState", 897876, null, null)));
+		customer1 = new Customer(18, "TEST", "password", "passtest", "test@mail.com", "89879987", "23", "cityTEST",
+				"testState", 897876, null, null);
 		assertNotNull(customerService.updateCustomer(customer1));
 		assertEquals("TEST", customer1.getCustomerName());
 

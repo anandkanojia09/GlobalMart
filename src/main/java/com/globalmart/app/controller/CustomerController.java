@@ -45,7 +45,7 @@ public class CustomerController {
 		return customerUpdated;
 	}
 
-	@DeleteMapping("customer/delete/{id}")
+	@DeleteMapping("customer/{id}")
 	public String deleteCustomerById(@PathVariable("id") Integer id) throws GlobalMartException {
 		String msg = null;
 		if (customerService.deleteCustomerById(id))
