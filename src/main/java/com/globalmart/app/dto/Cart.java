@@ -20,13 +20,13 @@ public class Cart {
 	private Double cartPrice;
 
 	@OneToOne
-	private Customer customer;
+	private CustomerDetails customer;
 
-	public Customer getCustomer() {
+	public CustomerDetails getCustomer() {
 		return customer;
 	}
 
-	public void setCustomer(Customer customer) {
+	public void setCustomer(CustomerDetails customer) {
 		this.customer = customer;
 	}
 
@@ -34,7 +34,7 @@ public class Cart {
 	private List<Product> products = new ArrayList<>();
 
 	public Cart(Integer cartId, Integer productQuantity, Double cartPrice, List<Product> products,
-			Customer customer) {
+			CustomerDetails customer) {
 		super();
 		this.cartId = cartId;
 		this.productQuantity = productQuantity;

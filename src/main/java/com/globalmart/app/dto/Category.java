@@ -9,13 +9,14 @@ import javax.persistence.Id;
 public class Category {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+//	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer categoryId;
 	private String name;
 	private String description;
 
 	public Category() {
 		super();
+		// TODO Auto-generated constructor stub
 	}
 
 	public Category(Integer categoryId, String name, String description) {

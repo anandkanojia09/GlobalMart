@@ -26,8 +26,8 @@ public class CategoryController {
 	}
 
 	@GetMapping("category/{id}")
-	public Optional<Category> getCategory(@PathVariable Integer id) {
-		return categoryRepo.findById(id);
+	public Optional<Category> getCategory(@PathVariable Integer categoryId) {
+		return categoryRepo.findById(categoryId);
 	}
 
 	@GetMapping("category/all")
