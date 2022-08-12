@@ -3,11 +3,14 @@ package com.globalmart.app.controller;
 import java.util.List;
 import java.util.Optional;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -25,29 +28,40 @@ public class CustomerController {
 
 
 	@PostMapping("customer")
-	public Customer addCustomer(@RequestBody Customer customer) throws GlobalMartException {
-		return customerService.addCustomer(customer);
+	public Customer addCustomer(@Valid @RequestBody Customer customer) throws GlobalMartException {
+		Customer customerAdded = null;
+		customerAdded = customerService.addCustomer(customer);
+		return customerAdded;
 	}
 
 	@GetMapping("customer/{id}")
 
 	public Optional<Customer> getCustomer(@PathVariable("id") Integer id) throws GlobalMartException {
-		return customerService.getCustomerById(id);
+		Optional<Customer> customerFound = null;
+		customerFound = customerService.getCustomerById(id);
+		return customerFound;
 	}
 
-	@PostMapping("customer/update")
+	@PutMapping("customer")
 	public Customer updateCustomer(@RequestBody Customer customer) throws GlobalMartException {
-		return customerService.updateCustomerById(customer);
+		Customer customerUpdated = null;
+		customerUpdated = customerService.updateCustomer(customer);
+		return customerUpdated;
 	}
 
 	@DeleteMapping("customer/delete/{id}")
-	public void deleteCustomerById(@PathVariable("id") Integer id) throws GlobalMartException {
-		customerService.deleteCustomerById(id);
+	public String deleteCustomerById(@PathVariable("id") Integer id) throws GlobalMartException {
+		String msg = null;
+		if (customerService.deleteCustomerById(id))
+			msg = "Delete Successfull";
+		return msg;
 	}
 
 	@GetMapping("customer/all")
 	public List<Customer> getAllCustomers() throws GlobalMartException {
-		return customerService.getAllCustomers();
+		List<Customer> customers = null;
+		customers = customerService.getAllCustomers();
+		return customers;
 	}
 
 }
