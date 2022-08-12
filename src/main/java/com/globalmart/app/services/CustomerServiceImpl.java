@@ -80,14 +80,14 @@ public class CustomerServiceImpl implements CustomerServices {
 	}
 
 	@Override
-	public List<Customer> getCustomerByNameAndPassword(String name, String password) throws GlobalMartException {
+	public List<Customer> getCustomerByUserNameAndPassword(String name, String password) throws GlobalMartException {
 		List<Customer> customer = new ArrayList<>();
 		if (name == null || password == null) {
-			throw new GlobalMartException("Name and password are required!! ");
+			throw new GlobalMartException("Username and password are required!! ");
 		}
-		customer = customerRepo.findByCustomerNameAndPassword(name, password);
+		customer = customerRepo.findByUserNameAndPassword(name, password);
 		if (customer.isEmpty())
-			throw new GlobalMartException("No customer with the provided data. Try again with correct details.");
+			throw new GlobalMartException("No customer with the provided username and password. Try again with correct details.");
 		return customer;
 	}
 
