@@ -13,7 +13,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import com.globalmart.app.dao.CategoryRepo;
 import com.globalmart.app.dto.Category;
 import com.globalmart.app.exception.CategoryException;
-import com.globalmart.app.service.CategoryServices;
+import com.globalmart.app.services.CategoryServices;
 import java.util.Optional;
 
 
