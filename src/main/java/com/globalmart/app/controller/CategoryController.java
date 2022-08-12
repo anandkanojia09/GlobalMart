@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import com.globalmart.app.dto.Category;
 import com.globalmart.app.exception.CategoryException;
-import com.globalmart.app.service.CategoryServices;
+import com.globalmart.app.services.CategoryServices;
 
 @RestController
 public class CategoryController {

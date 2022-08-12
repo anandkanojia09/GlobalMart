@@ -16,7 +16,8 @@ import com.globalmart.app.dao.CartRepo;
 import com.globalmart.app.dao.CustomerRepo;
 import com.globalmart.app.dto.Admin;
 import com.globalmart.app.dto.Cart;
-import com.globalmart.app.dto.CustomerDetails;
+import com.globalmart.app.dto.Customer;
+
 
 @RestController
 public class AdminController {
@@ -50,7 +51,7 @@ public class AdminController {
 	}
 
 	@GetMapping("allCustomer")
-	public List<CustomerDetails> getAllCustomer() {
+	public List<Customer> getAllCustomer() {
 		return customerRepo.findAll();
 	}
 
