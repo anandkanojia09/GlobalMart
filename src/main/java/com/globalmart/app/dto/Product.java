@@ -1,31 +1,27 @@
 package com.globalmart.app.dto;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
-import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
 public class Product {
 
 	@Id
-//	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	// @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
 	@NotEmpty(message = "Name is Mandatory.")
 	@Pattern(regexp = "[A-Za-z0-9 ]*", message = "Only Alphanumeric characters are allowed.")
 	@Size(min=3, max=20, message="Name must be between 3 and 20 characters long.")
 	private String name;
-	@Pattern(regexp = "[A-Za-z0-9 ]*", message = "Only Alphanumeric characters are allowed.")
+	@Pattern(regexp = "[A-Za-z0-9. ]*", message = "Only Alphanumeric characters are allowed.")
 	@Size(min=3, max=200, message="Description must be between 3 and 200 characters long.")
 	@NotNull(message = "Description can't be Null.")
 	private String description;
@@ -104,8 +100,8 @@ public class Product {
 
 	@Override
 	public String toString() {
-		return "Product [id=" + id + ", name=" + name + ", description=" + description + ", price=" + price
-				+ ", quantity=" + quantity + ", category=" + category + "]";
+		return "Product [category=" + category + ", description=" + description + ", id=" + id + ", name=" + name
+				+ ", price=" + price + ", quantity=" + quantity + "]";
 	}
 
 }

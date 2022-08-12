@@ -36,25 +36,29 @@ public class AdminServiceImpl implements AdminServices {
 
 	@Override
 	public Admin updateAdminById(Admin admin) throws GlobalMartException {
-		int x = admin.getAdminId();
-		if (adminRepo.existsById(x)) {
+		Integer id = admin.getAdminId();
+		if (adminRepo.existsById(id)) {
 			adminRepo.save(admin);
 		} else {
-			throw new GlobalMartException("No customer with the		 data exists to be updated!! ");
+			throw new GlobalMartException("No customer with the data exists to be updated!! ");
 		}
 		return admin;
 	}
 
 	@Override
-	public void deleteAdminById(Integer id) throws GlobalMartException {
+	public boolean deleteAdminById(Integer id) throws GlobalMartException {
+		boolean flag = true;
 		if (adminRepo.existsById(id)) {
 			adminRepo.deleteById(id);
 			if (adminRepo.existsById(id)) {
+				flag=false;
 				throw new GlobalMartException("Unable to delete User. Try Again!!");
 			}
 		} else {
+			flag=false;
 			throw new GlobalMartException("No customer with id " + id + " exists to be deleted ");
 		}
+		return flag;
 	}
 
 	@Override
@@ -69,24 +73,12 @@ public class AdminServiceImpl implements AdminServices {
 	@Override
 	public List<Admin> getAdminByNameAndPassword(String name, String password) throws GlobalMartException {
 		List<Admin> admins = new ArrayList<>();
-		try {
-			admins = adminRepo.findByAdminNameAndPassword(name, password);
-		} catch (Exception e) {
-			throw new GlobalMartException(e.getLocalizedMessage());
+		admins = adminRepo.findByAdminNameAndPassword(name, password);
+		if(admins.isEmpty()) {
+			throw new GlobalMartException("No admin(s) with the name and password provided!! Check and try again.");
 		}
 		return admins;
 	}
 
-	@Override
-	public boolean deleteAllAdmins() throws GlobalMartException {
-		boolean flag = false;
-		adminRepo.deleteAll();
-		if (getAllAdmins().isEmpty()) {
-			flag = true;
-		} else {
-			throw new GlobalMartException("Deletion failed. Try again");
-		}
-		return flag;
-	}
 
 }
