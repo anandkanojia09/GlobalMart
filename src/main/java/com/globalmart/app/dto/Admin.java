@@ -8,14 +8,8 @@ public class Admin {
 
 	@Id
 	private Integer adminId;
-//	@NotEmpty(message = "Cannot be empty. Please give correct name")
-//	@Range(message = "Name should be more than 2 characters")
-//	@Pattern(regexp = "[A-Za-z]*", message = "Name cannot have number or special characters !!")
 	private String adminName;
-//	@NotEmpty(message = "Password cannot be empty")
-//	@Range(min = 6, max = 25, message = "Password should be more than 6 characters")
-//	@Pattern(regexp = "[A-Za-z0-9]*", message = "Password should contain number and special characters!!")
-	private String password;
+	private String passsword;
 
 	public Admin() {
 		super();
@@ -25,7 +19,7 @@ public class Admin {
 		super();
 		this.adminId = adminId;
 		this.adminName = adminName;
-		this.password = passsword;
+		this.passsword = passsword;
 	}
 
 	public Integer getAdminId() {
@@ -37,7 +31,7 @@ public class Admin {
 	}
 
 	public String getPasssword() {
-		return password;
+		return passsword;
 	}
 
 	public void setAdminId(Integer adminId) {
@@ -49,7 +43,7 @@ public class Admin {
 	}
 
 	public void setPasssword(String passsword) {
-		this.password = passsword;
+		this.passsword = passsword;
 	}
 
 }
