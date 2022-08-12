@@ -1,3 +1,4 @@
+
 package com.globalmart.app.dto;
 
 import javax.persistence.Entity;
@@ -45,5 +46,4 @@ public class Admin {
 	public void setPasssword(String passsword) {
 		this.passsword = passsword;
 	}
-
 }
