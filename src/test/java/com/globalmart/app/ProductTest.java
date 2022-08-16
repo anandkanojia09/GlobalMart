@@ -66,7 +66,7 @@ class ProductTest {
 		productRepo.deleteAll();
 		productRepo.flush();
 		assertThrows(ProductException.class, ()-> productService.getAllProducts());
-	}
+	} 
 
 	@Test
 	void deleteProductByIdTest() throws ProductException {

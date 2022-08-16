@@ -18,7 +18,7 @@ public class AdminServiceImpl implements AdminServices {
 	private AdminRepo adminRepo;
 
 	@Override
-	public Admin addAdmin(Admin admin) throws GlobalMartException {
+	public Admin addAdmin(Admin admin) throws GlobalMartException { 
 		if (admin == null)
 			throw new GlobalMartException("Admin cant be null");
 		return adminRepo.save(admin);

@@ -26,7 +26,7 @@ public class AdminController {
 	@Autowired
 	private AdminServices adminServices;
 
-	@PostMapping("admin")
+	@PostMapping("admin") 
 	public Admin addAdmin(@RequestBody Admin admin) throws GlobalMartException {
 		Admin adminAdded = null;
 		adminAdded = adminServices.addAdmin(admin);
