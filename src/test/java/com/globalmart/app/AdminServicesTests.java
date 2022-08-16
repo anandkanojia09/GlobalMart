@@ -61,8 +61,8 @@ class AdminServicesTests {
 	void updateAdmin() throws GlobalMartException {
 		assumeTrue(adminService != null);
 		Admin adminUpdate = new Admin(890, "SHHS", "jhdhd");
-		assertThrows(GlobalMartException.class, () -> adminService.updateAdminById(adminUpdate));
-		Admin admin2 = adminService.updateAdminById(new Admin(53, "SHHS", "llllll"));
+		assertThrows(GlobalMartException.class, () -> adminService.updateAdmin(adminUpdate));
+		Admin admin2 = adminService.updateAdmin(new Admin(53, "SHHS", "llllll"));
 		assertEquals("llllll", admin2.getPassword());
 	}
 

@@ -43,7 +43,7 @@ public class AdminController {
 	@PutMapping("admin")
 	public Admin updateAdmin(@RequestBody Admin admin) throws GlobalMartException {
 		Admin adminUpdated = null;
-		adminUpdated = adminServices.updateAdminById(admin);
+		adminUpdated = adminServices.updateAdmin(admin);
 		return adminUpdated;
 	}
 

@@ -11,12 +11,28 @@ import com.globalmart.app.dao.CustomerRepo;
 import com.globalmart.app.dto.Customer;
 import com.globalmart.app.exception.GlobalMartException;
 
+/************************************************************************************
+ *         @author          Anand Kumar Kanojia
+ *         Description      It is a service class that provides the operations for customer class like add customer, get customer, 
+ *          				delete customer, update customer
+ *         Version          1.1
+ *         Created Date     08-AUG-2022
+ ************************************************************************************/
 @Service
 public class CustomerServiceImpl implements CustomerServices {
 
 	@Autowired
 	private CustomerRepo customerRepo;
 
+	/************************************************************************************
+	 * Method: getCustomerById
+     * Description:  	fetches customer(s) data from the application.
+	 * @param id - id of the customer to be searched.
+	 * @returns customer - container object of the fetched customer class or throws exception.
+	 * @throws GlobalMartException - It is raised due to no details of the customer to be fetched or wrong input.
+     * Created By - Anand Kumar Kanojia
+     * Created Date - 08-AUG-2022                          
+	 ************************************************************************************/
 	@Override
 	public Optional<Customer> getCustomerById(Integer id) throws GlobalMartException {
 		Optional<Customer> customer = customerRepo.findById(id);
@@ -26,13 +42,22 @@ public class CustomerServiceImpl implements CustomerServices {
 		return customer;
 	}
 
+	/************************************************************************************
+	 * Method: addCustomer
+     * Description: add customer(s) data for the application.
+	 * @param customer - customer data of type customer class.
+	 * @returns customer - saved or added customer class or throws exception.
+	 * @throws GlobalMartException - It is raised due to no details of the customer to be added.
+     * Created By - Anand Kumar Kanojia
+     * Created Date - 08-AUG-2022
+	 ************************************************************************************/
 	@Override
 	public Customer addCustomer(Customer customer) throws GlobalMartException {
 		if (customer == null)
 			throw new GlobalMartException("Feilds cannot be left empty. Please fill in the necesaary details.");
-//		Integer userId = customer.getId();
-//		if(customerRepo.existsById(userId))
-//			throw new GlobalMartException("");
+		String userPhoneNumber = customer.getPhoneNumber();
+		if(customerRepo.findByPhoneNumber(userPhoneNumber) != null)
+			throw new GlobalMartException("Customer details already exist. Log into your account!");
 		customer = customerRepo.save(customer);
 		if (customer == null) {
 			throw new GlobalMartException("Customer could not be added!! Try again.");
@@ -40,6 +65,15 @@ public class CustomerServiceImpl implements CustomerServices {
 		return customer;
 	}
 
+	/************************************************************************************
+	 * Method: updateCustomer
+     * Description: update customer(s) data for the application.
+	 * @param customer - customer data of type customer class.
+	 * @returns customer - updated customer data class or throws exception.
+	 * @throws GlobalMartException - It is raised due to no details of the customer or wrong input.
+     * Created By - Anand Kumar Kanojia
+     * Created Date - 08-AUG-2022                           
+	 ************************************************************************************/
 	@Override
 	public Customer updateCustomer(Customer customer) throws GlobalMartException {
 		if (customer == null) {
@@ -57,6 +91,15 @@ public class CustomerServiceImpl implements CustomerServices {
 		return customer;
 	}
 
+	/************************************************************************************
+	 * Method: deleteCustomerById
+     * Description: delete customer(s) data from the application.
+	 * @param id - id of the customer to be deleted.
+	 * @returns boolean - true, if deleted successfully or throw exception.
+	 * @throws GlobalMartException - It is raised due to no details of the customer to be added.
+     * Created By - Anand Kumar Kanojia
+     * Created Date - 08-AUG-2022                          
+	 ************************************************************************************/
 	@Override
 	public boolean deleteCustomerById(Integer id) throws GlobalMartException {
 		boolean flag = true;
@@ -73,6 +116,14 @@ public class CustomerServiceImpl implements CustomerServices {
 		return flag;
 	}
 
+	/************************************************************************************
+	 * Method: getCustomerById
+     * Description: get all customers data from the application.
+	 * @returns List<customer> - List of saved customer details or throws exception.
+	 * @throws GlobalMartException - It is raised due to no details of the customer to be added.
+     * Created By - Anand Kumar Kanojia
+     * Created Date - 08-AUG-2022                           
+	 ************************************************************************************/
 	@Override
 	public List<Customer> getAllCustomers() throws GlobalMartException {
 		List<Customer> allCustomers = customerRepo.findAll();
@@ -82,6 +133,16 @@ public class CustomerServiceImpl implements CustomerServices {
 		return allCustomers;
 	}
 
+	/************************************************************************************
+	 * Method: getcustomerByNameAndPassword
+     * Description: fetch customer(s) data using name and password.
+	 * @param name - name of the customer.
+	 * @param password - password of the customer's account.
+	 * @returns customer - customer class found or throws exception.
+	 * @throws GlobalMartException - It is raised due to no details of the customer are found or wrong details.
+     * Created By - Anand Kumar Kanojia
+     * Created Date - 08-AUG-2022                          
+	 ************************************************************************************/
 	@Override
 	public List<Customer> getCustomerByUserNameAndPassword(String name, String password) throws GlobalMartException {
 		List<Customer> customer = new ArrayList<>();
