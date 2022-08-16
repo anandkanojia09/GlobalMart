@@ -30,6 +30,9 @@ public class CustomerServiceImpl implements CustomerServices {
 	public Customer addCustomer(Customer customer) throws GlobalMartException {
 		if (customer == null)
 			throw new GlobalMartException("Feilds cannot be left empty. Please fill in the necesaary details.");
+//		Integer userId = customer.getId();
+//		if(customerRepo.existsById(userId))
+//			throw new GlobalMartException("");
 		customer = customerRepo.save(customer);
 		if (customer == null) {
 			throw new GlobalMartException("Customer could not be added!! Try again.");
@@ -87,7 +90,8 @@ public class CustomerServiceImpl implements CustomerServices {
 		}
 		customer = customerRepo.findByUserNameAndPassword(name, password);
 		if (customer.isEmpty())
-			throw new GlobalMartException("No customer with the provided username and password. Try again with correct details.");
+			throw new GlobalMartException(
+					"No customer with the provided username and password. Try again with correct details.");
 		return customer;
 	}
 

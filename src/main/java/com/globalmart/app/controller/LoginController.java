@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.globalmart.app.dto.Admin;
@@ -22,15 +23,15 @@ public class LoginController {
 	@Autowired
 	private CustomerServices customerServices;
 
-	@GetMapping("login/admin/{name}/{password}")
+	@GetMapping("login/admin/{adminName}")
 	public List<Admin> getAdminByName(@PathVariable("adminName") String name,
-			@PathVariable(value = "password") String password) throws GlobalMartException {
+			@RequestParam(value = "password") String password) throws GlobalMartException {
 
 		return adminServices.getAdminByNameAndPassword(name, password);
 	}
 
-	@GetMapping("login/customer/{userName}/{password}")
-	public List<Customer> getCustomerByUserName(@PathVariable(value = "userName") String userName,
+	@GetMapping("login/customer/{userName}")
+	public List<Customer> getCustomerByUserName(@RequestParam(value = "userName") String userName,
 			@PathVariable(value = "password") String password) throws GlobalMartException {
 				
 		return customerServices.getCustomerByUserNameAndPassword(userName, password);

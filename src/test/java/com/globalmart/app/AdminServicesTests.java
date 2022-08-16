@@ -84,6 +84,7 @@ class AdminServicesTests {
 	@Test
 	void getByNameAndPassword() {
 		assertThrows(GlobalMartException.class, () -> adminService.getAdminByNameAndPassword("akkk", "hkjk"));
+		assertThrows(GlobalMartException.class, () -> adminService.getAdminByNameAndPassword(null, null));
 	}
 
 }

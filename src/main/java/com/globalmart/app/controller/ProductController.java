@@ -23,7 +23,7 @@ public class ProductController {
 	private ProductServicesInterface productService;
 
 	@PostMapping("product")
-	public String addProduct(@Valid @RequestBody Product product) throws ProductException {
+	public Product addProduct(@Valid @RequestBody Product product) throws ProductException {
 		return productService.addProduct(product);
 	}
 

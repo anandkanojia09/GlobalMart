@@ -37,10 +37,10 @@ public class ProductServiceImpl implements ProductServicesInterface {
 	}
 
 	@Override
-	public String addProduct(Product product) throws ProductException {
+	public Product addProduct(Product product) throws ProductException {
 		Integer productId = product.getId();
 		if (!productRepo.existsById(productId)) {
-			return product.toString();
+			return productRepo.save(product);
 		} else {
 			throw new ProductException("Product with ID " + productId + " already present in Database.");
 		}
