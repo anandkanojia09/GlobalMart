@@ -14,5 +14,8 @@ public interface CartService {
 	public Cart updateCart(Cart cart) throws CartException;
 	
 	public Boolean deleteCartById(Integer id) throws CartException;
-
+	
+	public Cart addProductToCart(Integer id ,Integer productId) throws CartException;
+	
+	public Cart removeProductFromCart(Integer id ,Integer productId) throws CartException;
 }

@@ -14,12 +14,16 @@ import org.springframework.web.bind.annotation.RestController;
 import com.globalmart.app.dto.Cart;
 import com.globalmart.app.exception.CartException;
 import com.globalmart.app.services.CartService;
+import com.globalmart.app.services.ProductServicesInterface;
 
 @RestController
 public class CartController {
 
 	@Autowired
 	private CartService cartService;
+
+	@Autowired
+	private ProductServicesInterface productService;
 
 	@PostMapping("cart")
 	public Cart addCart(@RequestBody Cart cart) throws CartException {
@@ -62,4 +66,24 @@ public class CartController {
 		}
 	}
 
+	@PatchMapping("addproduct/{id}")
+	public String addProductById(@PathVariable("id") Integer cartId, Integer productid) throws CartException {
+
+		try {
+			cartService.addProductToCart(cartId, productid);
+		} catch (CartException e) {
+			throw new CartException(e.getMessage());
+		}
+		return "product added in cart Successfully.";
+	}
+
+	@PatchMapping("removeproduct/{id}")
+	public String removeProductById(@PathVariable("id") Integer cartId, Integer productid) throws CartException {
+		try {
+			cartService.removeProductFromCart(cartId, productid);
+		} catch (CartException e) {
+			throw new CartException(e.getMessage());
+		}
+		return " product removed from cart successfully.";
+	}
 }
