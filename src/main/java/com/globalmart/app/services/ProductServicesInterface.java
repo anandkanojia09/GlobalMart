@@ -25,7 +25,7 @@ public interface ProductServicesInterface {
 
 	public String deleteProductById(Integer productId) throws ProductException;
 
-	public String addProduct(@RequestBody Product product) throws ProductException;
+	public Product addProduct(@RequestBody Product product) throws ProductException;
 
 	public String updateProduct(@RequestBody Product product) throws ProductException;
 
