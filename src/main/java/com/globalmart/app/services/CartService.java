@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import com.globalmart.app.dto.Cart;
 import com.globalmart.app.exception.CartException;
+import com.globalmart.app.exception.ProductException;
 
 public interface CartService {
 	
@@ -15,7 +16,7 @@ public interface CartService {
 	
 	public Boolean deleteCartById(Integer id) throws CartException;
 	
-	public Cart addProductToCart(Integer id ,Integer productId) throws CartException;
+	public Cart addProductToCart(Integer id ,Integer productId) throws CartException, ProductException;
 	
 	public Cart removeProductFromCart(Integer id ,Integer productId) throws CartException;
 }

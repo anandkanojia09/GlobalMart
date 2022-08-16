@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.globalmart.app.dto.Cart;
 import com.globalmart.app.exception.CartException;
+import com.globalmart.app.exception.ProductException;
 import com.globalmart.app.services.CartService;
 import com.globalmart.app.services.ProductServicesInterface;
 
@@ -67,7 +68,7 @@ public class CartController {
 	}
 
 	@PatchMapping("addproduct/{id}")
-	public String addProductById(@PathVariable("id") Integer cartId, Integer productid) throws CartException {
+	public String addProductById(@PathVariable("id") Integer cartId, Integer productid) throws CartException, ProductException {
 
 		try {
 			cartService.addProductToCart(cartId, productid);
