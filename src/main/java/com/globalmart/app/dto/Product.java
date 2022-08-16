@@ -1,5 +1,6 @@
 package com.globalmart.app.dto;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
@@ -39,8 +40,9 @@ public class Product {
 	private Double price;
 	@Min(value = 1, message = "Product quantity must be atleast 1.")
 
-	private Integer quantity;
-
+	private Integer productQuantity;
+	@Column(columnDefinition = "integer default 0")
+	private Integer orderQuantity;
 	@ManyToOne
 	private Category category;
 
@@ -56,15 +58,14 @@ public class Product {
 		this.category = category;
 	}
 
-	// Product product = new Product(1, "MyProduct", "MyDescription", 2500.00, 25,
-	// (1, "categoryName", "categoryDescription"));
-	public Product(Integer id, String name, String description, Double price, Integer quantity, Category category) {
+	public Product(Integer id, String name, String description, Double price, Integer productQuantity, Integer orderQuantity, Category category) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.description = description;
 		this.price = price;
-		this.quantity = quantity;
+		this.productQuantity = productQuantity;
+		this.orderQuantity = orderQuantity;
 		this.category = category;
 	}
 
@@ -100,18 +101,27 @@ public class Product {
 		this.price = price;
 	}
 
-	public Integer getQuantity() {
-		return quantity;
+	public Integer getProductQuantity() {
+		return productQuantity;
 	}
 
-	public void setQuantity(Integer quantity) {
-		this.quantity = quantity;
+	public void setProductQuantity(Integer productQuantity) {
+		this.productQuantity = productQuantity;
+	}
+
+	public Integer getOrderQuantity() {
+		return orderQuantity;
+	}
+
+	public void setOrderQuantity(Integer orderQuantity) {
+		this.orderQuantity = orderQuantity;
 	}
 
 	@Override
 	public String toString() {
 		return "Product [category=" + category + ", description=" + description + ", id=" + id + ", name=" + name
-				+ ", price=" + price + ", quantity=" + quantity + "]";
+				+ ", orderQuantity=" + orderQuantity + ", price=" + price + ", productQuantity=" + productQuantity
+				+ "]";
 	}
 
 }
