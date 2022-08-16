@@ -194,7 +194,7 @@ public class CartServiceImpl implements CartService {
 	@Override
 	public Cart removeProductFromCart(Integer id, Integer productId) throws CartException {
 		Cart cart;
-		List<Product> productList;
+//		List<Product> productList;
 		Optional<Product> product = java.util.Optional.empty();
 		try {
 			product = productService.getProductById(productId);
@@ -203,13 +203,30 @@ public class CartServiceImpl implements CartService {
 			e.printStackTrace();
 		}
 		cart = this.getCartById(id).get();
-		productList = cart.getProducts();
+		List<Product> productList = cart.getProducts();
 		if (cart != null) {
 			productList.remove(product.get());
 			cart.setProducts(productList);
 			this.cartRepo.save(cart);
 		}
 
+		return cart;
+	}
+
+	@Override
+	public Cart updateProductQuantity(Integer id, Integer productId, Integer quantity) throws CartException, ProductException {
+		Cart cart = getCartById(id).get();
+		Product product = productService.getProductById(productId).get() ;
+		List<Product> productList = cart.getProducts();
+		if (productList.contains(product)) {
+			if(quantity > product.getProductQuantity()) {
+				throw new CartException("Quantity cannot be more than "+product.getProductQuantity()+". Please select quantity in range!! ");
+			}
+			product.setOrderQuantity(quantity);
+			product.setProductQuantity(product.getProductQuantity() - quantity);
+//			productList.add(product);
+			this.cartRepo.save(cart);	
+		} else throw new CartException("Internal error. Try again later!!");
 		return cart;
 	}
 
