@@ -14,10 +14,10 @@ public interface AdminServices {
 
 	public boolean deleteAdminById(Integer id) throws GlobalMartException;
 
-	public Admin updateAdminById(Admin admin) throws GlobalMartException;
-
 	public List<Admin> getAllAdmins() throws GlobalMartException;
 
 	public List<Admin> getAdminByNameAndPassword(String name, String password) throws GlobalMartException;
+
+	Admin updateAdmin(Admin admin) throws GlobalMartException;
 
 }

@@ -1,7 +1,7 @@
 package com.globalmart.app.dto;
 
-import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -29,7 +29,7 @@ public class Order {
 	@NotNull(message = "Amount cant be Null")
 	@Min(value = 500, message = "Minimum Amount must be 500")
 	private double amounts;
-	//@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.DATE)
 
 	private Date orderDate = new Date(System.currentTimeMillis());
 
