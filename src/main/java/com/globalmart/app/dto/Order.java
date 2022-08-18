@@ -29,7 +29,7 @@ public class Order {
 	@NotNull(message = "Amount cant be Null")
 	@Min(value = 500, message = "Minimum Amount must be 500")
 	private double amounts;
-	@Temporal(TemporalType.DATE)
+//	@Temporal(TemporalType.DATE)
 
 	private Date orderDate = new Date(System.currentTimeMillis());
 
