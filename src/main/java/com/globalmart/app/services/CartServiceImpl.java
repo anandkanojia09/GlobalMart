@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.globalmart.app.dao.CartRepo;
+import com.globalmart.app.dao.ProductRepo;
 import com.globalmart.app.dto.Cart;
 import com.globalmart.app.dto.Product;
 import com.globalmart.app.exception.CartException;
@@ -26,6 +27,9 @@ public class CartServiceImpl implements CartService {
 
 	@Autowired
 	private CartRepo cartRepo;
+	
+	@Autowired
+	private ProductRepo productRepo;
 
 	@Autowired
 	private ProductServicesInterface productService;
@@ -151,32 +155,20 @@ public class CartServiceImpl implements CartService {
 	 ************************************************************************************/
 	@Override
 	public Cart addProductToCart(Integer id, Integer productId) throws CartException, ProductException {
-		Cart cart;
-		List<Product> productList;
-		Optional<Product> product = java.util.Optional.empty();
-		product = productService.getProductById(productId);
-		if (product == null) {
-			throw new ProductException("product not found.");
-		}
-		cart = this.getCartById(id).get();
-		productList = cart.getProducts();
-		if (cart != null) {
-			if (productList.contains(product.get())) {
-//				Integer q = product.get().getQuantity();
-//				product.get().setQuantity(product.get().getQuantity() + 1);
-//				productList.remove(product);
-//				productService.
-//				productList.add(product.get());
-//				this.cartRepo.save(cart);
-				throw new CartException("Product already in cart. Go to cart");
-			} else {
-				productList.add(product.get());
-				cart.setProducts(productList);
-				this.cartRepo.save(cart);
-			}
+		Integer quantity = 1;
+		Cart cart = getCartById(id).get();
+		Product product = productService.getProductById(productId).get();
+		List<Product> productList = cart.getProducts();
+		if (productList.contains(product)) {
+			throw new CartException("Item already in Cart. Go to Cart!!");
+		} else {
+
+			product.setOrderQuantity(quantity);
+			product.setProductQuantity(product.getProductQuantity() - quantity);
+			productList.add(product);
+			this.cartRepo.save(cart);
 		}
 		return cart;
-
 	}
 
 	/************************************************************************************
@@ -192,41 +184,37 @@ public class CartServiceImpl implements CartService {
 	 ************************************************************************************/
 
 	@Override
-	public Cart removeProductFromCart(Integer id, Integer productId) throws CartException {
-		Cart cart;
-//		List<Product> productList;
-		Optional<Product> product = java.util.Optional.empty();
-		try {
-			product = productService.getProductById(productId);
-		} catch (ProductException e) {
-
-			e.printStackTrace();
-		}
-		cart = this.getCartById(id).get();
+	public Cart removeProductFromCart(Integer id, Integer productId) throws CartException, ProductException {
+		Cart cart = getCartById(id).get();
+		Product product = productService.getProductById(productId).get();
 		List<Product> productList = cart.getProducts();
-		if (cart != null) {
-			productList.remove(product.get());
-			cart.setProducts(productList);
+		if (productList.contains(product)) {
+			Integer quantity = product.getOrderQuantity();
+			productList.remove(product);
+			product.setProductQuantity(product.getProductQuantity() + quantity);
 			this.cartRepo.save(cart);
+			productRepo.save(product);
+		} else {
+				throw new CartException("item is not present in Cart.");
 		}
-
 		return cart;
 	}
 
 	@Override
 	public Cart updateProductQuantity(Integer id, Integer productId, Integer quantity) throws CartException, ProductException {
 		Cart cart = getCartById(id).get();
-		Product product = productService.getProductById(productId).get() ;
+		Product product = productService.getProductById(productId).get();
 		List<Product> productList = cart.getProducts();
 		if (productList.contains(product)) {
-			if(quantity > product.getProductQuantity()) {
-				throw new CartException("Quantity cannot be more than "+product.getProductQuantity()+". Please select quantity in range!! ");
+			if (quantity > product.getProductQuantity()) {
+				throw new CartException("Quantity cannot be more than " + product.getProductQuantity()
+						+ ". Please select quantity in range!! ");
 			}
-			product.setOrderQuantity(quantity);
+			product.setOrderQuantity(quantity+product.getOrderQuantity());
 			product.setProductQuantity(product.getProductQuantity() - quantity);
-//			productList.add(product);
-			this.cartRepo.save(cart);	
-		} else throw new CartException("Internal error. Try again later!!");
+			this.cartRepo.save(cart);
+		} else
+			throw new CartException("Internal error. Try again later!!");
 		return cart;
 	}
 
