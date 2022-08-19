@@ -1,5 +1,7 @@
 package com.globalmart.app.services;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,7 +9,9 @@ import org.springframework.stereotype.Service;
 
 import com.globalmart.app.dao.CartRepo;
 import com.globalmart.app.dto.Cart;
+import com.globalmart.app.dto.Product;
 import com.globalmart.app.exception.CartException;
+import com.globalmart.app.exception.ProductException;
 
 @Service
 public class CartServiceImpl implements CartService {
@@ -15,6 +19,8 @@ public class CartServiceImpl implements CartService {
 	@Autowired
 	private CartRepo cartRepo;
 	
+	@Autowired 
+	private ProductServicesInterface productService;
 	
 
 	@Override
@@ -75,5 +81,51 @@ public class CartServiceImpl implements CartService {
 
 		return isCartdeleted;
 	}
+
+	@Override
+	public Cart addProductToCart(Integer id,Integer productId) throws CartException {
+		Cart cart ;
+		List<Product> cart2 ;// = new ArrayList<>();
+		Optional<Product> product = java.util.Optional.empty() ;
+		try {
+			product = productService.getProductById(productId);
+		} catch (ProductException e) {
+			
+			e.printStackTrace();
+		}	
+		cart = this.getCartById(id).get();
+		cart2 = cart.getProducts();
+		if(cart!= null) {
+			cart2.add(product.get());
+			cart.setProducts(cart2);
+			this.cartRepo.save(cart);
+		}
+		
+		return cart;
+	}
+
+	@Override
+	public Cart removeProductFromCart(Integer id, Integer productId) throws CartException {
+		Cart cart ;
+		List<Product> cart2 ;//= new ArrayList<>();
+		Optional<Product> product = java.util.Optional.empty() ;
+		try {
+			product = productService.getProductById(productId);
+		} catch (ProductException e) {
+			
+			e.printStackTrace();
+		}	
+		cart = this.getCartById(id).get();
+		cart2 = cart.getProducts();
+		if(cart != null) {
+			cart2.remove(product.get());
+			cart.setProducts(cart2);
+			this.cartRepo.save(cart);
+		}
+		
+		return cart;
+	}
+	
+	
 
 }

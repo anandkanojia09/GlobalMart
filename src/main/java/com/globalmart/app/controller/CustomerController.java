@@ -1,6 +1,5 @@
 package com.globalmart.app.controller;
 
-import java.util.List;
 import java.util.Optional;
 
 import javax.validation.Valid;
@@ -53,11 +52,11 @@ public class CustomerController {
 		return msg;
 	}
 
-	@GetMapping("customer/all")
-	public List<Customer> getAllCustomers() throws GlobalMartException {
-		List<Customer> customers = null;
-		customers = customerService.getAllCustomers();
-		return customers;
-	}
+//	@GetMapping("customers")
+//	public List<Customer> getAllCustomers() throws GlobalMartException {
+//		List<Customer> customers = null;
+//		customers = customerService.getAllCustomers();
+//		return customers;
+//	}
 
 }

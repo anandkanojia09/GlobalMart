@@ -32,19 +32,19 @@ class ProductTest {
 
 	@BeforeEach
 	void starterScript() throws ProductException {
-		productRepo.save(new Product(6, "MyProduct", "MyDescription", 2500.00, 25, category));
+		productRepo.save(new Product(6, "MyProduct", "MyDescription", 2500.00, 25, null, category));
 	}
 
 	@Test
 	void addProductTest() throws ProductException {
 		productService.deleteProductById(6);
-		Product product = new Product(6, "MyProduct", "MyDescription", 2500.00, 25, category);
+		Product product = new Product(6, "MyProduct", "MyDescription", 2500.00, 25, null, category);
 		assertDoesNotThrow( () -> productService.addProduct(product));
 	}
 
 	@Test
 	void addProductTestMore() throws ProductException {
-		Product product = new Product(6, "MyProduct", "MyDescription", 2500.00, 25, category);
+		Product product = new Product(6, "MyProduct", "MyDescription", 2500.00, 25, null, category);
 		assertThrowsExactly(ProductException.class, ()->productService.addProduct(product), "Product with ID 6 is already present in Database.");
 	}
 
@@ -66,7 +66,7 @@ class ProductTest {
 		productRepo.deleteAll();
 		productRepo.flush();
 		assertThrows(ProductException.class, ()-> productService.getAllProducts());
-	}
+	} 
 
 	@Test
 	void deleteProductByIdTest() throws ProductException {
@@ -82,13 +82,13 @@ class ProductTest {
 
 	@Test
 	void updateProductTest() throws ProductException {
-		Product updatedProduct = new Product(6, "UpdatedProduct", "MyDescription", 2500.00, 25, category);
+		Product updatedProduct = new Product(6, "UpdatedProduct", "MyDescription", 2500.00, 25, null, category);
 		assertNotNull(productService.updateProduct(updatedProduct));
 		assertEquals(updatedProduct.toString(), productService.updateProduct(updatedProduct));
 	}
 	@Test
 	void updateProductTestMore() throws ProductException {
-		Product updatedProduct = new Product(999, "UpdatedProduct", "MyDescription", 2500.00, 25, category);
+		Product updatedProduct = new Product(999, "UpdatedProduct", "MyDescription", 2500.00, 25, null, category);
 		assertThrowsExactly(ProductException.class, ()->productService.updateProduct(updatedProduct), "Product not found in Database, can't Update.");
 	}
 }

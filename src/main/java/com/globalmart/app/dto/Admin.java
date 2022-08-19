@@ -10,17 +10,17 @@ public class Admin {
 	@Id
 	private Integer adminId;
 	private String adminName;
-	private String passsword;
+	private String password;
 
 	public Admin() {
 		super();
 	}
 
-	public Admin(Integer adminId, String adminName, String passsword) {
+	public Admin(Integer adminId, String adminName, String password) {
 		super();
 		this.adminId = adminId;
 		this.adminName = adminName;
-		this.passsword = passsword;
+		this.password = password;
 	}
 
 	public Integer getAdminId() {
@@ -31,8 +31,8 @@ public class Admin {
 		return adminName;
 	}
 
-	public String getPasssword() {
-		return passsword;
+	public String getPassword() {
+		return password;
 	}
 
 	public void setAdminId(Integer adminId) {
@@ -43,7 +43,7 @@ public class Admin {
 		this.adminName = adminName;
 	}
 
-	public void setPasssword(String passsword) {
-		this.passsword = passsword;
+	public void setPasssword(String password) {
+		this.password = password;
 	}
 }
