@@ -26,7 +26,7 @@ class AdminServicesTests {
 	@Autowired
 	AdminRepo adminRepo;
 
-	Admin admin = new Admin(53, "SHHS", "jhdhd");
+	Admin admin = new Admin(53, "SHHS", "jhdhd", "admin@mail.com", "1010101010");
 
 	@AfterEach
 	void drop() throws GlobalMartException {
@@ -60,10 +60,10 @@ class AdminServicesTests {
 	@Test
 	void updateAdmin() throws GlobalMartException {
 		assumeTrue(adminService != null);
-		Admin adminUpdate = new Admin(890, "SHHS", "jhdhd");
+		Admin adminUpdate = new Admin(890, "SHHS","jhdhd", "admin@mail.com", "1010101010");
 		assertThrows(GlobalMartException.class, () -> adminService.updateAdmin(adminUpdate));
-		Admin admin2 = adminService.updateAdmin(new Admin(53, "SHHS", "llllll"));
-		assertEquals("llllll", admin2.getPassword());
+		Admin admin2 = adminService.updateAdmin(new Admin(53, "SHHS", "llllll", "admin@mail.com", "1010101010"));
+		assertEquals("llllll", admin2.getAdminPassword());
 	}
 
 	@Test

@@ -1,37 +1,70 @@
 package com.globalmart.app.dto;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
+
+@SuppressWarnings("serial")
 @Entity
-public class Customer {
+public class Customer implements Serializable {
+	
+	/************************************************************************************
+	 * @author Anand Kumar Kanojia
+	 * 
+	 * Description : It is a POJO class for Customer. All the entity and
+	 *         		 their respective mappings are defined here.
+	 * 
+	 * Version 1.0
+	 * 
+	 * Created Date 02-AUG-2022
+	 ************************************************************************************/
 
 	@Id
-//	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Integer id;
-//	@NotEmpty(message = "Cannot be empty. Please give correct name")
-//	@Range(max = 25, min = 2, message = "Should be more than 2 and less than 25 characters")
-//	@Pattern(regexp = "[A-Za-z]*", message = "Name cannot have number or special characters Data!!")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	private Integer customerId;
+	@NotBlank(message = "Name is Mandatory.")
+	@Pattern(regexp = "[A-Za-z]*", message = "Only Alphanumeric characters are allowed.")
+	@Size(min = 3, max = 20, message = "Name must be between 3 and 20 characters long.")
 	private String customerName;
-//	@NotEmpty(message = "Cannot be empty")
-//	@Pattern(regexp = "[A-Za-z0-9]", message = "Password should contain number and special characters!!")
-//	@Range(min = 8, message = "Password should be more than 8 characters")
-	private String password;
+	@NotBlank(message = "Cannot be empty")
+	@Pattern(regexp = "[A-Za-z0-9]*", message = "Password should contain number and special characters!!")
+	@Size(min = 6, max = 20, message = "Password should be more than 6 characters")
+	private String userPassword;
+	@Column(unique = true)
+	@NotBlank(message = "Cannot be empty")
+	@Pattern(regexp = "[A-Za-z0-9]*", message = "username already in use!!")
+	@Size(min = 6, max = 20, message = "username should be more than 6 characters")
 	private String userName;
-	private String email;
-	private String phoneNumber;
+	@Email
+	@NotBlank(message = "Cannot be empty")
+	@Pattern(regexp = "[A-Za-z0-9]*", message = "Incorrect email format!! Enter correct email.")
+	private String userEmail;
+	@NotBlank(message = "Cannot be empty")
+	@Pattern(regexp = "([0-9]*{10})", message = "Phone number should contain numbers only!!")
+	@Size(min = 10, max = 10, message = "Incorrect Number ")
+	private String userPhoneNumber;
 	private String roomNumber;
 	private String city;
 	private String state;
-	private int pincode;
+	@Pattern(regexp = "(^$|[0-9]*{6})", message = "Incorrect Pin !!")
+	@Size(min = 6, max = 6, message = "Cannot be more than 6 digits!!")
+	private Integer pincode;
 
 	@Temporal(TemporalType.DATE)
 	private Date createdDate = new Date(System.currentTimeMillis());
@@ -41,17 +74,25 @@ public class Customer {
 
 	public Customer() {
 		super();
+		// TODO Auto-generated constructor stub
 	}
 
-	public Customer(Integer id, String customerName, String password, String userName, String email, String phoneNumber,
-			String roomNumber, String city, String state, int pincode, Date createdDate, List<Order> orders) {
+	public Customer(Integer customerId,
+			@NotBlank(message = "Name is Mandatory.") @Pattern(regexp = "[A-Za-z]*", message = "Only Alphanumeric characters are allowed.") @Size(min = 3, max = 20, message = "Name must be between 3 and 20 characters long.") String customerName,
+			@NotBlank(message = "Cannot be empty") @Pattern(regexp = "[A-Za-z0-9]*", message = "Password should contain number and special characters!!") @Size(min = 6, max = 20, message = "Password should be more than 6 characters") String userPassword,
+			@NotBlank(message = "Cannot be empty") @Pattern(regexp = "[A-Za-z0-9]*", message = "username already in use!!") @Size(min = 6, max = 20, message = "username should be more than 6 characters") String userName,
+			@Email @NotBlank(message = "Cannot be empty") @Pattern(regexp = "[A-Za-z0-9]*", message = "Password should contain number and special characters!!") @Size(min = 6, max = 20, message = "Password should be more than 8 characters") String userEmail,
+			@NotBlank(message = "Cannot be empty") @Pattern(regexp = "(^[0-9]{10})", message = "Phone number should contain numbers only!!") @Size(min = 10, max = 10, message = "Incorrect Number ") String userPhoneNumber,
+			String roomNumber, String city, String state,
+			@NotBlank(message = "Cannot be empty") @Pattern(regexp = "(^[0-9]{6})", message = "Incorrect Pin !!") @Size(min = 6, max = 6, message = "Cannot be more than 6 digits!!") Integer pincode,
+			Date createdDate, List<Order> orders) {
 		super();
-		this.id = id;
+		this.customerId = customerId;
 		this.customerName = customerName;
-		this.password = password;
+		this.userPassword = userPassword;
 		this.userName = userName;
-		this.email = email;
-		this.phoneNumber = phoneNumber;
+		this.userEmail = userEmail;
+		this.userPhoneNumber = userPhoneNumber;
 		this.roomNumber = roomNumber;
 		this.city = city;
 		this.state = state;
@@ -60,32 +101,28 @@ public class Customer {
 		this.orders = orders;
 	}
 
-	public String getUserName() {
-		return userName;
-	}
-
-	public void setUserName(String userName) {
-		this.userName = userName;
-	}
-
-	public Integer getId() {
-		return id;
+	public Integer getCustomerId() {
+		return customerId;
 	}
 
 	public String getCustomerName() {
 		return customerName;
 	}
 
-	public String getPassword() {
-		return password;
+	public String getUserPassword() {
+		return userPassword;
 	}
 
-	public String getEmail() {
-		return email;
+	public String getUserName() {
+		return userName;
 	}
 
-	public String getPhoneNumber() {
-		return phoneNumber;
+	public String getUserEmail() {
+		return userEmail;
+	}
+
+	public String getUserPhoneNumber() {
+		return userPhoneNumber;
 	}
 
 	public String getRoomNumber() {
@@ -100,7 +137,7 @@ public class Customer {
 		return state;
 	}
 
-	public int getPincode() {
+	public Integer getPincode() {
 		return pincode;
 	}
 
@@ -112,24 +149,28 @@ public class Customer {
 		return orders;
 	}
 
-	public void setId(Integer id) {
-		this.id = id;
+	public void setCustomerId(Integer customerId) {
+		this.customerId = customerId;
 	}
 
 	public void setCustomerName(String customerName) {
 		this.customerName = customerName;
 	}
 
-	public void setPassword(String password) {
-		this.password = password;
+	public void setUserPassword(String userPassword) {
+		this.userPassword = userPassword;
 	}
 
-	public void setEmail(String email) {
-		this.email = email;
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 
-	public void setPhoneNumber(String phoneNumber) {
-		this.phoneNumber = phoneNumber;
+	public void setUserEmail(String userEmail) {
+		this.userEmail = userEmail;
+	}
+
+	public void setUserPhoneNumber(String userPhoneNumber) {
+		this.userPhoneNumber = userPhoneNumber;
 	}
 
 	public void setRoomNumber(String roomNumber) {
@@ -144,7 +185,7 @@ public class Customer {
 		this.state = state;
 	}
 
-	public void setPincode(int pincode) {
+	public void setPincode(Integer pincode) {
 		this.pincode = pincode;
 	}
 

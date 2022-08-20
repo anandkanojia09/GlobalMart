@@ -134,7 +134,7 @@ public class AdminServiceImpl implements AdminServices {
 	@Override
 	public List<Admin> getAdminByNameAndPassword(String name, String password) throws GlobalMartException {
 		List<Admin> admins = new ArrayList<>();
-		admins = adminRepo.findByAdminNameAndPassword(name, password);
+		admins = adminRepo.findByAdminNameAndAdminPassword(name, password);
 		if(admins.isEmpty()) {
 			throw new GlobalMartException("No admin(s) with the name and password provided!! Check and try again.");
 		}

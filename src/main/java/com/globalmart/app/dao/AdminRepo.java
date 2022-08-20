@@ -8,6 +8,6 @@ import com.globalmart.app.dto.Admin;
 
 public interface AdminRepo extends JpaRepository<Admin, Integer> {
 
-	List<Admin> findByAdminNameAndPassword(String name, String password);
+	List<Admin> findByAdminNameAndAdminPassword(String name, String password);
 
 }

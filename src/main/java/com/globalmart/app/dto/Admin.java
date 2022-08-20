@@ -2,25 +2,64 @@
 package com.globalmart.app.dto;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
+/************************************************************************************
+ * @author Anand Kumar Kanojia
+ * 
+ * Description : It is a POJO class for Admin. All the entity and
+ *         		 their respective mappings are defined here.
+ * 
+ * Version : 1.0
+ * 
+ * Created Date 02-AUG-2022
+ ************************************************************************************/
 @Entity
 public class Admin {
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Integer adminId;
+	@NotBlank(message = "Name is Mandatory.")
+	@Pattern(regexp = "[A-Za-z]*", message = "Only Alphanumeric characters are allowed.")
+	@Size(min = 3, max = 20, message = "Name must be between 3 and 20 characters long.")
 	private String adminName;
-	private String password;
-
+	@NotBlank(message = "Cannot be empty")
+	@Pattern(regexp = "[A-Za-z0-9]*", message = "Password should contain number and special characters!!")
+	@Size(min = 6, max = 20, message = "Password should be more than 6 characters")
+	private String adminPassword;
+	@Email
+	@NotBlank(message = "Cannot be empty")
+	@Pattern(regexp = "[A-Za-z0-9]*", message = "Password should contain number and special characters!!")
+	@Size(min = 6, max = 20, message = "Password should be more than 8 characters")
+	private String adminEmail;
+	@NotBlank(message = "Cannot be empty")
+	@Pattern(regexp = "(^[0-9]{10})", message = "Phone number should contain numbers only!!")
+	@Size(min = 10, max = 10, message = "Incorrect Number ")
+	private String adminPhoneNumber;
+	
 	public Admin() {
 		super();
+		// TODO Auto-generated constructor stub
 	}
 
-	public Admin(Integer adminId, String adminName, String password) {
+	public Admin(Integer adminId,
+			@NotBlank(message = "Name is Mandatory.") @Pattern(regexp = "[A-Za-z]*", message = "Only Alphanumeric characters are allowed.") @Size(min = 3, max = 20, message = "Name must be between 3 and 20 characters long.") String adminName,
+			@NotBlank(message = "Cannot be empty") @Pattern(regexp = "[A-Za-z0-9]*", message = "Password should contain number and special characters!!") @Size(min = 6, max = 20, message = "Password should be more than 6 characters") String adminPassword,
+			@Email @NotBlank(message = "Cannot be empty") @Pattern(regexp = "[A-Za-z0-9]*", message = "Password should contain number and special characters!!") @Size(min = 6, max = 20, message = "Password should be more than 8 characters") String adminEmail,
+			@NotBlank(message = "Cannot be empty") @Pattern(regexp = "(^[0-9]{10})", message = "Phone number should contain numbers only!!") @Size(min = 10, max = 10, message = "Incorrect Number ") String adminPhoneNumber) {
 		super();
 		this.adminId = adminId;
 		this.adminName = adminName;
-		this.password = password;
+		this.adminPassword = adminPassword;
+		this.adminEmail = adminEmail;
+		this.adminPhoneNumber = adminPhoneNumber;
 	}
 
 	public Integer getAdminId() {
@@ -31,8 +70,16 @@ public class Admin {
 		return adminName;
 	}
 
-	public String getPassword() {
-		return password;
+	public String getAdminPassword() {
+		return adminPassword;
+	}
+
+	public String getAdminEmail() {
+		return adminEmail;
+	}
+
+	public String getAdminPhoneNumber() {
+		return adminPhoneNumber;
 	}
 
 	public void setAdminId(Integer adminId) {
@@ -43,7 +90,16 @@ public class Admin {
 		this.adminName = adminName;
 	}
 
-	public void setPasssword(String password) {
-		this.password = password;
+	public void setAdminPassword(String adminPassword) {
+		this.adminPassword = adminPassword;
 	}
+
+	public void setAdminEmail(String adminEmail) {
+		this.adminEmail = adminEmail;
+	}
+
+	public void setAdminPhoneNumber(String adminPhoneNumber) {
+		this.adminPhoneNumber = adminPhoneNumber;
+	}
+
 }
