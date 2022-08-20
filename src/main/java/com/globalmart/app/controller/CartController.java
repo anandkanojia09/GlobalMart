@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.globalmart.app.dto.Cart;
 import com.globalmart.app.exception.CartException;
+import com.globalmart.app.exception.ProductException;
 import com.globalmart.app.services.CartService;
 import com.globalmart.app.services.ProductServicesInterface;
 
@@ -67,7 +68,7 @@ public class CartController {
 	}
 
 	@PatchMapping("addproduct/{id}")
-	public String addProductById(@PathVariable("id") Integer cartId, Integer productid) throws CartException {
+	public String addProductById(@PathVariable("id") Integer cartId, Integer productid) throws CartException, ProductException {
 
 		try {
 			cartService.addProductToCart(cartId, productid);
@@ -78,12 +79,32 @@ public class CartController {
 	}
 
 	@PatchMapping("removeproduct/{id}")
-	public String removeProductById(@PathVariable("id") Integer cartId, Integer productid) throws CartException {
+	public String removeProductById(@PathVariable("id") Integer cartId, Integer productid) throws CartException, ProductException{
 		try {
 			cartService.removeProductFromCart(cartId, productid);
 		} catch (CartException e) {
 			throw new CartException(e.getMessage());
 		}
 		return " product removed from cart successfully.";
+	}
+	
+	@PatchMapping("increaseproductquantiy/{id}")
+	public String addProductByIdInCart(@PathVariable("id") Integer cartId , Integer productId , Integer quantity) throws CartException , ProductException{
+		try {
+			cartService.increaseProductQuantity(cartId, productId, quantity);
+		} catch(CartException e) {
+			throw new CartException(e.getMessage());
+		}
+		return "cart quantity updated";
+	}
+	
+	@PatchMapping("decreaseproductquantiy/{id}")
+	public String removeProductByIdInCart(@PathVariable("id") Integer cartId , Integer productId , Integer quantity) throws CartException , ProductException{
+		try {
+			cartService.decreaseProductQuantity(cartId, productId, quantity);
+		} catch(CartException e) {
+			throw new CartException(e.getMessage());
+		}
+		return "cart quantity updated";
 	}
 }

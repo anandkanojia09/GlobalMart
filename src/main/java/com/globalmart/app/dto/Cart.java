@@ -7,6 +7,18 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 
+/************************************************************************************
+ * @author Abhishek Kumar Jaiswal
+ * 
+ *         Description : It is a POJO class for Cart. All the entity and
+ *         their respective mappings are defined here.
+ * 
+ *         
+ * 
+ *         Created Date 02-AUG-2022
+ ************************************************************************************/
+
+
 @Entity
 public class Cart {
 
