@@ -1,72 +1,40 @@
 package com.globalmart.app.dto;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
 
 @Entity
 public class Product {
-	/************************************************************************************
-	 * @author Anant Narayan Patel
-	 * 
-	 *         Description : It is a POJO class for Product. All the entity and
-	 *         their respective mappings are defined here.
-	 * 
-	 *         Version 1.0
-	 * 
-	 *         Created Date 02-AUG-2022
-	 ************************************************************************************/
-
+	
 	@Id
-
-	// @GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-
-	@NotEmpty(message = "Name is Mandatory.")
-	@Pattern(regexp = "[A-Za-z0-9 ]*", message = "Only Alphanumeric characters are allowed.")
-	@Size(min = 3, max = 20, message = "Name must be between 3 and 20 characters long.")
 	private String name;
-	@Pattern(regexp = "[A-Za-z0-9. ]*", message = "Only Alphanumeric characters are allowed.")
-	@Size(min = 3, max = 200, message = "Description must be between 4 and 200 characters long.")
-	@NotNull(message = "Description can't be Null.")
 	private String description;
-	// @NotEmpty(message = "Price is required.")
-	@Min(value = 1, message = "Price needs to be greater than 0")
 	private Double price;
-	@Min(value = 1, message = "Product quantity must be atleast 1.")
-
-	private Integer productQuantity;
-	@Column(columnDefinition = "integer default 0")
-	private Integer orderQuantity;
+	private Integer quantity;
+	
+//	@ManyToOne(fetch = FetchType.LAZY)
 	@ManyToOne
 	private Category category;
+	
+	
 
 	public Product() {
 		super();
 	}
 
-	public Category getCategory() {
-		return category;
-	}
-
-	public void setCategory(Category category) {
-		this.category = category;
-	}
-
-	public Product(Integer id, String name, String description, Double price, Integer productQuantity, Integer orderQuantity, Category category) {
+	public Product(Integer id, String name, String description, Double price, Integer quantity, Category category) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.description = description;
 		this.price = price;
-		this.productQuantity = productQuantity;
-		this.orderQuantity = orderQuantity;
+		this.quantity = quantity;
 		this.category = category;
 	}
 
@@ -102,27 +70,21 @@ public class Product {
 		this.price = price;
 	}
 
-	public Integer getProductQuantity() {
-		return productQuantity;
+	public Integer getQuantity() {
+		return quantity;
 	}
 
-	public void setProductQuantity(Integer productQuantity) {
-		this.productQuantity = productQuantity;
+	public void setQuantity(Integer quantity) {
+		this.quantity = quantity;
 	}
 
-	public Integer getOrderQuantity() {
-		return orderQuantity;
+	public Category getCategory() {
+		return category;
 	}
 
-	public void setOrderQuantity(Integer orderQuantity) {
-		this.orderQuantity = orderQuantity;
+	public void setCategory(Category category) {
+		this.category = category;
 	}
-
-	@Override
-	public String toString() {
-		return "Product [category=" + category + ", description=" + description + ", id=" + id + ", name=" + name
-				+ ", orderQuantity=" + orderQuantity + ", price=" + price + ", productQuantity=" + productQuantity
-				+ "]";
-	}
-
+	
+	
 }

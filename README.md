@@ -1,2 +1,2 @@
 # GlobalMart
-Spring-boot Project for GL
+Spring-boot Project
