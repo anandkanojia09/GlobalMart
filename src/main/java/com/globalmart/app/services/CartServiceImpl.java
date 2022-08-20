@@ -201,7 +201,7 @@ public class CartServiceImpl implements CartService {
 	}
 
 	@Override
-	public Cart updateProductQuantity(Integer id, Integer productId, Integer quantity) throws CartException, ProductException {
+	public Cart increaseProductQuantity(Integer id, Integer productId, Integer quantity) throws CartException, ProductException {
 		Cart cart = getCartById(id).get();
 		Product product = productService.getProductById(productId).get();
 		List<Product> productList = cart.getProducts();
@@ -217,5 +217,23 @@ public class CartServiceImpl implements CartService {
 			throw new CartException("Internal error. Try again later!!");
 		return cart;
 	}
+	
+	@Override
+	public Cart decreaseProductQuantity(Integer id, Integer productId, Integer quantity) throws CartException, ProductException {
+		Cart cart = getCartById(id).get();
+		Product product = productService.getProductById(productId).get();
+		List<Product> productList = cart.getProducts();
+		if (productList.contains(product)) {
+			if (quantity > product.getOrderQuantity()) {
+				throw new CartException("Quantity cannot be more than " + product.getOrderQuantity()
+						+ ". Please select quantity in range!! ");
+			}
+			product.setOrderQuantity(product.getOrderQuantity()-quantity);
+			product.setProductQuantity(product.getProductQuantity() + quantity);
+			this.cartRepo.save(cart);
+		} else
+			throw new CartException("Internal error. Try again later!!");
+		return cart;
+	} 
 
 }

@@ -13,13 +13,18 @@ import com.globalmart.app.dto.Cart;
 import com.globalmart.app.dto.Category;
 import com.globalmart.app.dto.Product;
 import com.globalmart.app.exception.CartException;
+import com.globalmart.app.exception.ProductException;
 import com.globalmart.app.services.CartService;
+import com.globalmart.app.services.ProductServicesInterface;
 
 @SpringBootTest
 public class CartTest {
 
 	@Autowired
 	private CartService cartService;
+	
+	@Autowired
+	private ProductServicesInterface productService;
 
 	@Test
 	public void deleteCartByIdTest() throws CartException {
@@ -51,7 +56,7 @@ public class CartTest {
 	public void updateCartTest() throws CartException {
 
 		Assumptions.assumeTrue(cartService != null);
-		Cart cart = cartService.getCartById(6).get();
+		Cart cart = cartService.getCartById(2).get();
 		// cartService.updateCart(cart).setCartPrice(1020.0);
 		// cartService.updateCart(cart).setProductQuantity(1000);
 		cart.setCartPrice(1000.0);
@@ -75,7 +80,7 @@ public class CartTest {
 	public void updateCartTest3() throws CartException {
 		Category category = new Category(10, "string10", "string10");
 		List<Product> product = new ArrayList<>();
-		product.add(new Product(12, "product12", "mastProduct", 120.0, 20, category));
+		product.add(new Product(12, "product12", "mastProduct", 120.0, 20,24, category));
 
 		Cart newcart = new Cart(120, 10, 10.0, product);
 		Assumptions.assumeTrue(cartService != null);
@@ -104,7 +109,7 @@ public class CartTest {
 
 		Category category = new Category(10, "string10", "string10");
 		List<Product> product = new ArrayList<>();
-		product.add(new Product(12, "product12", "mastProduct", 120.0, 20, category));
+		product.add(new Product(12, "product12", "mastProduct", 120.0, 20,24,category));
 
 		Cart newcart = new Cart(11, 10, 10.0, product);
 		Assumptions.assumeTrue(cartService != null);
@@ -114,11 +119,24 @@ public class CartTest {
 	@Test
 	public void addcartTest2() throws CartException {
 
-		// Cart cart = new Cart(null,null,null,null);
 		Cart cart = null;
 		Assumptions.assumeTrue(cartService != null);
 		Assertions.assertThrows(CartException.class, () -> cartService.addCart(cart));
 
 	}
+	
+	@Test
+	public void addProductToCartTest() throws CartException, ProductException{
+		
+		Assumptions.assumeTrue(cartService != null);
+		Cart cart = cartService.getCartById(3).get();
+		Product product = productService.getProductById(3).get();
+		cartService.addProductToCart(3, 3);
+		Assertions.assertTrue(cart.getProducts().contains(product));
+		
+	}
+	
+	
+	
 
 }

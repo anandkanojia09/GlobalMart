@@ -88,10 +88,20 @@ public class CartController {
 		return " product removed from cart successfully.";
 	}
 	
-	@PatchMapping("updatecart/{id}")
+	@PatchMapping("increaseproductquantiy/{id}")
 	public String addProductByIdInCart(@PathVariable("id") Integer cartId , Integer productId , Integer quantity) throws CartException , ProductException{
 		try {
-			cartService.updateProductQuantity(cartId, productId, quantity);
+			cartService.increaseProductQuantity(cartId, productId, quantity);
+		} catch(CartException e) {
+			throw new CartException(e.getMessage());
+		}
+		return "cart quantity updated";
+	}
+	
+	@PatchMapping("decreaseproductquantiy/{id}")
+	public String removeProductByIdInCart(@PathVariable("id") Integer cartId , Integer productId , Integer quantity) throws CartException , ProductException{
+		try {
+			cartService.decreaseProductQuantity(cartId, productId, quantity);
 		} catch(CartException e) {
 			throw new CartException(e.getMessage());
 		}
