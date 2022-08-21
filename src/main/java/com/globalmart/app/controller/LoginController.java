@@ -32,9 +32,9 @@ public class LoginController {
 
 	@GetMapping("login/customer/{userName}")
 	public List<Customer> getCustomerByUserName(@RequestParam(value = "userName") String userName,
-			@PathVariable(value = "password") String password) throws GlobalMartException {
+			@RequestParam(value = "password") String password) throws GlobalMartException {
 				
-		return customerServices.getCustomerByUserNameAndPassword(userName, password);
+		return customerServices.getCustomerByUserNameAndUserPassword(userName, password);
 
 	}
 }

@@ -14,6 +14,8 @@ public interface CustomerRepo extends JpaRepository<Customer, Integer> {
 
 	List<Customer> findByUserPhoneNumber(String phoneNumber);
 
-	Object findByUserEmail(String userEmail);
+	List<Customer> findByUserEmail(String userEmail);
+
+	List<Customer> findByUserName(String userName);
 	
 }

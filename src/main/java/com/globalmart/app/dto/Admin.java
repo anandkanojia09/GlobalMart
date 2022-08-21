@@ -24,23 +24,21 @@ import javax.validation.constraints.Size;
 public class Admin {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+//	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer adminId;
 	@NotBlank(message = "Name is Mandatory.")
 	@Pattern(regexp = "[A-Za-z]*", message = "Only Alphanumeric characters are allowed.")
 	@Size(min = 3, max = 20, message = "Name must be between 3 and 20 characters long.")
 	private String adminName;
 	@NotBlank(message = "Cannot be empty")
-	@Pattern(regexp = "[A-Za-z0-9]*", message = "Password should contain number and special characters!!")
+	@Pattern(regexp = "^(?=.*[0-9])"+ "(?=.*[a-z])(?=.*[A-Z])"+ "(?=.*[@#$%^&+=])"+ "(?=\\S+$).{6,20}$", message = "Password should contain at least one smallcase and one upper case letter, number and a special character!!")
 	@Size(min = 6, max = 20, message = "Password should be more than 6 characters")
 	private String adminPassword;
 	@Email
 	@NotBlank(message = "Cannot be empty")
-	@Pattern(regexp = "[A-Za-z0-9]*", message = "Password should contain number and special characters!!")
-	@Size(min = 6, max = 20, message = "Password should be more than 8 characters")
 	private String adminEmail;
 	@NotBlank(message = "Cannot be empty")
-	@Pattern(regexp = "(^[0-9]{10})", message = "Phone number should contain numbers only!!")
+	@Pattern(regexp = "([0-9]*{10})", message = "Phone number should contain numbers only!!")
 	@Size(min = 10, max = 10, message = "Incorrect Number ")
 	private String adminPhoneNumber;
 	

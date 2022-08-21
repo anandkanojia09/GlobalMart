@@ -56,8 +56,10 @@ public class CustomerServiceImpl implements CustomerServices {
 	public Customer addCustomer(Customer customer) throws GlobalMartException {
 		if (customer == null)
 			throw new GlobalMartException("Feilds cannot be left empty. Please fill in the necesaary details.");
-		if (customerRepo.findByUserPhoneNumber(customer.getUserPhoneNumber()) != null || customerRepo.findByUserEmail(customer.getUserEmail()) != null)
-			throw new GlobalMartException("User already exist. Log into your account!");
+//		if (customerRepo.findByUserName(customer.getUserName()) != null )
+//			throw new GlobalMartException("User name already in use!! Use a different username.");
+//		if (customerRepo.findByUserPhoneNumber(customer.getUserPhoneNumber()) != null || customerRepo.findByUserEmail(customer.getUserEmail()) != null)
+//			throw new GlobalMartException("User already exists. Log into your account!");
 		customer = customerRepo.save(customer);
 		if (customer == null) {
 			throw new GlobalMartException("Customer could not be added!! Try again.");
@@ -144,7 +146,7 @@ public class CustomerServiceImpl implements CustomerServices {
 	 * Created Date - 08-AUG-2022
 	 ************************************************************************************/
 	@Override
-	public List<Customer> getCustomerByUserNameAndPassword(String name, String password) throws GlobalMartException {
+	public List<Customer> getCustomerByUserNameAndUserPassword(String name, String password) throws GlobalMartException {
 		List<Customer> customer = new ArrayList<>();
 		if (name == null || password == null) {
 			throw new GlobalMartException("Username and password are required!! ");

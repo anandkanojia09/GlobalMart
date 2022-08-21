@@ -73,7 +73,7 @@ public class AdminServiceImpl implements AdminServices {
 		if (adminRepo.existsById(id)) {
 			adminRepo.save(admin);
 		} else {
-			throw new GlobalMartException("No customer with the data exists to be updated!! Create new Admin ");
+			throw new GlobalMartException("No Admin with the data exists to be updated!! Create new Admin ");
 		}
 		return admin;
 	}
@@ -94,11 +94,11 @@ public class AdminServiceImpl implements AdminServices {
 			adminRepo.deleteById(id);
 			if (adminRepo.existsById(id)) {
 				flag=false;
-				throw new GlobalMartException("Unable to delete User. Try Again!!");
+				throw new GlobalMartException("Unable to delete Admin. Try Again!!");
 			}
 		} else {
 			flag=false;
-			throw new GlobalMartException("No customer with id " + id + " exists to be deleted ");
+			throw new GlobalMartException("No admin with id " + id + " exists to be deleted ");
 		}
 		return flag;
 	}
@@ -136,7 +136,7 @@ public class AdminServiceImpl implements AdminServices {
 		List<Admin> admins = new ArrayList<>();
 		admins = adminRepo.findByAdminNameAndAdminPassword(name, password);
 		if(admins.isEmpty()) {
-			throw new GlobalMartException("No admin(s) with the name and password provided!! Check and try again.");
+			throw new GlobalMartException("No admin(s) with the provided name and password!! Check and try again.");
 		}
 		return admins;
 	}

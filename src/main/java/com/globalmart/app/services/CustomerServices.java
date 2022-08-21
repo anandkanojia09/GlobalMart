@@ -18,6 +18,6 @@ public interface CustomerServices {
 
 	public List<Customer> getAllCustomers() throws GlobalMartException;
 
-	public List<Customer> getCustomerByUserNameAndPassword(String name, String password) throws GlobalMartException;
+	public List<Customer> getCustomerByUserNameAndUserPassword(String name, String password) throws GlobalMartException;
 
 }

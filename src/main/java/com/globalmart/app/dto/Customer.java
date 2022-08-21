@@ -6,7 +6,6 @@ import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -18,7 +17,6 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
-
 
 @SuppressWarnings("serial")
 @Entity
@@ -36,24 +34,22 @@ public class Customer implements Serializable {
 	 ************************************************************************************/
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+//	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer customerId;
 	@NotBlank(message = "Name is Mandatory.")
-	@Pattern(regexp = "[A-Za-z]*", message = "Only Alphanumeric characters are allowed.")
-	@Size(min = 3, max = 20, message = "Name must be between 3 and 20 characters long.")
+	@Pattern(regexp = "[A-Za-z]*", message = "No letters are allowed.")
+	@Size(min = 2, max = 20, message = "Name must be between 2 and 20 characters long.")
 	private String customerName;
 	@NotBlank(message = "Cannot be empty")
-	@Pattern(regexp = "[A-Za-z0-9]*", message = "Password should contain number and special characters!!")
+	@Pattern(regexp = "^(?=.*[0-9])"+ "(?=.*[a-z])(?=.*[A-Z])"+ "(?=.*[@#$%^&+=])"+ "(?=\\S+$).{6,20}$", message = "Password should contain at least one smallcase and one upper case letter, number and a special character!!")
 	@Size(min = 6, max = 20, message = "Password should be more than 6 characters")
 	private String userPassword;
-	@Column(unique = true)
 	@NotBlank(message = "Cannot be empty")
 	@Pattern(regexp = "[A-Za-z0-9]*", message = "username already in use!!")
-	@Size(min = 6, max = 20, message = "username should be more than 6 characters")
+	@Size(min = 3, max = 20, message = "username should be more than 3 characters")
 	private String userName;
 	@Email
 	@NotBlank(message = "Cannot be empty")
-	@Pattern(regexp = "[A-Za-z0-9]*", message = "Incorrect email format!! Enter correct email.")
 	private String userEmail;
 	@NotBlank(message = "Cannot be empty")
 	@Pattern(regexp = "([0-9]*{10})", message = "Phone number should contain numbers only!!")
@@ -62,9 +58,10 @@ public class Customer implements Serializable {
 	private String roomNumber;
 	private String city;
 	private String state;
-	@Pattern(regexp = "(^$|[0-9]*{6})", message = "Incorrect Pin !!")
-	@Size(min = 6, max = 6, message = "Cannot be more than 6 digits!!")
-	private Integer pincode;
+	@NotBlank(message = "Pin cannot be empty")
+	@Pattern(regexp = "^[1-9]{1}[0-9]{2}\\s{0,1}[0-9]{3}$", message = "Invalid pin!! Try again.")
+	@Size(min = 6, max = 6, message = "Incorrect Pin!!")
+	private String pincode;
 
 	@Temporal(TemporalType.DATE)
 	private Date createdDate = new Date(System.currentTimeMillis());
@@ -74,17 +71,16 @@ public class Customer implements Serializable {
 
 	public Customer() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public Customer(Integer customerId,
-			@NotBlank(message = "Name is Mandatory.") @Pattern(regexp = "[A-Za-z]*", message = "Only Alphanumeric characters are allowed.") @Size(min = 3, max = 20, message = "Name must be between 3 and 20 characters long.") String customerName,
-			@NotBlank(message = "Cannot be empty") @Pattern(regexp = "[A-Za-z0-9]*", message = "Password should contain number and special characters!!") @Size(min = 6, max = 20, message = "Password should be more than 6 characters") String userPassword,
-			@NotBlank(message = "Cannot be empty") @Pattern(regexp = "[A-Za-z0-9]*", message = "username already in use!!") @Size(min = 6, max = 20, message = "username should be more than 6 characters") String userName,
-			@Email @NotBlank(message = "Cannot be empty") @Pattern(regexp = "[A-Za-z0-9]*", message = "Password should contain number and special characters!!") @Size(min = 6, max = 20, message = "Password should be more than 8 characters") String userEmail,
-			@NotBlank(message = "Cannot be empty") @Pattern(regexp = "(^[0-9]{10})", message = "Phone number should contain numbers only!!") @Size(min = 10, max = 10, message = "Incorrect Number ") String userPhoneNumber,
+			@NotBlank(message = "Name is Mandatory.") @Pattern(regexp = "[A-Za-z]*", message = "No letters are allowed.") @Size(min = 2, max = 20, message = "Name must be between 2 and 20 characters long.") String customerName,
+			@NotBlank(message = "Cannot be empty") @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{6,20}$", message = "Password should contain at least one smallcase and one upper case letter, number and a special character!!") @Size(min = 6, max = 20, message = "Password should be more than 6 characters") String userPassword,
+			@NotBlank(message = "Cannot be empty") @Pattern(regexp = "[A-Za-z0-9]*", message = "username already in use!!") @Size(min = 3, max = 20, message = "username should be more than 3 characters") String userName,
+			@Email @NotBlank(message = "Cannot be empty") String userEmail,
+			@NotBlank(message = "Cannot be empty") @Pattern(regexp = "([0-9]*{10})", message = "Phone number should contain numbers only!!") @Size(min = 10, max = 10, message = "Incorrect Number ") String userPhoneNumber,
 			String roomNumber, String city, String state,
-			@NotBlank(message = "Cannot be empty") @Pattern(regexp = "(^[0-9]{6})", message = "Incorrect Pin !!") @Size(min = 6, max = 6, message = "Cannot be more than 6 digits!!") Integer pincode,
+			@NotBlank(message = "Pin cannot be empty") @Pattern(regexp = "^[1-9]{1}[0-9]{2}\\s{0,1}[0-9]{3}$", message = "Invalid pin!! Try again.") @Size(min = 10, max = 10, message = "Incorrect Pin!!") String pincode,
 			Date createdDate, List<Order> orders) {
 		super();
 		this.customerId = customerId;
@@ -100,7 +96,27 @@ public class Customer implements Serializable {
 		this.createdDate = createdDate;
 		this.orders = orders;
 	}
-
+	
+	public Customer(Integer customerId,
+			@NotBlank(message = "Name is Mandatory.") @Pattern(regexp = "[A-Za-z]*", message = "No letters are allowed.") @Size(min = 2, max = 20, message = "Name must be between 2 and 20 characters long.") String customerName,
+			@NotBlank(message = "Cannot be empty") @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{6,20}$", message = "Password should contain at least one smallcase and one upper case letter, number and a special character!!") @Size(min = 6, max = 20, message = "Password should be more than 6 characters") String userPassword,
+			@NotBlank(message = "Cannot be empty") @Pattern(regexp = "[A-Za-z0-9]*", message = "username already in use!!") @Size(min = 3, max = 20, message = "username should be more than 3 characters") String userName,
+			@Email @NotBlank(message = "Cannot be empty") String userEmail,
+			@NotBlank(message = "Cannot be empty") @Pattern(regexp = "([0-9]*{10})", message = "Phone number should contain numbers only!!") @Size(min = 10, max = 10, message = "Incorrect Number ") String userPhoneNumber,
+			String roomNumber, String city, String state,
+			@NotBlank(message = "Pin cannot be empty") @Pattern(regexp = "^[1-9]{1}[0-9]{2}\\s{0,1}[0-9]{3}$", message = "Invalid pin!! Try again.") @Size(min = 10, max = 10, message = "Incorrect Pin!!") String pincode) {
+		super();
+		this.customerId = customerId;
+		this.customerName = customerName;
+		this.userPassword = userPassword;
+		this.userName = userName;
+		this.userEmail = userEmail;
+		this.userPhoneNumber = userPhoneNumber;
+		this.roomNumber = roomNumber;
+		this.city = city;
+		this.state = state;
+		this.pincode = pincode;
+	}
 	public Integer getCustomerId() {
 		return customerId;
 	}
@@ -137,7 +153,7 @@ public class Customer implements Serializable {
 		return state;
 	}
 
-	public Integer getPincode() {
+	public String getPincode() {
 		return pincode;
 	}
 
@@ -185,7 +201,7 @@ public class Customer implements Serializable {
 		this.state = state;
 	}
 
-	public void setPincode(Integer pincode) {
+	public void setPincode(String pincode) {
 		this.pincode = pincode;
 	}
 
