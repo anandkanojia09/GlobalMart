@@ -8,16 +8,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.globalmart.app.dao.CategoryRepo;
-
+import com.globalmart.app.dao.ProductRepo;
 import com.globalmart.app.dto.Category;
-
+import com.globalmart.app.dto.Product;
 import com.globalmart.app.exception.CategoryException;
+import com.globalmart.app.exception.ProductException;
 
 @Service
 public class CategoryServicesImpl implements CategoryServices {
 
 	@Autowired
 	private CategoryRepo categoryRepository;
+	
+	@Autowired
+	private ProductRepo  productRepo;
 
 	@Override
 	public Category addCategory(Category category) throws CategoryException {
@@ -84,6 +88,26 @@ public class CategoryServicesImpl implements CategoryServices {
 		}
 		return isDeleted;
 
+	}
+
+	@Override
+	public List<Product> getAllProducts(Integer CategoryId) throws ProductException, CategoryException {
+		List<Product> products= productRepo.findAll();
+		if(products.isEmpty()) {
+			throw new ProductException("No product is there");
+		}
+		List<Product> product2= new ArrayList<>();
+		
+		if(categoryRepository.existsById(CategoryId)) {
+			throw new CategoryException("Category does not exist with category id " + CategoryId);
+		}
+		
+		for(Product prod : products) {
+			if(prod.getCategory().getCategoryId()==CategoryId) {
+				product2.add(prod);
+			}
+		}
+		return product2;
 	}
 
 }

@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 
@@ -23,17 +25,18 @@ import javax.persistence.ManyToMany;
 public class Cart {
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer cartId;
 	private Integer productQuantity;
 	private Double cartPrice;
 
 	@ManyToMany
-	private List<Product> products = new ArrayList<>();
-
+	List<Product> products = new ArrayList<>();
+	
 	public Cart() {
 		super();
 	}
-
+	
 	public Cart(Integer cartId, Integer productQuantity, Double cartPrice, List<Product> products) {
 		super();
 		this.cartId = cartId;

@@ -11,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.Email;
@@ -34,10 +35,10 @@ public class Customer implements Serializable {
 	 ************************************************************************************/
 
 	@Id
-//	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer customerId;
 	@NotBlank(message = "Name is Mandatory.")
-	@Pattern(regexp = "[A-Za-z]*", message = "No letters are allowed.")
+	@Pattern(regexp = "^[a-zA-Z][a-zA-Z\\s]{1,20}[a-zA-Z]$", message = "Only letters are allowed.")
 	@Size(min = 2, max = 20, message = "Name must be between 2 and 20 characters long.")
 	private String customerName;
 	@NotBlank(message = "Cannot be empty")
@@ -45,14 +46,14 @@ public class Customer implements Serializable {
 	@Size(min = 6, max = 20, message = "Password should be more than 6 characters")
 	private String userPassword;
 	@NotBlank(message = "Cannot be empty")
-	@Pattern(regexp = "[A-Za-z0-9]*", message = "username already in use!!")
-	@Size(min = 3, max = 20, message = "username should be more than 3 characters")
+	@Pattern(regexp = "^[A-Za-z][A-Za-z0-9_]{3,29}$", message = "username should start with an alphabet!!")
+	@Size(min = 4, max = 20, message = "username should be more than 4 characters")
 	private String userName;
 	@Email
 	@NotBlank(message = "Cannot be empty")
 	private String userEmail;
 	@NotBlank(message = "Cannot be empty")
-	@Pattern(regexp = "([0-9]*{10})", message = "Phone number should contain numbers only!!")
+	@Pattern(regexp = "(^[1-9][0-9]{8}[0-9]$)", message = "Phone number should contain numbers only!!")
 	@Size(min = 10, max = 10, message = "Incorrect Number ")
 	private String userPhoneNumber;
 	private String roomNumber;
@@ -69,8 +70,12 @@ public class Customer implements Serializable {
 	@OneToMany(cascade = { CascadeType.ALL })
 	private List<Order> orders = new ArrayList<>();
 
+	@OneToOne(cascade = { CascadeType.ALL })
+	Cart cart = new Cart();
+
 	public Customer() {
 		super();
+		// TODO Auto-generated constructor stub
 	}
 
 	public Customer(Integer customerId,
@@ -80,8 +85,8 @@ public class Customer implements Serializable {
 			@Email @NotBlank(message = "Cannot be empty") String userEmail,
 			@NotBlank(message = "Cannot be empty") @Pattern(regexp = "([0-9]*{10})", message = "Phone number should contain numbers only!!") @Size(min = 10, max = 10, message = "Incorrect Number ") String userPhoneNumber,
 			String roomNumber, String city, String state,
-			@NotBlank(message = "Pin cannot be empty") @Pattern(regexp = "^[1-9]{1}[0-9]{2}\\s{0,1}[0-9]{3}$", message = "Invalid pin!! Try again.") @Size(min = 10, max = 10, message = "Incorrect Pin!!") String pincode,
-			Date createdDate, List<Order> orders) {
+			@NotBlank(message = "Pin cannot be empty") @Pattern(regexp = "^[1-9]{1}[0-9]{2}\\s{0,1}[0-9]{3}$", message = "Invalid pin!! Try again.") @Size(min = 6, max = 6, message = "Incorrect Pin!!") String pincode,
+			Date createdDate, List<Order> orders, Cart cart) {
 		super();
 		this.customerId = customerId;
 		this.customerName = customerName;
@@ -95,28 +100,9 @@ public class Customer implements Serializable {
 		this.pincode = pincode;
 		this.createdDate = createdDate;
 		this.orders = orders;
+		this.cart = cart;
 	}
-	
-	public Customer(Integer customerId,
-			@NotBlank(message = "Name is Mandatory.") @Pattern(regexp = "[A-Za-z]*", message = "No letters are allowed.") @Size(min = 2, max = 20, message = "Name must be between 2 and 20 characters long.") String customerName,
-			@NotBlank(message = "Cannot be empty") @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{6,20}$", message = "Password should contain at least one smallcase and one upper case letter, number and a special character!!") @Size(min = 6, max = 20, message = "Password should be more than 6 characters") String userPassword,
-			@NotBlank(message = "Cannot be empty") @Pattern(regexp = "[A-Za-z0-9]*", message = "username already in use!!") @Size(min = 3, max = 20, message = "username should be more than 3 characters") String userName,
-			@Email @NotBlank(message = "Cannot be empty") String userEmail,
-			@NotBlank(message = "Cannot be empty") @Pattern(regexp = "([0-9]*{10})", message = "Phone number should contain numbers only!!") @Size(min = 10, max = 10, message = "Incorrect Number ") String userPhoneNumber,
-			String roomNumber, String city, String state,
-			@NotBlank(message = "Pin cannot be empty") @Pattern(regexp = "^[1-9]{1}[0-9]{2}\\s{0,1}[0-9]{3}$", message = "Invalid pin!! Try again.") @Size(min = 10, max = 10, message = "Incorrect Pin!!") String pincode) {
-		super();
-		this.customerId = customerId;
-		this.customerName = customerName;
-		this.userPassword = userPassword;
-		this.userName = userName;
-		this.userEmail = userEmail;
-		this.userPhoneNumber = userPhoneNumber;
-		this.roomNumber = roomNumber;
-		this.city = city;
-		this.state = state;
-		this.pincode = pincode;
-	}
+
 	public Integer getCustomerId() {
 		return customerId;
 	}
@@ -163,6 +149,10 @@ public class Customer implements Serializable {
 
 	public List<Order> getOrders() {
 		return orders;
+	}
+
+	public Cart getCart() {
+		return cart;
 	}
 
 	public void setCustomerId(Integer customerId) {
@@ -213,4 +203,8 @@ public class Customer implements Serializable {
 		this.orders = orders;
 	}
 
+	public void setCart(Cart cart) {
+		this.cart = cart;
+	}
+	
 }

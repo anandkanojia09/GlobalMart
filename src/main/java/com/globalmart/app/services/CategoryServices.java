@@ -6,7 +6,9 @@ import java.util.Optional;
 
 
 import com.globalmart.app.dto.Category;
+import com.globalmart.app.dto.Product;
 import com.globalmart.app.exception.CategoryException;
+import com.globalmart.app.exception.ProductException;
 
 public interface CategoryServices {
 
@@ -15,5 +17,5 @@ public interface CategoryServices {
 	public List<Category> getAllCategory()throws CategoryException;
 	public Category updateCategory(Category category)throws CategoryException;
 	public Boolean deleteCategory(Integer categoryId)throws CategoryException;
-	
+	public List<Product> getAllProducts(Integer CategoryId) throws ProductException, CategoryException;
 }

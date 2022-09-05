@@ -26,14 +26,19 @@ class CustomerServicesTest {
 	CustomerRepo customerRepo;
 
 	Customer customer = new Customer(1, "Test", "Pass@123", "test1", "test@mail", "9090909090", "23", "testCity",
-			"testState", "122312");
+			"testState", "122312", null, null, null);
 
 	@BeforeEach
 	@Test
 	void addCustomer() throws GlobalMartException {
 		assumeTrue(customerService != null);
-		assertThrows(GlobalMartException.class, () -> customerService.addCustomer(null));
 		assertNotNull(customerService.addCustomer(customer));
+		assertThrows(GlobalMartException.class, () -> customerService.addCustomer(null));
+		assertThrows(GlobalMartException.class, () -> customerService.addCustomer(new Customer(2, "Test", "Pass@123",
+				"test1", "test@mail", "9090909090", "23", "testCity", "testState", "122312", null, null, null)));
+		assertThrows(GlobalMartException.class, () -> customerService.addCustomer(new Customer(2, "Test", "Pass@123",
+				"test145", "test@mail", "9090909090", "23", "testCity", "testState", "122312", null, null, null)));
+
 	}
 
 	@Test
@@ -72,15 +77,16 @@ class CustomerServicesTest {
 
 	}
 
-	@Test 
+	@Test
 	void updateCustomer() throws GlobalMartException {
 		assumeTrue(customerService != null);
 		Customer customer1 = new Customer();
 		assertThrows(Exception.class, () -> customerService.updateCustomer(null));
-		assertThrows(GlobalMartException.class, () -> customerService.updateCustomer(new Customer(1099, "Test",
-				"pass@123", "test1", "test@mail", "9090909090", "23", "testCity", "testState", "122312")));
+		assertThrows(GlobalMartException.class,
+				() -> customerService.updateCustomer(new Customer(1099, "Test", "pass@123", "test1", "test@mail",
+						"9090909090", "23", "testCity", "testState", "122312", null, null, null)));
 		customer1 = new Customer(1, "TEST", "Pass@123", "test1", "test@mail", "9090909090", "23", "testCity",
-				"testState", "122312");
+				"testState", "122312", null, null, null);
 		assertNotNull(customerService.updateCustomer(customer1));
 		assertEquals("TEST", customer1.getCustomerName());
 

@@ -36,7 +36,12 @@ public class AdminServiceImpl implements AdminServices {
 	public Admin addAdmin(Admin admin) throws GlobalMartException { 
 		if (admin == null)
 			throw new GlobalMartException("Admin cant be null");
-		return adminRepo.save(admin);
+		if(!adminRepo.findByAdminEmail(admin.getAdminEmail()).isEmpty() || !adminRepo.findByAdminPhoneNumber(admin.getAdminPhoneNumber()).isEmpty())
+			throw new GlobalMartException("Email or phone number exist!! Log in to your account");
+		admin = adminRepo.save(admin);
+		if(admin==null)
+			throw new GlobalMartException("Admin could not be added!! Try again");
+		return admin;
 
 	}
 	
@@ -104,11 +109,10 @@ public class AdminServiceImpl implements AdminServices {
 	}
 	
 	/************************************************************************************
-	 * Method: getAdminById
-     * Description: add admin(s) data for the application.
-	 * @param id - admin data of type Admin class.
-	 * @returns admin - saved or added admin class or throws exception.
-	 * @throws GlobalMartException - It is raised due to no details of the admin to be added.
+	 * Method: getAllAdmin
+     * Description: fetches all the admin(s) data for the application.
+	 * @returns List<admin> - List of admin(s) or throws exception.
+	 * @throws GlobalMartException - It is raised if no admin data available.
      * Created By - Anand Kumar Kanojia
      * Created Date - 08-AUG-2022                           
 	 ************************************************************************************/

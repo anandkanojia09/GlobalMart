@@ -38,8 +38,25 @@ public class CustomerServiceImpl implements CustomerServices {
 	public Optional<Customer> getCustomerById(Integer id) throws GlobalMartException {
 		Optional<Customer> customer = customerRepo.findById(id);
 		if (customer.isEmpty()) {
-			throw new GlobalMartException("User with user id " + id + " does not exist");
+			throw new GlobalMartException("No User with user id " + id+"!! Provide correct User Id ");
 		}
+		return customer;
+	}
+	
+	/************************************************************************************
+	 * Method: getCustomerByUserName 
+	 * Description: fetches customer(s) data from the application.
+	 * @param userName - unique user name of the customer to be searched.
+	 * @returns List<customer> - container object of the fetched customer class or throws exception.
+	 * @throws GlobalMartException - It is raised due to no details of the customer to be fetched or wrong input. 
+	 * Created By - AnandKumar Kanojia 
+	 * Created Date - 08-AUG-2022
+	 ************************************************************************************/
+	@Override
+	public List<Customer> getCustomerByUserName(String userName) throws GlobalMartException {
+		List<Customer> customer = customerRepo.findByUserName(userName);
+		if(customer.isEmpty())
+			throw new GlobalMartException("No user with user name: "+userName);
 		return customer;
 	}
 
@@ -56,10 +73,11 @@ public class CustomerServiceImpl implements CustomerServices {
 	public Customer addCustomer(Customer customer) throws GlobalMartException {
 		if (customer == null)
 			throw new GlobalMartException("Feilds cannot be left empty. Please fill in the necesaary details.");
-//		if (customerRepo.findByUserName(customer.getUserName()) != null )
-//			throw new GlobalMartException("User name already in use!! Use a different username.");
-//		if (customerRepo.findByUserPhoneNumber(customer.getUserPhoneNumber()) != null || customerRepo.findByUserEmail(customer.getUserEmail()) != null)
-//			throw new GlobalMartException("User already exists. Log into your account!");
+		String userName = customer.getUserName();
+		if (!customerRepo.findByUserName(userName).isEmpty() )
+			throw new GlobalMartException("User name already in use!! Use a different username.");
+		if (!customerRepo.findByUserPhoneNumber(customer.getUserPhoneNumber()).isEmpty() || !customerRepo.findByUserEmail(customer.getUserEmail()).isEmpty())
+			throw new GlobalMartException("User email or phone number already exists. Log into your account!");
 		customer = customerRepo.save(customer);
 		if (customer == null) {
 			throw new GlobalMartException("Customer could not be added!! Try again.");

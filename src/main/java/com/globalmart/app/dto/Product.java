@@ -2,6 +2,8 @@ package com.globalmart.app.dto;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.Min;
@@ -25,17 +27,17 @@ public class Product {
 
 	@Id
 
-	// @GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer productId;
 
 	@NotEmpty(message = "Name is Mandatory.")
 	@Pattern(regexp = "[A-Za-z0-9 ]*", message = "Only Alphanumeric characters are allowed.")
 	@Size(min = 3, max = 20, message = "Name must be between 3 and 20 characters long.")
-	private String name;
+	private String productName;
 	@Pattern(regexp = "[A-Za-z0-9. ]*", message = "Only Alphanumeric characters are allowed.")
 	@Size(min = 3, max = 200, message = "Description must be between 4 and 200 characters long.")
 	@NotNull(message = "Description can't be Null.")
-	private String description;
+	private String productDescription;
 	// @NotEmpty(message = "Price is required.")
 	@Min(value = 1, message = "Price needs to be greater than 0")
 	private Double price;
@@ -61,9 +63,9 @@ public class Product {
 
 	public Product(Integer id, String name, String description, Double price, Integer productQuantity, Integer orderQuantity, Category category) {
 		super();
-		this.id = id;
-		this.name = name;
-		this.description = description;
+		this.productId = id;
+		this.productName = name;
+		this.productDescription = description;
 		this.price = price;
 		this.productQuantity = productQuantity;
 		this.orderQuantity = orderQuantity;
@@ -71,27 +73,27 @@ public class Product {
 	}
 
 	public Integer getId() {
-		return id;
+		return productId;
 	}
 
 	public void setId(Integer id) {
-		this.id = id;
+		this.productId = id;
 	}
 
 	public String getName() {
-		return name;
+		return productName;
 	}
 
 	public void setName(String name) {
-		this.name = name;
+		this.productName = name;
 	}
 
 	public String getDescription() {
-		return description;
+		return productDescription;
 	}
 
 	public void setDescription(String description) {
-		this.description = description;
+		this.productDescription = description;
 	}
 
 	public Double getPrice() {
@@ -120,7 +122,7 @@ public class Product {
 
 	@Override
 	public String toString() {
-		return "Product [category=" + category + ", description=" + description + ", id=" + id + ", name=" + name
+		return "Product [category=" + category + ", description=" + productDescription + ", id=" + productId + ", name=" + productName
 				+ ", orderQuantity=" + orderQuantity + ", price=" + price + ", productQuantity=" + productQuantity
 				+ "]";
 	}

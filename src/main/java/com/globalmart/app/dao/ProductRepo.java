@@ -19,7 +19,7 @@ public interface ProductRepo extends JpaRepository<Product, Integer> {
 	 *         Created Date 02-AUG-2022
 	 ************************************************************************************/
 
-	List<Product> findAllByName(String name);
+	List<Product> findAllByProductName(String name);
 
-	void deleteByName(String name);
+	void deleteByProductName(String name);
 }

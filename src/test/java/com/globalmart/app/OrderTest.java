@@ -3,7 +3,6 @@ package com.globalmart.app;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.sql.SQLException;
-
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -21,7 +20,7 @@ class OrderTest {
 	private OrderService orderService;
 
 	@Test
-	void getOrderByIdTest() throws OrderMartException, SQLException {
+	void getOrderTest() throws OrderMartException, SQLException {
 		assumeTrue(orderService != null);
 //	 OrderService.getOrderById(7);
 		// assert(OrderService.getOrderById(7).get());
@@ -32,14 +31,14 @@ class OrderTest {
 	}
 
 	@Test
-	void addOrderByIdTest() throws OrderMartException {
+	void addOrderTest() throws OrderMartException {
 
 		assumeTrue(orderService != null);
 
 //		 Order order= new Order(30,"MyOrder","MyDescription",3000.00,21,category);
 
 //		Order order = orderService.addOrder(null);
-		 assertThrows(Exception.class,()-> orderService.addOrderById(null));
+		 assertThrows(Exception.class,()-> orderService.addOrder(null));
 
 	}
 	private void assumeTrue(boolean b) {
@@ -48,13 +47,13 @@ class OrderTest {
 	}
 
 	@Test
-	public void deleteOrderByIdTest() throws OrderMartException, SQLException{
- 		assertEquals("Successful", this.orderService.deleteOrderById(1));
+	public void deleteOrderTest() throws OrderMartException, SQLException{
+ 		assertEquals("Successful", this.orderService.deleteOrderById(0));
 		assertThrows(OrderMartException.class,()-> this.orderService.deleteOrderById(500));
 	}
 //	@Test
 //
-//	public void updateOrderByIdTest() throws OrderMartException{
+//	public void updateOrderTest() throws OrderMartException{
 // 		assertNotNull(orderService.addOrderById());
 // 		assertNotNull(orderService.updateOrder(order));
 // 		assertThrows(OrderMartException.class,()-> this.orderService.updateOrderById(null));

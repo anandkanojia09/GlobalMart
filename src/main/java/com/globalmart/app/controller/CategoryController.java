@@ -15,7 +15,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import com.globalmart.app.dto.Category;
+import com.globalmart.app.dto.Product;
 import com.globalmart.app.exception.CategoryException;
+import com.globalmart.app.exception.ProductException;
 import com.globalmart.app.services.CategoryServices;
 
 @RestController
@@ -59,6 +61,11 @@ public class CategoryController {
 
 		 return categoryServices.deleteCategory(id);
 	
+	}
+	
+	@GetMapping("allproducts")
+	public List<Product> getAllProducts(Integer CategoryId) throws ProductException, CategoryException{
+		return categoryServices.getAllProducts(CategoryId);
 	}
 
 	

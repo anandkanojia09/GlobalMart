@@ -1,5 +1,6 @@
 package com.globalmart.app.exception;
 
+@SuppressWarnings("serial")
 public class ProductException extends Exception {
 	/************************************************************************************
 	 * @author Anant Narayan Patel

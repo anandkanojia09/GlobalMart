@@ -13,7 +13,7 @@ import javax.validation.constraints.Size;
 public class Category {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer categoryId;
 	
 	@NotNull(message="Name cant be null")

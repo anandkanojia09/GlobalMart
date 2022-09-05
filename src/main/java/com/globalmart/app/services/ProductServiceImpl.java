@@ -81,7 +81,7 @@ public class ProductServiceImpl implements ProductServicesInterface {
 
 	@Override
 	public List<Product> getProductByName(String name) throws ProductException {
-		List<Product> prodD = productRepo.findAllByName(name);
+		List<Product> prodD = productRepo.findAllByProductName(name);
 		if (!prodD.isEmpty()) {
 			return prodD;
 		} else {
@@ -91,8 +91,8 @@ public class ProductServiceImpl implements ProductServicesInterface {
 
 	@Override
 	public String deleteByName(String name) throws ProductException {
-		if (!productRepo.findAllByName(name).isEmpty()) {
-			productRepo.deleteByName(name);
+		if (!productRepo.findAllByProductName(name).isEmpty()) {
+			productRepo.deleteByProductName(name);
 			return ("Delete operation successful");
 		} else {
 			throw new ProductException("No product with name " + name + " found");

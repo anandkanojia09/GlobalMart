@@ -6,9 +6,17 @@ import java.util.Optional;
 import com.globalmart.app.dto.Customer;
 import com.globalmart.app.exception.GlobalMartException;
 
+/************************************************************************************
+ *         @author          Anand Kumar Kanojia
+ *         Description      It is a customer service interface that provides abstraction to the business logic and repository.
+ *         Version          1.1
+ *         Created Date     08-AUG-2022
+ ************************************************************************************/
 public interface CustomerServices {
 
 	public Optional<Customer> getCustomerById(Integer id) throws GlobalMartException;
+	
+	public List<Customer> getCustomerByUserName(String userName) throws GlobalMartException; 
 
 	public Customer addCustomer(Customer customer) throws GlobalMartException;
 

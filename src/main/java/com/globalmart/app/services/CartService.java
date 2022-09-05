@@ -10,11 +10,11 @@ import com.globalmart.app.exception.ProductException;
 /************************************************************************************
  * @author Abhishek Kumar Jaiswal
  * 
- *         Description : These are the services which is used by user in Cart related Operation.
+ * Description : These are the services which is used by user in Cart related Operation.
  * 
  *        
  * 
- *         Created Date 02-AUG-2022
+ * Created Date 02-AUG-2022
  ************************************************************************************/
 public interface CartService {
 	

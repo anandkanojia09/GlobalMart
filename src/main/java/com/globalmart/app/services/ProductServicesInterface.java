@@ -6,8 +6,6 @@ import java.util.Optional;
 import com.globalmart.app.dto.Product;
 import com.globalmart.app.exception.ProductException;
 
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
-
 public interface ProductServicesInterface {
 	/************************************************************************************
 	 * @author Anant Narayan Patel
@@ -25,9 +23,9 @@ public interface ProductServicesInterface {
 
 	public String deleteProductById(Integer productId) throws ProductException;
 
-	public Product addProduct(@RequestBody Product product) throws ProductException;
+	public Product addProduct( Product product) throws ProductException;
 
-	public String updateProduct(@RequestBody Product product) throws ProductException;
+	public String updateProduct( Product product) throws ProductException;
 
 	public List<Product> getAllProducts() throws ProductException;
 

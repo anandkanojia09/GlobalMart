@@ -6,6 +6,12 @@ import java.util.Optional;
 import com.globalmart.app.dto.Admin;
 import com.globalmart.app.exception.GlobalMartException;
 
+/************************************************************************************
+ *         @author          Anand Kumar Kanojia
+ *         Description      It is a admin service interface that provides abstraction to the business logic and repository.
+ *         Version          1.1
+ *         Created Date     08-AUG-2022
+ ************************************************************************************/
 public interface AdminServices {
 
 	public Optional<Admin> getAdminById(Integer id) throws GlobalMartException;

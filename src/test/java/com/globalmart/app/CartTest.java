@@ -3,6 +3,8 @@ package com.globalmart.app;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Assumptions;
 import org.junit.jupiter.api.Test;
@@ -126,13 +128,83 @@ public class CartTest {
 	}
 	
 	@Test
+	@Transactional
 	public void addProductToCartTest() throws CartException, ProductException{
 		
 		Assumptions.assumeTrue(cartService != null);
 		Cart cart = cartService.getCartById(3).get();
 		Product product = productService.getProductById(3).get();
-		cartService.addProductToCart(3, 3);
+		cartService.addProductToCart(3, 2);
 		Assertions.assertTrue(cart.getProducts().contains(product));
+		Assertions.assertThrows(CartException.class, () -> cartService.addProductToCart(3, 2));
+
+		
+	}
+	
+	@Test
+	@Transactional
+	public void removeProductFromCartTest() throws CartException, ProductException{
+		
+		Assumptions.assumeTrue(cartService != null);
+		Cart cart = cartService.getCartById(3).get();
+		Product product = productService.getProductById(3).get();
+		Assertions.assertThrows(CartException.class, () -> cartService.removeProductFromCart(3, 2));
+
+}
+	
+	@Test
+	@Transactional
+	public void increaseProductQuantityTest() throws CartException, ProductException{
+		
+		Assumptions.assumeTrue(cartService != null);
+		Cart cart = cartService.getCartById(3).get();
+		Product product = productService.getProductById(2).get();
+		Integer quantity = product.getOrderQuantity();
+		cartService.increaseProductQuantity(3, 2, 10);
+		Assertions.assertEquals(quantity+10,product.getOrderQuantity());
+		
+		
+	}
+	
+	@Test
+	@Transactional
+	public void increaseProductQuantityExceptionTest() throws CartException, ProductException{
+		
+		Assumptions.assumeTrue(cartService != null);
+		Cart cart = cartService.getCartById(3).get();
+		Product product = productService.getProductById(2).get();
+		Integer quantity = product.getOrderQuantity();
+
+		Assertions.assertThrows(CartException.class, () -> cartService.increaseProductQuantity(3, 2, 500));
+		
+		
+	}
+	
+	@Test
+	@Transactional
+	public void decreaseProductQuantityTest() throws CartException, ProductException{
+		
+		Assumptions.assumeTrue(cartService != null);
+		Cart cart = cartService.getCartById(3).get();
+		Product product = productService.getProductById(2).get();
+		Integer quantity = product.getOrderQuantity();
+		cartService.decreaseProductQuantity(3, 2, 10);
+		Assertions.assertEquals(quantity-10,product.getOrderQuantity());
+		
+		
+	}
+	
+	@Test
+	@Transactional
+	public void decreaseProductQuantityExceptionTest() throws CartException, ProductException{
+		
+		Assumptions.assumeTrue(cartService != null);
+		Cart cart = cartService.getCartById(3).get();
+		Product product = productService.getProductById(2).get();
+		Integer quantity = product.getOrderQuantity();
+
+		Assertions.assertThrows(CartException.class, () -> cartService.decreaseProductQuantity(3, 2, 500));
+		
 		
 	}
 	

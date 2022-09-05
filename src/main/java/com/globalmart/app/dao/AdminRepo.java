@@ -9,5 +9,9 @@ import com.globalmart.app.dto.Admin;
 public interface AdminRepo extends JpaRepository<Admin, Integer> {
 
 	List<Admin> findByAdminNameAndAdminPassword(String name, String password);
+	
+	List<Admin> findByAdminEmail(String email);
+
+	List<Admin> findByAdminPhoneNumber(String number);	
 
 }

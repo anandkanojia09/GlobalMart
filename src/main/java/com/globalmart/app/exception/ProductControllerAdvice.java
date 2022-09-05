@@ -1,11 +1,9 @@
-package com.globalmart.app.controller;
+package com.globalmart.app.exception;
 
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-
-import com.globalmart.app.exception.ProductException;
 
 import java.util.HashMap;
 import java.util.Map;

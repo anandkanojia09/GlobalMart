@@ -24,10 +24,10 @@ import javax.validation.constraints.Size;
 public class Admin {
 
 	@Id
-//	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer adminId;
 	@NotBlank(message = "Name is Mandatory.")
-	@Pattern(regexp = "[A-Za-z]*", message = "Only Alphanumeric characters are allowed.")
+	@Pattern(regexp = "^[a-zA-Z][a-zA-Z\\s]{1,20}[a-zA-Z]$", message = "Only letters are allowed.")
 	@Size(min = 3, max = 20, message = "Name must be between 3 and 20 characters long.")
 	private String adminName;
 	@NotBlank(message = "Cannot be empty")
@@ -38,7 +38,7 @@ public class Admin {
 	@NotBlank(message = "Cannot be empty")
 	private String adminEmail;
 	@NotBlank(message = "Cannot be empty")
-	@Pattern(regexp = "([0-9]*{10})", message = "Phone number should contain numbers only!!")
+	@Pattern(regexp = "(^[1-9][0-9]{8}[0-9]$)", message = "Phone number should contain numbers only!!")
 	@Size(min = 10, max = 10, message = "Incorrect Number ")
 	private String adminPhoneNumber;
 	
